@@ -5,28 +5,30 @@ import java.util.Comparator;
 import java.util.stream.Collectors;
 
 public class Task6 {
-    public Task6() {
+    private Task6() {
     }
 
     private static final int K = 6174;
     private static final int MIN_DIGIT = 1000;
-
+    private static final int SCALE_OF_NOTATION = 10;
 
     public static int countK(int n) {
         return countK(n, 0);
     }
 
-    private static int addZerosIfDigitLess1000(int n){
-        while (n / MIN_DIGIT == 0) {
-            n *= 10;
+    private static int addZerosIfDigitLess1000(int n) {
+        int newN = n;
+        while (newN / MIN_DIGIT == 0) {
+            newN *= SCALE_OF_NOTATION;
         }
-        return n;
+        return newN;
     }
+
     private static int countK(int n, int counter) {
         int ans;
         int sortedN;
         int sortedRN;
-        int newN=n;
+        int newN = n;
 
         if (newN == K) {
             return counter;

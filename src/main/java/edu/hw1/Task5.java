@@ -3,7 +3,7 @@ package edu.hw1;
 public class Task5 {
     private static final int SCALE_OF_NOTATION = 10;
 
-    public Task5() {
+    private Task5() {
     }
 
     public static boolean isPalindromeDescendant(long n) {
@@ -14,7 +14,8 @@ public class Task5 {
         if (isPalindrome(strN)) {
             return true;
         }
-        int newN = 0, addition = 0;
+        int newN = 0;
+        int addition;
         for (int i = 0; i < strN.length() - 1; i += 2) {
 
             addition =

@@ -1,7 +1,7 @@
 package edu.hw1;
 
 public class Task3 {
-    public Task3() {
+    private Task3() {
     }
 
     public static boolean isNestable(int[] arr1, int[] arr2) {

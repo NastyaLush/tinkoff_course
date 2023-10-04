@@ -2,7 +2,8 @@ package edu.hw1;
 
 public class Task2 {
     private static final int SCALE_OF_NOTATION = 10;
-    public Task2() {
+
+    private Task2() {
     }
 
     public static int countDigits(long n) {

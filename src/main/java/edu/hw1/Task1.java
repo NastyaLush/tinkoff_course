@@ -6,7 +6,7 @@ public class Task1 {
     private static final int COUNT_SEC_IN_MINUTES = 60;
     private static final int MAX_SEC = 60;
 
-    public Task1() {
+    private Task1() {
     }
 
     public static long minutesToSeconds(String str) {

@@ -34,7 +34,7 @@ public class Task6 {
             return counter;
         }
 
-        newN=addZerosIfDigitLess1000(newN);
+        newN = addZerosIfDigitLess1000(newN);
 
         String strN = String.valueOf(newN);
         String sorted = Arrays.stream(strN.split("")).sorted().collect(Collectors.joining(""));

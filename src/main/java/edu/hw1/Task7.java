@@ -1,10 +1,12 @@
 package edu.hw1;
 
 public class Task7 {
+    public Task7() {
+    }
+
     public static int rotateLeft(int n, int shift) {
         String binN = Integer.toBinaryString(n);
         int offset = shift % binN.length();
-        System.out.println(offset);
         return Integer.parseInt(binN.substring(offset) + binN.substring(0, offset), 2);
     }
 

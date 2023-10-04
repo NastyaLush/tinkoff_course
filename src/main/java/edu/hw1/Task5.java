@@ -1,6 +1,11 @@
 package edu.hw1;
 
 public class Task5 {
+    private static final int SCALE_OF_NOTATION = 10;
+
+    public Task5() {
+    }
+
     public static boolean isPalindromeDescendant(long n) {
         String strN = String.valueOf(n);
         if (strN.length() == 1) {
@@ -10,19 +15,19 @@ public class Task5 {
             return true;
         }
         int newN = 0, addition = 0;
-        for (int i = 0; i < strN.length()-1; i+=2) {
-            // TODO: 10/4/2023
+        for (int i = 0; i < strN.length() - 1; i += 2) {
+
             addition =
                 (Character.getNumericValue(strN.charAt(i)) + Character.getNumericValue(strN.charAt(i + 1)));
-
-            if (addition / 10 == 0) {
-                newN = newN * 10 + addition;
+            // на тот случай если получим двухзначное число
+            if (addition / SCALE_OF_NOTATION == 0) {
+                newN = newN * SCALE_OF_NOTATION + addition;
             } else {
-                newN = newN * 100 + addition;
+                newN = newN * SCALE_OF_NOTATION * SCALE_OF_NOTATION + addition;
             }
         }
         if (strN.length() % 2 != 0) {
-            newN = newN * 10 + Character.getNumericValue(strN.charAt(strN.length() - 1));
+            newN = newN * SCALE_OF_NOTATION + Character.getNumericValue(strN.charAt(strN.length() - 1));
         }
         return isPalindromeDescendant(newN);
     }

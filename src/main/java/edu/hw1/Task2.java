@@ -1,13 +1,19 @@
 package edu.hw1;
 
 public class Task2 {
+    private static final int SCALE_OF_NOTATION = 10;
+    public Task2() {
+    }
+
     public static int countDigits(long n) {
         int counter = 0;
-        n=Math.abs(n);
-        if(n==0) return 1;
-        while (n > 0) {
+        long newN = Math.abs(n);
+        if (newN == 0) {
+            return 1;
+        }
+        while (newN > 0) {
             counter++;
-            n /= 10;
+            newN /= SCALE_OF_NOTATION;
         }
         return counter;
     }

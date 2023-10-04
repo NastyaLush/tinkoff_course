@@ -1,6 +1,9 @@
 package edu.hw1;
 
 public class Task3 {
+    public Task3() {
+    }
+
     public static boolean isNestable(int[] arr1, int[] arr2) {
         return min(arr1) > min(arr2) && max(arr1) < max(arr2);
     }

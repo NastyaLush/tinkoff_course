@@ -13,7 +13,7 @@ public class Task6 {
     }
 
     public static int countK(int n) {
-        if (n < 1000) {
+        if (n < MIN_DIGIT) {
             throw new IllegalArgumentException();
         }
         return countK(n, 0);

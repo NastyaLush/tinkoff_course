@@ -1,61 +1,32 @@
 package edu.hw1;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class Task2Test {
-    @Test
-    void Figure(){
-        //data
-        int n=0;
-        //when
-        int ans=Task2.countDigits(n);
-        //then
-        assertThat(ans).isEqualTo(1);
+    @ParameterizedTest(name = "Iteration #{index} -> Given number = {0} and count of digits is {1}")
+    @CsvSource({
+        "0, 1",
+        "10, 2",
+        "-1, 1",
+        "-1, 1"
+    })
+    void countDigits_shouldCountDigits(int n, int res) {
+        int ans = Task2.countDigits(n);
+        assertThat(ans).isEqualTo(res);
     }
+
     @Test
-    void Number(){
-        //data
-        int n=10;
+    void LongNumber() {
+        //given
+        long n = Integer.MAX_VALUE + 5L;
+
         //when
-        int ans=Task2.countDigits(n);
+        int ans = Task2.countDigits(n);
         //then
-        assertThat(ans).isEqualTo(2);
-    }
-    @Test
-    void NegativeFigure(){
-        //data
-        int n=-1;
-        //when
-        int ans=Task2.countDigits(n);
-        //then
-        assertThat(ans).isEqualTo(1);
-    }
-    @Test
-    void NegativeNumber(){
-        //data
-        int n=-11;
-        //when
-        int ans=Task2.countDigits(n);
-        //then
-        assertThat(ans).isEqualTo(2);
-    }
-    @Test
-    void NegativeZero(){
-        //data
-        int n=-0;
-        //when
-        int ans=Task2.countDigits(n);
-        //then
-        assertThat(ans).isEqualTo(1);
-    }
-    @Test
-    void LongNumber(){
-        //data
-        long n=Integer.MAX_VALUE+5L;
-        //when
-        int ans=Task2.countDigits(n);
-        //then
-        assertThat(ans).isEqualTo(10);
+        assertThat(ans).isEqualTo(Long.toString(n).length());
     }
 }

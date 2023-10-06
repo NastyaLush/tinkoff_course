@@ -10,7 +10,7 @@ public class Task1 {
     }
 
     public static long minutesToSeconds(String str) {
-        if (Pattern.matches("\\d{2,}:\\d{2}", str)) {
+        if (Pattern.matches("\\d+:\\d{2}", str)) {
             String[] splStr = str.split(":");
             if (Long.parseLong(splStr[1]) > MAX_SEC) {
                 return -1;

@@ -1,133 +1,43 @@
 package edu.hw1;
 
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class Task5Test {
-    @Test
-    void oneDigit() {
-        //data
-        long data = 0;
-        //when
-        boolean ans = Task5.isPalindromeDescendant(data);
-        //then
-        assertThat(ans).isFalse();
-    }
-    @Test
-    void twoDigitPalindrome() {
-        //data
-        long data = 11;
-        //when
-        boolean ans = Task5.isPalindromeDescendant(data);
-        //then
+    @ParameterizedTest(name = "Iteration #{index} -> Given pal = {0}")
+    @ValueSource(longs = {11, 121, 1836829634369286381L})
+    void isPalindromeDescendant_shouldCorrectlyFindPalindrome(long pal) {
+        boolean ans = Task5.isPalindromeDescendant(pal);
         assertThat(ans).isTrue();
     }
-    @Test
-    void twoDigitNotPalindrome() {
-        //data
-        long data = 12;
-        //when
-        boolean ans = Task5.isPalindromeDescendant(data);
-        //then
-        assertThat(ans).isFalse();
-    }
-    @Test
-    void treeDigitPalindrome() {
-        //data
-        long data = 121;
-        //when
-        boolean ans = Task5.isPalindromeDescendant(data);
-        //then
+
+    @ParameterizedTest(name = "Iteration #{index} -> Given pal = {0}")
+    @ValueSource(longs = {1322, 134, 1012301112201210L, 1012301145122012113L})
+    void isPalindromeDescendant_shouldCorrectlyFindPalindromeChild(long pal) {
+        boolean ans = Task5.isPalindromeDescendant(pal);
         assertThat(ans).isTrue();
     }
-    @Test
-    void treeDigitNotPalindrome() {
-        //data
-        long data = 113;
-        //when
-        boolean ans = Task5.isPalindromeDescendant(data);
-        //then
+
+    @ParameterizedTest(name = "Iteration #{index} -> Given pal = {0}")
+    @ValueSource(longs = {12})
+    void isPalindromeDescendant_shouldCorrectlyNotFindPalindrome(long pal) {
+        boolean ans = Task5.isPalindromeDescendant(pal);
         assertThat(ans).isFalse();
     }
-    @Test
-    void aLotOfDigitPalindrome() {
-        //data
-        long data = 1836829634369286381L;
-        //when
-        boolean ans = Task5.isPalindromeDescendant(data);
-        //then
-        assertThat(ans).isTrue();
-    }
-    @Test
-    void palindromeSecondChildWithTwoDigits(){
-        //data 44
-        long data = 1322;
-        //when
-        boolean ans = Task5.isPalindromeDescendant(data);
-        //then
-        assertThat(ans).isTrue();
-    }
-    @Test
-    void palindromeSecondChildWithTreeDigits(){
-        //data 44
-        long data = 134;
-        //when
-        boolean ans = Task5.isPalindromeDescendant(data);
-        //then
-        assertThat(ans).isTrue();
-    }
-    @Test
-    void notPalindromeSecondChildWithTreeDigits(){
-        //data 45
-        long data = 135;
-        //when
-        boolean ans = Task5.isPalindromeDescendant(data);
-        //then
+
+    @ParameterizedTest(name = "Iteration #{index} -> Given pal = {0}")
+    @ValueSource(longs = {113, 135, 1012301112201211L, 10123011122012113L})
+    void isPalindromeDescendant_shouldCorrectlyNotFindPalindromeAndChild(long pal) {
+        boolean ans = Task5.isPalindromeDescendant(pal);
         assertThat(ans).isFalse();
     }
-    @Test
-    void notPalindromeSecondChildWithTwoDigits(){
-        //data 45
-        long data = 1341;
-        //when
-        boolean ans = Task5.isPalindromeDescendant(data);
-        //then
+
+    @ParameterizedTest(name = "Iteration #{index} -> Given pal = {0}")
+    @ValueSource(longs = {0})
+    void isPalindromeDescendant_shouldNotWorkWithOneDigit(long pal) {
+        boolean ans = Task5.isPalindromeDescendant(pal);
         assertThat(ans).isFalse();
-    }
-    @Test
-    void palindromeNChildWithFourDigits(){
-        //data 4554
-        long data = 1012301112201210L;
-        //when
-        boolean ans = Task5.isPalindromeDescendant(data);
-        //then
-        assertThat(ans).isTrue();
-    }
-    @Test
-    void notPalindromeNChildWithFourDigits(){
-        //data 4554
-        long data = 1012301112201211L;
-        //when
-        boolean ans = Task5.isPalindromeDescendant(data);
-        //then
-        assertThat(ans).isFalse();
-    }
-    @Test
-    void notPalindromeNChildWithFourDigitsOdd(){
-        //data 4554
-        long data = 10123011122012113L;
-        //when
-        boolean ans = Task5.isPalindromeDescendant(data);
-        //then
-        assertThat(ans).isFalse();
-    }
-    @Test
-    void palindromeNChildWithTreeDigitsOddSumMoreThan10(){
-        //data 121
-        long data = 1012301145122012113L;
-        //when
-        boolean ans = Task5.isPalindromeDescendant(data);
-        //then
-        assertThat(ans).isTrue();
     }
 }

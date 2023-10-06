@@ -2,29 +2,36 @@ package edu.hw1;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class Task8Test {
+
     @Test
-    void exmplTests() {
-        //data
+    void knightBoardCapture_shouldCorrectlyWorkWithExampleTest1() {
+        //given
         int[][] data = {
-                      {0, 0, 0, 1, 0, 0, 0, 0},
-                      {0, 0, 0, 0, 0, 0, 0, 0},
-                      {0, 1, 0, 0, 0, 1, 0, 0},
-                      {0, 0, 0, 0, 1, 0, 1, 0},
-                      {0, 1, 0, 0, 0, 1, 0, 0},
-                      {0, 0, 0, 0, 0, 0, 0, 0},
-                      {0, 1, 0, 0, 0, 0, 0, 1},
-                      {0, 0, 0, 0, 1, 0, 0, 0}
+            {0, 0, 0, 1, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 1, 0, 0, 0, 1, 0, 0},
+            {0, 0, 0, 0, 1, 0, 1, 0},
+            {0, 1, 0, 0, 0, 1, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 1, 0, 0, 0, 0, 0, 1},
+            {0, 0, 0, 0, 1, 0, 0, 0}
         };
+
         //when
         boolean ans = Task8.knightBoardCapture(data);
         //then
         assertThat(ans).isTrue();
+    }
 
-        //data
-        data = new int[][] {
+    @Test
+    void knightBoardCapture_shouldCorrectlyWorkWithExampleTest2() {
+        //given
+        int[][] data = new int[][] {
             {1, 0, 1, 0, 1, 0, 1, 0},
             {0, 1, 0, 1, 0, 1, 0, 1},
             {0, 0, 0, 0, 1, 0, 1, 0},
@@ -34,12 +41,16 @@ public class Task8Test {
             {1, 0, 0, 0, 1, 0, 1, 0},
             {0, 0, 0, 1, 0, 1, 0, 1}
         };
+
         //when
-        ans = Task8.knightBoardCapture(data);
+        boolean ans = Task8.knightBoardCapture(data);
         //then
         assertThat(ans).isFalse();
+    }
 
-        data = new int[][] {
+    @Test
+    void knightBoardCapture_shouldCorrectlyWorkWithExampleTest3() {
+        int[][] data = new int[][] {
             {0, 0, 0, 0, 1, 0, 0, 0},
             {0, 0, 0, 0, 0, 1, 0, 0},
             {0, 0, 0, 1, 0, 0, 0, 0},
@@ -49,14 +60,29 @@ public class Task8Test {
             {0, 0, 0, 0, 0, 1, 0, 0},
             {1, 0, 0, 0, 0, 0, 0, 0}
         };
+
         //when
-        ans = Task8.knightBoardCapture(data);
+        boolean ans = Task8.knightBoardCapture(data);
         //then
         assertThat(ans).isFalse();
     }
-    @Test
-    void allIs1() {
-        //data
+
+    @ParameterizedTest(name = "Iteration #{index} -> Given number = {0} and must receive {1}")
+    @CsvSource({
+        "{\n" +
+            "            {1, 1, 1, 1, 1, 1, 1, 1},\n" +
+            "            {1, 1, 1, 1, 1, 1, 1, 1},\n" +
+            "            {1, 1, 1, 1, 1, 1, 1, 1},\n" +
+            "            {1, 1, 1, 1, 1, 1, 1, 1},\n" +
+            "            {1, 1, 1, 1, 1, 1, 1, 1},\n" +
+            "            {1, 1, 1, 1, 1, 1, 1, 1},\n" +
+            "            {1, 1, 1, 1, 1, 1, 1, 1},\n" +
+            "            {1, 1, 1, 1, 1, 1, 1, 1}\n" +
+            "        }, false"
+
+    })
+    void knightBoardCapture_shouldCorrectlyWorkWith1() {
+        //given
         int[][] data = {
             {1, 1, 1, 1, 1, 1, 1, 1},
             {1, 1, 1, 1, 1, 1, 1, 1},
@@ -67,14 +93,16 @@ public class Task8Test {
             {1, 1, 1, 1, 1, 1, 1, 1},
             {1, 1, 1, 1, 1, 1, 1, 1}
         };
+
         //when
         boolean ans = Task8.knightBoardCapture(data);
         //then
         assertThat(ans).isFalse();
     }
+
     @Test
-    void allIs0() {
-        //data
+    void knightBoardCapture_shouldCorrectlyWorkWith0() {
+        //given
         int[][] data = {
             {0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0},
@@ -85,15 +113,17 @@ public class Task8Test {
             {0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0}
         };
+
         //when
         boolean ans = Task8.knightBoardCapture(data);
         //then
         assertThat(ans).isTrue();
     }
+
     @Test
-    @DisplayName("строки едениц через 2 строки нулей")
-    void test0() {
-        //data
+    @DisplayName("Строки единиц через 2 строки нулей")
+    void knightBoardCapture_shouldCorrectlyWithZerosBellowAndOnesLeftAndRight() {
+        //given
         int[][] data = {
             {1, 1, 1, 1, 1, 1, 1, 1},
             {0, 0, 0, 0, 0, 0, 0, 0},
@@ -104,15 +134,17 @@ public class Task8Test {
             {1, 1, 1, 1, 1, 1, 1, 1},
             {0, 0, 0, 0, 0, 0, 0, 0}
         };
+
         //when
         boolean ans = Task8.knightBoardCapture(data);
         //then
         assertThat(ans).isTrue();
     }
+
     @Test
     @DisplayName("проверка коня в левом верхнем углу")
-    void test2() {
-        //data
+    void knightBoardCapture_shouldCorrectlyWorkWithKnightInTheLeftUpCorner() {
+        //given
         int[][] data = {
             {1, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0},
@@ -123,12 +155,13 @@ public class Task8Test {
             {0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0}
         };
+
         //when
         boolean ans = Task8.knightBoardCapture(data);
         //then
         assertThat(ans).isTrue();
 
-        //data
+        //given
         data = new int[][] {
             {1, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0},
@@ -139,12 +172,13 @@ public class Task8Test {
             {0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0}
         };
+
         //when
         ans = Task8.knightBoardCapture(data);
         //then
         assertThat(ans).isFalse();
 
-        //data
+        //given
         data = new int[][] {
             {1, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 1, 0, 0, 0, 0, 0},
@@ -155,12 +189,13 @@ public class Task8Test {
             {0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0}
         };
+
         //when
         ans = Task8.knightBoardCapture(data);
         //then
         assertThat(ans).isFalse();
 
-        //data
+        //given
         data = new int[][] {
             {1, 0, 0, 1, 0, 1, 0, 1},
             {0, 0, 0, 0, 1, 0, 1, 0},
@@ -171,15 +206,17 @@ public class Task8Test {
             {0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0}
         };
+
         //when
         ans = Task8.knightBoardCapture(data);
         //then
         assertThat(ans).isTrue();
     }
+
     @Test
     @DisplayName("проверка коня в правом верхнем углу")
-    void test3() {
-        //data
+    void knightBoardCapture_shouldCorrectlyWorkWithKnightInTheRightUpCorner() {
+        //given
         int[][] data = {
             {0, 0, 0, 0, 0, 0, 0, 1},
             {0, 0, 0, 0, 0, 0, 0, 0},
@@ -190,12 +227,13 @@ public class Task8Test {
             {0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0}
         };
+
         //when
         boolean ans = Task8.knightBoardCapture(data);
         //then
         assertThat(ans).isTrue();
 
-        //data
+        //given
         data = new int[][] {
             {0, 0, 0, 0, 0, 0, 0, 1},
             {0, 0, 0, 0, 0, 0, 0, 0},
@@ -206,12 +244,13 @@ public class Task8Test {
             {0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0}
         };
+
         //when
         ans = Task8.knightBoardCapture(data);
         //then
         assertThat(ans).isFalse();
 
-        //data
+        //given
         data = new int[][] {
             {0, 0, 0, 0, 0, 0, 0, 1},
             {0, 0, 0, 0, 0, 1, 0, 0},
@@ -222,12 +261,13 @@ public class Task8Test {
             {0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0}
         };
+
         //when
         ans = Task8.knightBoardCapture(data);
         //then
         assertThat(ans).isFalse();
 
-        //data
+        //given
         data = new int[][] {
             {0, 0, 0, 0, 0, 0, 0, 1},
             {0, 0, 0, 0, 0, 0, 1, 1},
@@ -238,15 +278,17 @@ public class Task8Test {
             {0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0}
         };
+
         //when
         ans = Task8.knightBoardCapture(data);
         //then
         assertThat(ans).isTrue();
     }
+
     @Test
     @DisplayName("проверка коня в середине")
-    void test4() {
-        //data
+    void knightBoardCapture_shouldCorrectlyWorkWithKnightInTheMiddle() {
+        //given
         int[][] data = {
             {0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0},
@@ -257,12 +299,13 @@ public class Task8Test {
             {0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0}
         };
+
         //when
         boolean ans = Task8.knightBoardCapture(data);
         //then
         assertThat(ans).isFalse();
 
-        //data
+        //given
         data = new int[][] {
             {0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0},
@@ -273,12 +316,13 @@ public class Task8Test {
             {0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0}
         };
+
         //when
         ans = Task8.knightBoardCapture(data);
         //then
         assertThat(ans).isFalse();
 
-        //data
+        //given
         data = new int[][] {
             {0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0},
@@ -289,12 +333,13 @@ public class Task8Test {
             {0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0}
         };
+
         //when
         ans = Task8.knightBoardCapture(data);
         //then
         assertThat(ans).isFalse();
 
-        //data
+        //given
         data = new int[][] {
             {0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0},
@@ -305,11 +350,13 @@ public class Task8Test {
             {0, 0, 0, 1, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0}
         };
+
         //when
         ans = Task8.knightBoardCapture(data);
         //then
         assertThat(ans).isFalse();
-        //data
+
+        //given
         data = new int[][] {
             {0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0},
@@ -320,6 +367,7 @@ public class Task8Test {
             {0, 0, 1, 0, 1, 0, 1, 0},
             {0, 0, 0, 0, 0, 0, 0, 0}
         };
+
         //when
         ans = Task8.knightBoardCapture(data);
         //then

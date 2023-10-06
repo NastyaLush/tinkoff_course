@@ -2,8 +2,6 @@ package edu.hw1;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class Task8Test {
@@ -67,20 +65,7 @@ public class Task8Test {
         assertThat(ans).isFalse();
     }
 
-    @ParameterizedTest(name = "Iteration #{index} -> Given number = {0} and must receive {1}")
-    @CsvSource({
-        "{\n" +
-            "            {1, 1, 1, 1, 1, 1, 1, 1},\n" +
-            "            {1, 1, 1, 1, 1, 1, 1, 1},\n" +
-            "            {1, 1, 1, 1, 1, 1, 1, 1},\n" +
-            "            {1, 1, 1, 1, 1, 1, 1, 1},\n" +
-            "            {1, 1, 1, 1, 1, 1, 1, 1},\n" +
-            "            {1, 1, 1, 1, 1, 1, 1, 1},\n" +
-            "            {1, 1, 1, 1, 1, 1, 1, 1},\n" +
-            "            {1, 1, 1, 1, 1, 1, 1, 1}\n" +
-            "        }, false"
-
-    })
+    @Test
     void knightBoardCapture_shouldCorrectlyWorkWith1() {
         //given
         int[][] data = {
@@ -123,7 +108,7 @@ public class Task8Test {
     @Test
     @DisplayName("Строки единиц через 2 строки нулей")
     void knightBoardCapture_shouldCorrectlyWithZerosBellowAndOnesLeftAndRight() {
-        //given
+
         int[][] data = {
             {1, 1, 1, 1, 1, 1, 1, 1},
             {0, 0, 0, 0, 0, 0, 0, 0},

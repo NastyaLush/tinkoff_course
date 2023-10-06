@@ -91,7 +91,7 @@ public class Task8Test {
         assertThat(ans).isTrue();
     }
     @Test
-    @DisplayName("строки едениц через 2 строки нулей")
+    @DisplayName("Строки единиц через 2 строки нулей")
     void test0() {
         //data
         int[][] data = {

@@ -1,152 +1,36 @@
 package edu.hw1;
 
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class Task3Test {
+    private static Stream<Arguments> isNestableTestMethodProvider() {
 
-    @Test
-    void isNestable_shouldReturnFalseWhenReceiveEmptyArrs() {
-        //given
-        int[] arr2 = {};
-        int[] arr1 = {};
-
-        //when
-        boolean ans = Task3.isNestable(arr1, arr2);
-        //then
-        assertThat(ans).isFalse();
+        return Stream.of(
+            Arguments.of(new int[] {}, new int[] {}, false),
+            Arguments.of(new int[] {1}, new int[] {}, false),
+            Arguments.of(new int[] {}, new int[] {1}, true),
+            Arguments.of(new int[] {1}, new int[] {8}, false),
+            Arguments.of(new int[] {8}, new int[] {1}, false),
+            Arguments.of(new int[] {8}, new int[] {8}, false),
+            Arguments.of(new int[] {1, 2}, new int[] {0, 5, 3}, true),
+            Arguments.of(new int[] {1, 7, 1}, new int[] {0, 5, 3}, false),
+            Arguments.of(new int[] {0, 5, 3}, new int[] {0, 5, 3}, false),
+            Arguments.of(new int[] {0, 4, 1}, new int[] {1, 5, 3}, false),
+            Arguments.of(new int[] {0, 4, 3}, new int[] {-1, 5, 3}, true),
+            Arguments.of(new int[] {-1, 4, 3}, new int[] {-2, 5, 3}, true)
+        );
     }
 
-    @Test
-    void isNestable_shouldReturnFalseIfSecondArrIsEmpty() {
-        //given
-        int[] arr2 = {};
-        int[] arr1 = {1};
-
-        //when
-        boolean ans = Task3.isNestable(arr1, arr2);
-        //then
-        assertThat(ans).isFalse();
+    @ParameterizedTest(name = "Iteration #{index} -> Given array1={0}, given array2={1}, expected answer={2}")
+    @MethodSource("isNestableTestMethodProvider")
+    void isNestableTest(int[] arr1, int[] arr2, boolean ans) {
+        assertThat(Task3.isNestable(arr1, arr2)).isEqualTo(ans);
     }
 
-    @Test
-    void isNestable_shouldReturnTrueIfFirstArrIsEmptyNotSecond() {
-        //given
-        int[] arr2 = {1};
-        int[] arr1 = {};
-
-        //when
-        boolean ans = Task3.isNestable(arr1, arr2);
-        //then
-        assertThat(ans).isTrue();
-    }
-
-    @Test
-    void isNestable_shouldReturnFalseIfArrsHaveOneDigit() {
-        //given
-        int[] arr2 = {8};
-        int[] arr1 = {1};
-
-        //when
-        boolean ans = Task3.isNestable(arr1, arr2);
-        //then
-        assertThat(ans).isFalse();
-    }
-
-    @Test
-    void isNestable_shouldReturnFalseIfArrsHaveOneDigitRegardlessOfOrder() {
-        //given
-        int[] arr2 = {1};
-        int[] arr1 = {8};
-
-        //when
-        boolean ans = Task3.isNestable(arr1, arr2);
-        //then
-        assertThat(ans).isFalse();
-    }
-
-    @Test
-    void isNestable_shouldReturnFalseIfArrsHaveSameFigure() {
-        //given
-        int[] arr1 = {8};
-        int[] arr2 = {8};
-
-        //when
-        boolean ans = Task3.isNestable(arr1, arr2);
-        //then
-        assertThat(ans).isFalse();
-    }
-
-    @Test
-    void isNestable_shouldReturnTrueIfArr2HasTheSmallestAndTheBiggestDigit() {
-        //given
-        int[] arr2 = {0, 5, 3};
-        int[] arr1 = {1, 2};
-
-        //when
-        boolean ans = Task3.isNestable(arr1, arr2);
-        //then
-        assertThat(ans).isTrue();
-    }
-
-    @Test
-    void isNestable_shouldReturnFalseIfArr1HasTheBiggestDigit() {
-        //given
-        int[] arr2 = {0, 5, 3};
-        int[] arr1 = {1, 7, 1};
-
-        //when
-        boolean ans = Task3.isNestable(arr1, arr2);
-        //then
-        assertThat(ans).isFalse();
-    }
-
-    @Test
-    void isNestable_shouldReturnFalseIfArr1HasTheSmallestDigit() {
-        //given
-        int[] arr2 = {1, 5, 3};
-        int[] arr1 = {0, 4, 1};
-
-        //when
-        boolean ans = Task3.isNestable(arr1, arr2);
-        //then
-        assertThat(ans).isFalse();
-    }
-
-    @Test
-    void isNestable_shouldReturnFalseIfArrsEqual() {
-        //given
-        int[] arr2 = {0, 5, 3};
-        int[] arr1 = {0, 5, 3};
-
-        //when
-        boolean ans = Task3.isNestable(arr1, arr2);
-        //then
-        assertThat(ans).isFalse();
-    }
-
-    @Test
-    void isNestable_shouldWorkCorrectlyWithNegativesInSecondArr() {
-        //given
-        int[] arr2 = {-1, 5, 3};
-        int[] arr1 = {0, 4, 3};
-
-        //when
-        boolean ans = Task3.isNestable(arr1, arr2);
-        //then
-        assertThat(ans).isTrue();
-    }
-
-    @Test
-    void isNestable_shouldWorkCorrectlyWithNegativesInBoth() {
-        //given
-        int[] arr2 = {-2, 5, 3};
-        int[] arr1 = {-1, 4, 3};
-
-        //when
-        boolean ans = Task3.isNestable(arr1, arr2);
-        //then
-        assertThat(ans).isTrue();
-    }
 }

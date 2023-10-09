@@ -1,43 +1,36 @@
 package edu.hw1;
 
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class Task5Test {
-    @ParameterizedTest(name = "Iteration #{index} -> Given pal = {0}")
-    @ValueSource(longs = {11, 121, 1836829634369286381L})
-    void isPalindromeDescendant_shouldCorrectlyFindPalindrome(long pal) {
-        boolean ans = Task5.isPalindromeDescendant(pal);
-        assertThat(ans).isTrue();
+
+    private static Stream<Arguments> isPalindromeTestMethodProvider() {
+        return Stream.of(
+            Arguments.of(11, true),
+            Arguments.of(121, true),
+            Arguments.of(1836829634369286381L, true),
+            Arguments.of(1322, true),
+            Arguments.of(134, true),
+            Arguments.of(1012301112201210L, true),
+            Arguments.of(1012301145122012113L, true),
+            Arguments.of(12, false),
+            Arguments.of(113, false),
+            Arguments.of(135, false),
+            Arguments.of(1012301112201211L, false),
+            Arguments.of(10123011122012113L, false),
+            Arguments.of(0, false)
+        );
     }
 
-    @ParameterizedTest(name = "Iteration #{index} -> Given pal = {0}")
-    @ValueSource(longs = {1322, 134, 1012301112201210L, 1012301145122012113L})
-    void isPalindromeDescendant_shouldCorrectlyFindPalindromeChild(long pal) {
-        boolean ans = Task5.isPalindromeDescendant(pal);
-        assertThat(ans).isTrue();
-    }
-
-    @ParameterizedTest(name = "Iteration #{index} -> Given pal = {0}")
-    @ValueSource(longs = {12})
-    void isPalindromeDescendant_shouldCorrectlyNotFindPalindrome(long pal) {
-        boolean ans = Task5.isPalindromeDescendant(pal);
-        assertThat(ans).isFalse();
-    }
-
-    @ParameterizedTest(name = "Iteration #{index} -> Given pal = {0}")
-    @ValueSource(longs = {113, 135, 1012301112201211L, 10123011122012113L})
-    void isPalindromeDescendant_shouldCorrectlyNotFindPalindromeAndChild(long pal) {
-        boolean ans = Task5.isPalindromeDescendant(pal);
-        assertThat(ans).isFalse();
-    }
-
-    @ParameterizedTest(name = "Iteration #{index} -> Given pal = {0}")
-    @ValueSource(longs = {0})
-    void isPalindromeDescendant_shouldNotWorkWithOneDigit(long pal) {
-        boolean ans = Task5.isPalindromeDescendant(pal);
-        assertThat(ans).isFalse();
+    @ParameterizedTest(name = "Iteration #{index} -> Given palindrome = {0}")
+    @MethodSource("isPalindromeTestMethodProvider")
+    void isPalindromeTest(long pal, boolean expectedAnswer) {
+        assertThat(Task5.isPalindromeDescendant(pal)).isEqualTo(expectedAnswer);
     }
 }

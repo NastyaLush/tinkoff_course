@@ -27,7 +27,6 @@ public class Task1Test {
         String data = intM + ":23";
 
         //when
-        System.out.println(intM);
         long min = Task1.minutesToSeconds(data);
         //then
         assertThat(min).isEqualTo(intM * 60 + 23);

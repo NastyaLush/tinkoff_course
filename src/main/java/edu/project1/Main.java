@@ -6,15 +6,17 @@ import edu.project1.io.Input;
 import edu.project1.io.MyInput;
 import edu.project1.io.MyOutput;
 import edu.project1.io.Output;
+
 import java.util.ArrayList;
 
 public class Main {
-    private static ArrayList<String> addWordsToDictionary(){
+    private static ArrayList<String> addWordsToDictionary() {
         ArrayList<String> dictionary = new ArrayList<>();
         dictionary.add("worlld");
         dictionary.add("person");
         return dictionary;
     }
+
     public static void main(String[] args) {
         ArrayList<String> dictionaryArray = addWordsToDictionary();
         Input input = new MyInput();

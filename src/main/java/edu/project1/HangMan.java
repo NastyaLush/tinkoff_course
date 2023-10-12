@@ -1,12 +1,14 @@
 package edu.project1;
 
 import edu.project1.commands.AbstractCommand;
-import edu.project1.commands.CommandExecutor;
 import edu.project1.commands.CommandManager;
 import edu.project1.commands.Executor;
 import edu.project1.commands.MyIllegalArgumentException;
 import edu.project1.io.Input;
 import edu.project1.io.Output;
+
+import static edu.project1.Messages.HELLO_MESSAGE;
+import static edu.project1.Messages.TYPE_ERROR_MESSAGE;
 
 public class HangMan {
     private final Dictionary dictionary;
@@ -14,22 +16,19 @@ public class HangMan {
     private final Output output;
     private final Executor executor;
     private final CommandManager commandManager;
-    private final String HELLO_MESSAGE = """
-        Welcome to the gallows game
-        You have some options:
-        help - get help information
-        guess_word - guess next word
-        exit - finish game
-        """;
-    private final String TYPE_ERROR_MESSAGE =
-        "This command is not exist, type help to have information about opportunities";
 
-    public HangMan(Dictionary dictionary, Input input, Output output, Executor executor, CommandManager commandManager) {
+    public HangMan(
+        Dictionary dictionary,
+        Input input,
+        Output output,
+        Executor executor,
+        CommandManager commandManager
+    ) {
         this.dictionary = dictionary;
         this.input = input;
         this.output = output;
         this.executor = executor;
-        this.commandManager= commandManager;
+        this.commandManager = commandManager;
     }
 
     public void play() {

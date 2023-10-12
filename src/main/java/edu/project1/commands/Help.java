@@ -1,20 +1,20 @@
 package edu.project1.commands;
 
-public class Help extends AbstractCommand {
-    private final String MESSAGE = """
-        You have some options:
-        help - get help information
-        guess_word - guess next word
-        exit - finish game
-        """;
+import edu.project1.io.Output;
+import static edu.project1.Messages.HELP_MESSAGE;
 
-    protected Help() {
+public class Help extends AbstractCommand {
+    private final Output output;
+
+
+    protected Help(Output output) {
         super("help");
+        this.output = output;
     }
 
     @Override
     protected boolean execute() {
-        System.out.println(MESSAGE);
+        output.write(HELP_MESSAGE);
         return true;
     }
 

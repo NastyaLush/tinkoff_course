@@ -3,9 +3,7 @@ package edu.project1.commands;
 import edu.project1.Dictionary;
 import edu.project1.io.Input;
 import edu.project1.io.Output;
-
 import java.util.ArrayList;
-
 import static edu.project1.Messages.ALREADY_TYPED_MESSAGE;
 import static edu.project1.Messages.FAILED_MESSAGE;
 import static edu.project1.Messages.GUESS_MESSAGE;

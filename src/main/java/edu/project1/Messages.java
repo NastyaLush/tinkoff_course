@@ -9,7 +9,7 @@ public class Messages {
     public static final String WRITE_MESSAGE = "Write a letter or a world";
     public static final String SUCCESS_MESSAGE = "HOORAY, you've guessed the word: ";
     public static final String FAILED_MESSAGE = "OOps, you didn't guess the word";
-    public static final String AlREADY_TYPED_MESSAGE = "Typed letters: ";
+    public static final String ALREADY_TYPED_MESSAGE = "Typed letters: ";
     public static final String HELLO_MESSAGE = """
         Welcome to the gallows game
         You have some options:
@@ -25,4 +25,7 @@ public class Messages {
         guess_word - guess next word
         exit - finish game
         """;
+
+    private Messages() {
+    }
 }

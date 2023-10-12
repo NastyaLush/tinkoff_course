@@ -6,10 +6,12 @@ import edu.project1.io.Input;
 import edu.project1.io.MyInput;
 import edu.project1.io.MyOutput;
 import edu.project1.io.Output;
-
 import java.util.ArrayList;
 
 public class Main {
+    private Main() {
+    }
+
     private static ArrayList<String> addWordsToDictionary() {
         ArrayList<String> dictionary = new ArrayList<>();
         dictionary.add("worlld");

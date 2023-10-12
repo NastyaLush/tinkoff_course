@@ -4,7 +4,15 @@ import edu.project1.Dictionary;
 import edu.project1.io.Input;
 import edu.project1.io.Output;
 import java.util.ArrayList;
-import static edu.project1.Messages.*;
+import static edu.project1.Messages.ALREADY_TYPED_MESSAGE;
+import static edu.project1.Messages.FAILED_MESSAGE;
+import static edu.project1.Messages.GUESS_MESSAGE;
+import static edu.project1.Messages.MISTAKE_MESSAGE;
+import static edu.project1.Messages.MISTAKE_MESSAGE_COUNT;
+import static edu.project1.Messages.START_MESSAGE;
+import static edu.project1.Messages.SUCCESS_MESSAGE;
+import static edu.project1.Messages.WORD_MESSAGE;
+import static edu.project1.Messages.WRITE_MESSAGE;
 
 public class GuessWord extends AbstractCommand {
     private final Dictionary dictionary;
@@ -13,21 +21,12 @@ public class GuessWord extends AbstractCommand {
     private final ArrayList<Character> typedLetters;
     private final Integer countOfMistakes;
     private final Integer minSizeWord;
-    private final Integer MIN_SIZE_WORD_DEFAULT = 2;
-    private final Integer MIN_COUNT_OF_MISTAKES_DEFAULT = 6;
+    private final Integer minSizeWordDefault = 2;
+    private final Integer minCountOfMistakesDefault = 6;
     private Integer mistakes;
     private String guessedWord;
-    private String guessing_word;
-
-    protected GuessWord(Dictionary dictionary, Input input, Output output) {
-        super("guess_word");
-        this.dictionary = dictionary;
-        this.input = input;
-        this.output = output;
-        this.countOfMistakes = MIN_COUNT_OF_MISTAKES_DEFAULT;
-        this.minSizeWord = MIN_SIZE_WORD_DEFAULT;
-        this.typedLetters = new ArrayList<>();
-    }
+    private String guessingWord;
+    private static final String commandName="guess_word";
 
     protected GuessWord(
         Dictionary dictionary,
@@ -36,12 +35,22 @@ public class GuessWord extends AbstractCommand {
         Integer countOfMistakes,
         Integer minSizeWord
     ) {
-        super("guess_word");
+        super(commandName);
         this.dictionary = dictionary;
         this.input = input;
         this.output = output;
         this.countOfMistakes = countOfMistakes;
         this.minSizeWord = minSizeWord;
+        this.typedLetters = new ArrayList<>();
+    }
+
+    protected GuessWord(Dictionary dictionary, Input input, Output output) {
+        super(commandName);
+        this.dictionary = dictionary;
+        this.input = input;
+        this.output = output;
+        this.countOfMistakes = minCountOfMistakesDefault;
+        this.minSizeWord = minSizeWordDefault;
         this.typedLetters = new ArrayList<>();
     }
 
@@ -55,15 +64,15 @@ public class GuessWord extends AbstractCommand {
         guessedWord = dictionary.getRandomWord();
         validateWord(guessedWord);
 
-        guessing_word = this.getGuessingDefaultWord(guessedWord.length());
+        guessingWord = this.getGuessingDefaultWord(guessedWord.length());
         output.write(GUESS_MESSAGE);
 
-        while (!isWordGuessed(guessing_word) && mistakes < countOfMistakes) {
+        while (!isWordGuessed(guessingWord) && mistakes < countOfMistakes) {
 
-            output.write(WORD_MESSAGE + guessing_word);
+            output.write(WORD_MESSAGE + guessingWord);
             output.write(MISTAKE_MESSAGE + mistakes);
             output.write(MISTAKE_MESSAGE_COUNT + countOfMistakes);
-            output.write(AlREADY_TYPED_MESSAGE + typedLetters);
+            output.write(ALREADY_TYPED_MESSAGE + typedLetters);
             output.write(WRITE_MESSAGE);
 
             userInput = input.read();
@@ -73,7 +82,7 @@ public class GuessWord extends AbstractCommand {
             handleWord(userInput);
         }
 
-        if (isWordGuessed(guessing_word)) {
+        if (isWordGuessed(guessingWord)) {
             output.write(SUCCESS_MESSAGE + guessedWord);
         } else {
             output.write(FAILED_MESSAGE);
@@ -84,7 +93,7 @@ public class GuessWord extends AbstractCommand {
 
     private void handleWord(String userInput) {
         if (isWordsHaveSameLength(userInput) && isWordGuessed(userInput)) {
-            guessing_word = guessedWord;
+            guessingWord = guessedWord;
         } else if (!isTypo(userInput)) {
             handleLetter(userInput.charAt(0));
         }
@@ -104,13 +113,13 @@ public class GuessWord extends AbstractCommand {
     }
 
     private void updateGuessingWord(Character letter) {
-        char[] guessingWordChars = guessing_word.toCharArray();
+        char[] guessingWordChars = guessingWord.toCharArray();
         for (int i = 0; i < guessedWord.length(); i++) {
             if (guessedWord.charAt(i) == letter) {
                 guessingWordChars[i] = letter;
             }
         }
-        guessing_word = new String(guessingWordChars);
+        guessingWord = new String(guessingWordChars);
 
     }
 

@@ -3,7 +3,9 @@ package edu.project1.commands;
 import edu.project1.Dictionary;
 import edu.project1.io.Input;
 import edu.project1.io.Output;
+
 import java.util.ArrayList;
+
 import static edu.project1.Messages.ALREADY_TYPED_MESSAGE;
 import static edu.project1.Messages.FAILED_MESSAGE;
 import static edu.project1.Messages.GUESS_MESSAGE;
@@ -15,6 +17,7 @@ import static edu.project1.Messages.WORD_MESSAGE;
 import static edu.project1.Messages.WRITE_MESSAGE;
 
 public class GuessWord extends AbstractCommand {
+    private static final String COMMAND_NAME = "guess_word";
     private final Dictionary dictionary;
     private final Input input;
     private final Output output;
@@ -26,7 +29,6 @@ public class GuessWord extends AbstractCommand {
     private Integer mistakes;
     private String guessedWord;
     private String guessingWord;
-    private static final String commandName="guess_word";
 
     protected GuessWord(
         Dictionary dictionary,
@@ -35,7 +37,7 @@ public class GuessWord extends AbstractCommand {
         Integer countOfMistakes,
         Integer minSizeWord
     ) {
-        super(commandName);
+        super(COMMAND_NAME);
         this.dictionary = dictionary;
         this.input = input;
         this.output = output;
@@ -45,7 +47,7 @@ public class GuessWord extends AbstractCommand {
     }
 
     protected GuessWord(Dictionary dictionary, Input input, Output output) {
-        super(commandName);
+        super(COMMAND_NAME);
         this.dictionary = dictionary;
         this.input = input;
         this.output = output;

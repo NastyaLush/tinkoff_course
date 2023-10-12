@@ -11,7 +11,7 @@ public record PopularCommandExecutor(ConnectionManager manager, int maxAttempts)
         tryExecute("apt update && apt upgrade -y");
     }
 
-    private void tryExecute(String command) {
+    public void tryExecute(String command) {
 
         for (int i = 0; i < maxAttempts; i++) {
             try (Connection connection = manager.getConnection()) {

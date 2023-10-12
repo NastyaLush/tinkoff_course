@@ -1,14 +1,11 @@
-package edu.hw2.task2;
+package edu.hw2.task2.figure;
 
 public class Rectangle {
     private int width;
     private int height;
 
-    void setWidth(int width) {
+    Rectangle(int width, int height) {
         this.width = width;
-    }
-
-    void setHeight(int height) {
         this.height = height;
     }
 

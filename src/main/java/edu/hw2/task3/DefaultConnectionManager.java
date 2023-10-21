@@ -1,7 +1,17 @@
 package edu.hw2.task3;
 
 public class DefaultConnectionManager implements ConnectionManager {
-    private final double probabilityOfFaultyConnection = 0.4;
+
+    protected final double defaultProbabilityOfFaultyConnection = 0.4;
+    protected final double probabilityOfFaultyConnection;
+
+    public DefaultConnectionManager() {
+        this.probabilityOfFaultyConnection = this.defaultProbabilityOfFaultyConnection;
+    }
+
+    public DefaultConnectionManager(double probability) {
+        this.probabilityOfFaultyConnection = probability;
+    }
 
     @Override
     public Connection getConnection() {
@@ -10,4 +20,12 @@ public class DefaultConnectionManager implements ConnectionManager {
         }
         return new StableConnection();
     }
+
+    public Connection getCustomConnection(double probabilityOfCreatingFaultyConnection) {
+        if (probabilityOfFaultyConnection > Math.random()) {
+            return new FaultyConnection(probabilityOfCreatingFaultyConnection);
+        }
+        return new StableConnection();
+    }
+
 }

@@ -1,8 +1,9 @@
 package edu.hw2.task2.figure;
 
 public class Rectangle {
-    private int width;
-    private int height;
+
+    private final int width;
+    private final int height;
 
     Rectangle(int width, int height) {
         this.width = width;

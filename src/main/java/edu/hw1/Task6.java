@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.stream.Collectors;
 
 public class Task6 {
+
     private static final int K = 6174;
     private static final int MIN_DIGIT = 1000;
     private static final int SCALE_OF_NOTATION = 10;

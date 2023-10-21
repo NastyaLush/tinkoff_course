@@ -4,8 +4,18 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class FaultyConnection implements Connection {
+
     private static final Logger LOGGER = LogManager.getLogger();
-    private final double probabilityOfFaultyConnection = 0.4;
+    protected final double defaultProbabilityOfFaultyConnection = 0.4;
+    protected final double probabilityOfFaultyConnection;
+
+    public FaultyConnection() {
+        this.probabilityOfFaultyConnection = this.defaultProbabilityOfFaultyConnection;
+    }
+
+    public FaultyConnection(double probabilityOfCreatingFaultyConnection) {
+        this.probabilityOfFaultyConnection = probabilityOfCreatingFaultyConnection;
+    }
 
     @Override
     public void execute(String command) {

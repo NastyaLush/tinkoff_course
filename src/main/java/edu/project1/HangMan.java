@@ -31,7 +31,7 @@ public class HangMan {
     }
 
     public void play() {
-        boolean shouldContinueGame = true;
+        boolean gameShouldBeContinued = true;
         AbstractCommand inputCommand;
         output.write(HELLO_MESSAGE);
         while (shouldContinueGame) {

@@ -15,18 +15,17 @@ import static edu.project1.Messages.WORD_MESSAGE;
 import static edu.project1.Messages.WRITE_MESSAGE;
 
 public class GuessWord extends AbstractCommand {
+
     private static final String COMMAND_NAME = "guess_word";
     private final Dictionary dictionary;
     private final Input input;
     private final Output output;
     private final ArrayList<Character> typedLetters;
     private final Integer countOfMistakes;
-    private final Integer minSizeWord;
     private final Integer minSizeWordDefault = 2;
     private final Integer minCountOfMistakesDefault = 6;
+    private final WordManager word;
     private Integer mistakes;
-    private String guessedWord;
-    private String guessingWord;
 
     protected GuessWord(
         Dictionary dictionary,
@@ -40,7 +39,7 @@ public class GuessWord extends AbstractCommand {
         this.input = input;
         this.output = output;
         this.countOfMistakes = countOfMistakes;
-        this.minSizeWord = minSizeWord;
+        this.word = new WordManager(minSizeWord);
         this.typedLetters = new ArrayList<>();
     }
 
@@ -50,7 +49,7 @@ public class GuessWord extends AbstractCommand {
         this.input = input;
         this.output = output;
         this.countOfMistakes = minCountOfMistakesDefault;
-        this.minSizeWord = minSizeWordDefault;
+        this.word = new WordManager(minSizeWordDefault);
         this.typedLetters = new ArrayList<>();
     }
 
@@ -61,15 +60,13 @@ public class GuessWord extends AbstractCommand {
 
         output.write(START_MESSAGE);
 
-        guessedWord = dictionary.getRandomWord();
-        validateWord(guessedWord);
+        word.setGuessedWord(dictionary.getRandomWord());
 
-        guessingWord = this.getGuessingDefaultWord(guessedWord.length());
         output.write(GUESS_MESSAGE);
 
-        while (!isWordGuessed(guessingWord) && mistakes < countOfMistakes) {
+        while (!word.isWordGuessed() && mistakes < countOfMistakes) {
 
-            output.write(WORD_MESSAGE + guessingWord);
+            output.write(WORD_MESSAGE + word.getGuessingWord());
             output.write(MISTAKE_MESSAGE + mistakes);
             output.write(MISTAKE_MESSAGE_COUNT + countOfMistakes);
             output.write(ALREADY_TYPED_MESSAGE + typedLetters);
@@ -82,8 +79,8 @@ public class GuessWord extends AbstractCommand {
             handleWord(userInput);
         }
 
-        if (isWordGuessed(guessingWord)) {
-            output.write(SUCCESS_MESSAGE + guessedWord);
+        if (word.isWordGuessed()) {
+            output.write(SUCCESS_MESSAGE + word.getGuessingWord());
         } else {
             output.write(FAILED_MESSAGE);
         }
@@ -91,10 +88,15 @@ public class GuessWord extends AbstractCommand {
         return true;
     }
 
+    private boolean isExitCommand(String command) {
+        if (command.equals("exit")) {
+            return new Exit().execute();
+        }
+        return true;
+    }
+
     private void handleWord(String userInput) {
-        if (isWordsHaveSameLength(userInput) && isWordGuessed(userInput)) {
-            guessingWord = guessedWord;
-        } else if (!isTypo(userInput)) {
+        if (!word.isWordGuessed(userInput) && !word.isTypo(userInput)) {
             handleLetter(userInput.charAt(0));
         }
     }
@@ -104,60 +106,9 @@ public class GuessWord extends AbstractCommand {
             mistakes++;
         } else {
             typedLetters.add(letter);
-            if (!guessedWord.contains(letter.toString())) {
+            if (!word.updateWord(letter)) {
                 mistakes++;
-            } else {
-                updateGuessingWord(letter);
             }
         }
-    }
-
-    private void updateGuessingWord(Character letter) {
-        char[] guessingWordChars = guessingWord.toCharArray();
-        for (int i = 0; i < guessedWord.length(); i++) {
-            if (guessedWord.charAt(i) == letter) {
-                guessingWordChars[i] = letter;
-            }
-        }
-        guessingWord = new String(guessingWordChars);
-
-    }
-
-    private boolean isWordsHaveSameLength(String userInput) {
-        return guessedWord.length() == userInput.length();
-    }
-
-    private boolean isLengthDifferentIsOne(String word1, String word2) {
-        return Math.abs(word1.length() - word2.length()) == 1;
-    }
-
-    private boolean isWordLetter(String word) {
-        return word.length() == 1;
-    }
-
-    private boolean isTypo(String userInput) {
-        return isLengthDifferentIsOne(guessedWord, userInput) || !isWordLetter(userInput);
-    }
-
-    private boolean isWordGuessed(String userWord) {
-        return guessedWord.equals(userWord);
-    }
-
-    private void validateWord(String word) {
-
-        if (word.length() < minSizeWord || !word.matches("^[a-zA-Z]*$")) {
-            throw new IllegalArgumentException("The word size must be more than " + minSizeWord);
-        }
-    }
-
-    private String getGuessingDefaultWord(int len) {
-        return "*".repeat(Math.max(0, len));
-    }
-
-    private boolean isExitCommand(String command) {
-        if (command.equals("exit")) {
-            return new Exit().execute();
-        }
-        return true;
     }
 }

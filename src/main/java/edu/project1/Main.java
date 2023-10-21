@@ -9,13 +9,16 @@ import edu.project1.io.Output;
 import java.util.ArrayList;
 
 public class Main {
+
     private Main() {
     }
 
     private static ArrayList<String> addWordsToDictionary() {
         ArrayList<String> dictionary = new ArrayList<>();
-        dictionary.add("worlld");
+        dictionary.add("world");
         dictionary.add("person");
+        dictionary.add("freedom");
+        dictionary.add("java");
         return dictionary;
     }
 

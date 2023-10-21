@@ -3,13 +3,14 @@ package edu.project1;
 import edu.project1.commands.AbstractCommand;
 import edu.project1.commands.CommandManager;
 import edu.project1.commands.Executor;
-import edu.project1.commands.MyIllegalArgumentException;
+import edu.project1.commands.WrongInputException;
 import edu.project1.io.Input;
 import edu.project1.io.Output;
 import static edu.project1.Messages.HELLO_MESSAGE;
 import static edu.project1.Messages.TYPE_ERROR_MESSAGE;
 
 public class HangMan {
+
     private final Dictionary dictionary;
     private final Input input;
     private final Output output;
@@ -34,12 +35,12 @@ public class HangMan {
         boolean gameShouldBeContinued = true;
         AbstractCommand inputCommand;
         output.write(HELLO_MESSAGE);
-        while (shouldContinueGame) {
+        while (gameShouldBeContinued) {
             String userInput = input.read();
             try {
                 inputCommand = commandManager.getCommand(userInput, dictionary, input, output);
-                shouldContinueGame = executor.executeOperation(inputCommand);
-            } catch (MyIllegalArgumentException e) {
+                gameShouldBeContinued = executor.executeOperation(inputCommand);
+            } catch (WrongInputException e) {
                 output.write(TYPE_ERROR_MESSAGE);
             }
         }

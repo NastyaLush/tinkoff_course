@@ -3,6 +3,7 @@ package edu.project1.io;
 import java.util.Scanner;
 
 public class MyInput implements Input {
+
     private final Scanner scanner;
 
     public MyInput() {

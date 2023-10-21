@@ -1,6 +1,7 @@
 package edu.project1;
 
 public class Messages {
+
     public static final String START_MESSAGE = "Start game";
     public static final String GUESS_MESSAGE = "The word is guessed";
     public static final String WORD_MESSAGE = "The word: ";

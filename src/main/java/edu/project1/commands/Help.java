@@ -4,8 +4,8 @@ import edu.project1.io.Output;
 import static edu.project1.Messages.HELP_MESSAGE;
 
 public class Help extends AbstractCommand {
-    private final Output output;
 
+    private final Output output;
 
     protected Help(Output output) {
         super("help");

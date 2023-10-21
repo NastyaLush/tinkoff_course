@@ -3,6 +3,7 @@ package edu.project1;
 import edu.project1.commands.CommandManager;
 import edu.project1.commands.Exit;
 import edu.project1.commands.GuessWord;
+import edu.project1.commands.Help;
 import edu.project1.commands.WrongInputException;
 import edu.project1.io.MyInput;
 import edu.project1.io.MyOutput;
@@ -21,7 +22,7 @@ public class CommandManagerTest {
 
     public static Stream<Arguments> getCommandProvider() {
         return Stream.of(
-            Arguments.of("help", Exit.class),
+            Arguments.of("help", Help.class),
             Arguments.of("exit", Exit.class),
             Arguments.of("guess_word", GuessWord.class)
         );

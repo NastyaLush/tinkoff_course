@@ -43,7 +43,7 @@ public class AtbashEnglish {
     }
 
     private Character getEncodedSmallLetter(Character character) {
-        return alphabetSmall.get(alphabetSmall.size() - (character - firstSmallLetter));
+        return alphabetSmall.get(alphabetSmall.size() - 1 - (character - firstSmallLetter));
     }
 
     private boolean isBigLetter(Character character) {
@@ -51,7 +51,7 @@ public class AtbashEnglish {
     }
 
     private Character getEncodedBigLetter(Character character) {
-        return alphabetBig.get(alphabetBig.size() - (character - firstBigLetter));
+        return alphabetBig.get(alphabetBig.size() - 1 - (character - firstBigLetter));
     }
 
 }

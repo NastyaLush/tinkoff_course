@@ -1,4 +1,7 @@
-package edu.project2;
+package edu.project2.generators;
+
+import edu.project2.gameObjects.Maze;
+import edu.project2.generators.Generator;
 
 public class GeneratorManager {
 

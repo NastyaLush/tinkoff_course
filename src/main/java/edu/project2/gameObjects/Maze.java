@@ -1,4 +1,6 @@
-package edu.project2;
+package edu.project2.gameObjects;
+
+import edu.project2.util.Util;
 
 public class Maze {
 
@@ -7,7 +9,7 @@ public class Maze {
     private final Integer columns;
 
     public Maze(Integer columns, Integer rows) {
-        this.maze = new Util().getSimpleMaze(columns, rows);
+        this.maze = new Util().getSimpleEmptyMaze(columns, rows);
         this.rows = rows;
         this.columns = columns;
     }

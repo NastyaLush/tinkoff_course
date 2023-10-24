@@ -1,5 +1,7 @@
-package edu.project2;
+package edu.project2.generators;
 
+import edu.project2.gameObjects.Cell;
+import edu.project2.gameObjects.Maze;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;

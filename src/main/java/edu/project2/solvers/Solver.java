@@ -1,5 +1,8 @@
-package edu.project2;
+package edu.project2.solvers;
 
-public class Solver {
+import edu.project2.gameObjects.Maze;
 
+public interface Solver {
+
+    void solve(Maze maze);
 }

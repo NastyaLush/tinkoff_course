@@ -9,11 +9,11 @@ public class Cell {
     private boolean leftWall;
     private boolean bottomWall;
 
-    public Cell(Integer row, Integer column) {
+    public Cell(Integer row, Integer column, boolean leftWall, boolean bottomWall) {
         this.row = row;
         this.column = column;
-        this.leftWall = true;
-        this.bottomWall = true;
+        this.leftWall = leftWall;
+        this.bottomWall = bottomWall;
     }
 
     public boolean isVisited() {

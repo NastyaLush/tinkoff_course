@@ -1,11 +1,14 @@
-package edu.project2;
+package edu.project2.render;
 
-public class Render {
+import edu.project2.gameObjects.Cell;
+import edu.project2.gameObjects.Maze;
+
+public class BeautyRender implements Render {
 
     public static final String ANSI_PURPLE_BACKGROUND = "\u001B[45m";
     public static final String ANSI_RESET = "\u001B[0m";
 
-    public void printMaze(Maze maze) {
+    public void rend(Maze maze) {
         for (int i = 0; i < maze.getColumns(); i++) {
             System.out.print(ANSI_PURPLE_BACKGROUND + "      " + ANSI_RESET);
         }

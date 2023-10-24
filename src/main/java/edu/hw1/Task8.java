@@ -1,6 +1,7 @@
 package edu.hw1;
 
 public class Task8 {
+
     private static final int COUNT_OF_SQUARE_ON_DESK = 8;
 
     private Task8() {

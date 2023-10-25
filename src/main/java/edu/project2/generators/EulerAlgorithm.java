@@ -2,89 +2,93 @@ package edu.project2.generators;
 
 import edu.project2.gameObjects.Cell;
 import edu.project2.gameObjects.Maze;
-import edu.project2.render.BeautyRender;
+import edu.project2.util.Util;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 import java.util.Objects;
 
 public class EulerAlgorithm implements Generator {
 
-    private final HashMap<Integer, ArrayList<Cell>> setValueCounter;
+    private final HashMap<Integer, ArrayList<Cell>> cellsOfCurrentRowWithoutBottomByClasses;
+    private Maze<Cell> maze;
+    private Integer[] classesOfCurrentRowCells;
 
     private Integer counter;
 
     public EulerAlgorithm() {
-        this.setValueCounter = new HashMap<>();
+        this.cellsOfCurrentRowWithoutBottomByClasses = new HashMap<>();
         this.counter = 0;
     }
 
     @Override
-    public void generate(Maze maze) {
-        Integer[] set = generateSetString(maze.getColumns());
-        for (int i = 0; i < maze.getRows(); i++) {
+    public Maze<Cell> generate(Integer rows, Integer columns) {
+        maze = new Util().getSimpleEmptyMaze(rows, columns);
+        generateStartClasses(maze.getColumns());
 
-            for (int j = 0; j < set.length; j++) {
-                setValueCounter.get(set[j]).clear();
-            }
-            for (int j = 0; j < maze.getColumns(); j++) {
-                setValueCounter.get(set[j]).add(maze.getMaze()[i][j]);
-            }
+        for (int row = 0; row < maze.getRows(); row++) {
+            regenerateClasses(row - 1, maze);
+            updateCellsOfCurrentRowWithoutBottomByClasses(maze, row);
 
-            for (int j = 0; j < maze.getColumns() - 1; j++) {
-                if (Objects.equals(set[j], set[j + 1]) || shouldCreateWall()) {
-                    createLeftWall(maze.getMaze()[i][j + 1]);
+            for (int column = 0; column < maze.getColumns() - 1; column++) {
+                if (isSameClass(column, column + 1) || shouldCreateWall()) {
+                    createLeftWall(maze.getMaze()[row][column + 1]);
                 } else {
-                    setValueCounter.get(set[j]).addAll(setValueCounter.get(set[j + 1]));
-                    setValueCounter.remove(set[j + 1]);
-                    set[j + 1] = set[j];
+                    mergeClasses(column, column + 1);
                 }
             }
-            for (int j = 0; j < maze.getColumns(); j++) {
-                if (isAloneWithFreeBottomInThisClass(set, set[j])) {
+            for (int column = 0; column < maze.getColumns(); column++) {
+                if (isAloneWithFreeBottomInThisClass(classesOfCurrentRowCells[column])) {
                     continue;
                 }
                 if (shouldCreateWall()) {
-                    createBottomWall(maze.getMaze()[i][j]);
-                    setValueCounter.get(set[j]).remove(maze.getMaze()[i][j]);
+                    createBottomWall(maze.getMaze()[row][column]);
+                    removeCellWithBottomFromMap(row, column, maze);
                 }
             }
-            regenerateSet(set, i, maze);
 
         }
 
-        for (int j = 0; j < maze.getColumns(); j++) {
-            createBottomWall(maze.getMaze()[maze.getRows() - 1][j]);
-        }
-        for (int i = 0; i < maze.getRows(); i++) {
-            createLeftWall(maze.getMaze()[i][0]);
-        }
+        addBottomWallsToLastRow(maze);
+        addLeftWallsToFirstColumn(maze);
 
-        for (int i = 0; i < maze.getColumns(); i++) {
-            System.out.print(set[i] + " ");
-        }
-        System.out.println();
+        correctLeftWallsInLastRow(maze);
+        return maze;
+    }
 
-        new BeautyRender().rend(maze);
-        int i = maze.getRows() - 1;
-        for (int j = 0; j < maze.getColumns() - 1; j++) {
-            if (!Objects.equals(set[j], set[j + 1])) {
-                breakLeftWall(maze.getMaze()[i][j + 1]);
-                set[j + 1] = set[j];
-            }
+    private void generateStartClasses(Integer columns) {
+        classesOfCurrentRowCells = new Integer[columns];
+        for (int i = 0; i < columns; i++) {
+            classesOfCurrentRowCells[i] = counter++;
+            cellsOfCurrentRowWithoutBottomByClasses.put(classesOfCurrentRowCells[i], new ArrayList<>());
         }
 
     }
 
-    private Integer[] generateSetString(Integer columns) {
-        Integer[] emptySet = new Integer[columns];
-        for (int i = 0; i < columns; i++) {
-            emptySet[i] = counter++;
-            setValueCounter.put(emptySet[i], new ArrayList<>());
+    private void regenerateClasses(Integer row, Maze maze) {
+        if (row < 0) {
+            return;
         }
-        return emptySet;
+        for (int i = 0; i < maze.getColumns(); i++) {
+            if (maze.getMaze()[row][i].isBottomWall()) {
+                classesOfCurrentRowCells[i] = counter++;
+                cellsOfCurrentRowWithoutBottomByClasses.put(classesOfCurrentRowCells[i], new ArrayList<>());
+            }
+        }
+    }
+
+    private void updateCellsOfCurrentRowWithoutBottomByClasses(Maze maze, Integer row) {
+
+        for (Integer key : cellsOfCurrentRowWithoutBottomByClasses.keySet()) {
+            cellsOfCurrentRowWithoutBottomByClasses.get(key).clear();
+        }
+        for (int classNumber = 0; classNumber < maze.getColumns(); classNumber++) {
+            cellsOfCurrentRowWithoutBottomByClasses.get(classesOfCurrentRowCells[classNumber])
+                .add(maze.getMaze()[row][classNumber]);
+        }
+    }
+
+    private boolean isSameClass(Integer first, Integer second) {
+        return classesOfCurrentRowCells[first].equals(classesOfCurrentRowCells[second]);
     }
 
     private boolean shouldCreateWall() {
@@ -95,20 +99,61 @@ public class EulerAlgorithm implements Generator {
         cell.setLeftWall(true);
     }
 
-    private boolean isAloneWithFreeBottomInThisClass(Integer[] set, Integer setNumberOfCell) {
-        return setValueCounter.get(setNumberOfCell).stream().filter((Cell a) -> !a.isBottomWall()).count() == 1;
+    private void mergeClasses(Integer main, Integer secondary) {
+        int classForRemove = classesOfCurrentRowCells[secondary];
+        cellsOfCurrentRowWithoutBottomByClasses.get(classesOfCurrentRowCells[main]).addAll(
+            cellsOfCurrentRowWithoutBottomByClasses.get(classForRemove));
+        cellsOfCurrentRowWithoutBottomByClasses.remove(classesOfCurrentRowCells[secondary]);
+
+        updateClassesOfCurrentRowCells(classForRemove, main);
+    }
+
+    private boolean isAloneWithFreeBottomInThisClass(Integer setNumberOfCell) {
+        return
+            cellsOfCurrentRowWithoutBottomByClasses.get(setNumberOfCell).stream().filter((Cell a) -> !a.isBottomWall())
+                .count() == 1;
     }
 
     private void createBottomWall(Cell cell) {
         cell.setBottomWall(true);
     }
 
-    private void regenerateSet(Integer[] set, Integer row, Maze maze) {
-        for (int i = 0; i < maze.getColumns(); i++) {
-            if (maze.getMaze()[row][i].isBottomWall()) {
-                set[i] = counter++;
-                setValueCounter.put(set[i], new ArrayList<>());
+    private void removeCellWithBottomFromMap(Integer row, Integer column, Maze maze) {
+        cellsOfCurrentRowWithoutBottomByClasses.get(classesOfCurrentRowCells[column])
+            .remove(maze.getMaze()[row][column]);
+    }
+
+    private void addBottomWallsToLastRow(Maze maze) {
+        for (int j = 0; j < maze.getColumns(); j++) {
+            createBottomWall(maze.getMaze()[maze.getRows() - 1][j]);
+        }
+    }
+
+    private void addLeftWallsToFirstColumn(Maze maze) {
+        for (int i = 0; i < maze.getRows(); i++) {
+            createLeftWall(maze.getMaze()[i][0]);
+        }
+    }
+
+    private void correctLeftWallsInLastRow(Maze maze) {
+        int lastRow = maze.getRows() - 1;
+        for (int column = 0; column < maze.getColumns() - 1; column++) {
+            removeLeftWallIfDifferentClass(maze, lastRow, column, column + 1);
+        }
+    }
+
+    private void updateClassesOfCurrentRowCells(Integer classForRemove, Integer column) {
+        for (int i = 0; i < classesOfCurrentRowCells.length; i++) {
+            if (Objects.equals(classesOfCurrentRowCells[i], classForRemove)) {
+                classesOfCurrentRowCells[i] = classesOfCurrentRowCells[column];
             }
+        }
+    }
+
+    private void removeLeftWallIfDifferentClass(Maze maze, Integer row, Integer first, Integer second) {
+        if (!isSameClass(first, second)) {
+            breakLeftWall(maze.getMaze()[row][second]);
+            updateClassesOfCurrentRowCells(classesOfCurrentRowCells[second], first);
         }
     }
 

@@ -1,7 +1,9 @@
 package edu.project2.generators;
 
-import edu.project2.gameObjects.Cell;
+import edu.project2.gameObjects.RBCell;
 import edu.project2.gameObjects.Maze;
+import edu.project2.gameObjects.RBCell;
+import edu.project2.util.Util;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
@@ -9,22 +11,24 @@ import java.util.Objects;
 
 public class RecursiveBacktracker implements Generator {
 
-    private final Deque<Cell> stack;
+    private final Deque<RBCell> stack;
+    private Maze<RBCell> maze;
 
     public RecursiveBacktracker() {
         this.stack = new ArrayDeque<>();
     }
 
     @Override
-    public void generate(Maze maze) {
-        Cell begin = maze.getMaze()[0][0];
+    public Maze<RBCell> generate(Integer rows, Integer columns) {
+        maze = new Util().getSimpleFullMaze(rows, columns);
+        RBCell begin = maze.getMaze()[0][0];
         begin.setVisited(true);
         stack.addFirst(begin);
-        Cell curent;
-        Cell chosen;
+        RBCell curent;
+        RBCell chosen;
         while (!stack.isEmpty()) {
             curent = stack.getFirst();
-            ArrayList<Cell> freeNeighbors = getFreeNeighbors(maze, curent.getRow(), curent.getColumn());
+            ArrayList<RBCell> freeNeighbors = getFreeNeighbors(curent.getRow(), curent.getColumn());
             if (freeNeighbors.isEmpty()) {
                 stack.removeFirst();
             } else {
@@ -34,10 +38,11 @@ public class RecursiveBacktracker implements Generator {
                 breakWall(curent, chosen);
             }
         }
+        return maze;
     }
 
-    private ArrayList<Cell> getFreeNeighbors(Maze maze, Integer row, Integer column) {
-        ArrayList<Cell> freeCells = new ArrayList<>();
+    private ArrayList<RBCell> getFreeNeighbors(Integer row, Integer column) {
+        ArrayList<RBCell> freeCells = new ArrayList<>();
         if (row > 0 && !maze.getMaze()[row - 1][column].isVisited()) {
             freeCells.add(maze.getMaze()[row - 1][column]);
         }
@@ -53,12 +58,12 @@ public class RecursiveBacktracker implements Generator {
         return freeCells;
     }
 
-    private Cell choseRandom(ArrayList<Cell> freeCells) {
+    private RBCell choseRandom(ArrayList<RBCell> freeCells) {
         int pointer = (int) Math.floor(Math.random() * freeCells.size());
         return freeCells.get(pointer);
     }
 
-    private void breakWall(Cell parent, Cell child) {
+    private void breakWall(RBCell parent, RBCell child) {
         if (Objects.equals(parent.getColumn(), child.getColumn())) {
             if (parent.getRow() < child.getRow()) {
                 parent.setBottomWall(false);

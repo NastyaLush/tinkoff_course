@@ -1,19 +1,19 @@
 package edu.project2.generators;
 
 import edu.project2.gameObjects.Maze;
-import edu.project2.generators.Generator;
 
 public class GeneratorManager {
 
-    private final Maze maze;
+    private final Integer rows;
+    private final Integer columns;
 
-    public GeneratorManager(Maze maze) {
-        this.maze = maze;
+    public GeneratorManager(Integer rows, Integer columns) {
+        this.rows = rows;
+        this.columns = columns;
     }
 
     public Maze generateMaze(Generator generator) {
-        generator.generate(maze);
-        return maze;
+        return generator.generate(rows, columns);
     }
 
 }

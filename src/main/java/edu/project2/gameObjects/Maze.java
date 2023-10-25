@@ -2,19 +2,19 @@ package edu.project2.gameObjects;
 
 import edu.project2.util.Util;
 
-public class Maze {
+public class Maze<T extends Cell> {
 
-    private final Cell[][] maze;
+    private final T[][] maze;
     private final Integer rows;
     private final Integer columns;
 
-    public Maze(Integer columns, Integer rows) {
-        this.maze = new Util().getSimpleEmptyMaze(columns, rows);
+    public Maze(Integer rows, Integer columns, T[][] maze) {
+        this.maze = maze;
         this.rows = rows;
         this.columns = columns;
     }
 
-    public Cell[][] getMaze() {
+    public T[][] getMaze() {
         return maze;
     }
 

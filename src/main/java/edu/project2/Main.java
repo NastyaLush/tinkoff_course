@@ -1,9 +1,15 @@
 package edu.project2;
 
+import edu.project2.gameObjects.Cell;
 import edu.project2.gameObjects.Maze;
 import edu.project2.generators.EulerAlgorithm;
 import edu.project2.generators.GeneratorManager;
+import edu.project2.generators.GrowingForestAlgorithm;
+import edu.project2.generators.RecursiveBacktracker;
 import edu.project2.render.BeautyRender;
+import edu.project2.solvers.AStar;
+import edu.project2.solvers.SolverManager;
+import java.util.Set;
 
 public class Main {
 
@@ -20,9 +26,10 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        new BeautyRender().rend(new GeneratorManager(new Maze(5, 5
-        )).generateMaze(new EulerAlgorithm()));
-
+        Maze maze = new GeneratorManager(100, 100).generateMaze(new EulerAlgorithm());
+        new BeautyRender().rend(maze);
+        Set<Cell> path = new SolverManager(maze).solveMaze(new AStar(), maze.getMaze()[0][0], maze.getMaze()[99][99]);
+        new BeautyRender().rendWithPath(maze, path);
     }
 
 }

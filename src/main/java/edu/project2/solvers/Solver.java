@@ -2,10 +2,9 @@ package edu.project2.solvers;
 
 import edu.project2.gameObjects.Cell;
 import edu.project2.gameObjects.Maze;
-import edu.project2.gameObjects.SolvedMaze;
-import java.util.Set;
+import java.util.TreeSet;
 
 public interface Solver {
 
-    public Set<Cell> solve(Maze maze, Cell begin, Cell end);
+    TreeSet<Cell> solve(Maze<Cell> maze, Cell begin, Cell end);
 }

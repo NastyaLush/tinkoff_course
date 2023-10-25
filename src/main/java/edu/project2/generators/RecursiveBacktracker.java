@@ -1,82 +1,77 @@
 package edu.project2.generators;
 
-import edu.project2.gameObjects.RBCell;
 import edu.project2.gameObjects.Maze;
-import edu.project2.gameObjects.RBCell;
-import edu.project2.util.Util;
+import edu.project2.gameObjects.RecursiveBacktrackerCell;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
-import java.util.Objects;
 
-public class RecursiveBacktracker implements Generator {
+public class RecursiveBacktracker extends TreeGenerator {
 
-    private final Deque<RBCell> stack;
-    private Maze<RBCell> maze;
+    private final Deque<RecursiveBacktrackerCell> stack;
+    private Maze<RecursiveBacktrackerCell> maze;
+    private RecursiveBacktrackerCell startCell;
 
     public RecursiveBacktracker() {
         this.stack = new ArrayDeque<>();
     }
 
     @Override
-    public Maze<RBCell> generate(Integer rows, Integer columns) {
-        maze = new Util().getSimpleFullMaze(rows, columns);
-        RBCell begin = maze.getMaze()[0][0];
-        begin.setVisited(true);
-        stack.addFirst(begin);
-        RBCell curent;
-        RBCell chosen;
+    public Maze<RecursiveBacktrackerCell> generate(Integer rows, Integer columns) {
+        createAndFillSimpleMaze(rows, columns);
+        if (startCell == null) {
+            startCell = maze.maze()[0][0];
+        }
+        startCell.setVisited(true);
+        stack.addFirst(startCell);
+
+        RecursiveBacktrackerCell current;
+        RecursiveBacktrackerCell chosen;
+
         while (!stack.isEmpty()) {
-            curent = stack.getFirst();
-            ArrayList<RBCell> freeNeighbors = getFreeNeighbors(curent.getRow(), curent.getColumn());
+            current = stack.getFirst();
+            ArrayList<RecursiveBacktrackerCell> freeNeighbors =
+                getFreeNeighbors(current.getRow(), current.getColumn(), maze);
+
             if (freeNeighbors.isEmpty()) {
                 stack.removeFirst();
             } else {
                 chosen = choseRandom(freeNeighbors);
                 chosen.setVisited(true);
                 stack.addFirst(chosen);
-                breakWall(curent, chosen);
+                breakWall(current, chosen);
             }
         }
         return maze;
     }
 
-    private ArrayList<RBCell> getFreeNeighbors(Integer row, Integer column) {
-        ArrayList<RBCell> freeCells = new ArrayList<>();
-        if (row > 0 && !maze.getMaze()[row - 1][column].isVisited()) {
-            freeCells.add(maze.getMaze()[row - 1][column]);
-        }
-        if (row < maze.getRows() - 1 && !maze.getMaze()[row + 1][column].isVisited()) {
-            freeCells.add(maze.getMaze()[row + 1][column]);
-        }
-        if (column > 0 && !maze.getMaze()[row][column - 1].isVisited()) {
-            freeCells.add(maze.getMaze()[row][column - 1]);
-        }
-        if (column < maze.getColumns() - 1 && !maze.getMaze()[row][column + 1].isVisited()) {
-            freeCells.add(maze.getMaze()[row][column + 1]);
-        }
-        return freeCells;
-    }
-
-    private RBCell choseRandom(ArrayList<RBCell> freeCells) {
-        int pointer = (int) Math.floor(Math.random() * freeCells.size());
-        return freeCells.get(pointer);
-    }
-
-    private void breakWall(RBCell parent, RBCell child) {
-        if (Objects.equals(parent.getColumn(), child.getColumn())) {
-            if (parent.getRow() < child.getRow()) {
-                parent.setBottomWall(false);
-            } else {
-                child.setBottomWall(false);
+    @Override
+    protected void createAndFillSimpleMaze(Integer rows, Integer columns) {
+        RecursiveBacktrackerCell[][] mazeRB = new RecursiveBacktrackerCell[rows][columns];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                mazeRB[i][j] = new RecursiveBacktrackerCell(i, j, true, true);
             }
         }
-        if (Objects.equals(parent.getRow(), child.getRow())) {
-            if (parent.getColumn() > child.getColumn()) {
-                parent.setLeftWall(false);
-            } else {
-                child.setLeftWall(false);
-            }
-        }
+        maze = new Maze<>(mazeRB, rows, columns);
+
+    }
+
+    @Override
+    protected boolean isNeighbor(
+        Integer rowCurrent,
+        Integer columnCurrent,
+        Integer rowPotential,
+        Integer columnPotential
+    ) {
+        return rowCurrent >= 0 && rowPotential >= 0
+            && columnCurrent >= 0 && columnPotential >= 0
+            && rowCurrent < maze.rows() && rowPotential < maze.rows()
+            && columnCurrent < maze.columns() && columnPotential < maze.columns()
+            && !maze.maze()[rowPotential][columnPotential].isVisited();
+    }
+
+    public void setStartCell(RecursiveBacktrackerCell startCell) {
+        this.startCell = startCell;
     }
 }

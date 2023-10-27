@@ -1,7 +1,9 @@
 package edu.hw3.task4;
 
 import java.util.HashMap;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class IntegerToRomanConverter {
 
     private static final int ONE_ARABIC = 1;
@@ -36,6 +38,8 @@ public class IntegerToRomanConverter {
     }
 
     public String convertToRoman(Integer number) {
+        log.info("begin converting arabic to roman");
+
         if (number < minAllowedDigit || number > maxAllowedDigit) {
             throw new IllegalArgumentException();
         }
@@ -43,10 +47,13 @@ public class IntegerToRomanConverter {
         Integer hundreds = number / hundredsPosition % notation;
         Integer tens = number / tensPosition % notation;
         Integer ones = number % notation;
+
+        log.info("finish converting arabic to roman");
+
         return thousandsToRoman(thousands)
-            + numberPositionToRoman(hundreds, hundredsPosition)
-            + numberPositionToRoman(tens, tensPosition)
-            + numberPositionToRoman(ones, onesPosition);
+                + numberPositionToRoman(hundreds, hundredsPosition)
+                + numberPositionToRoman(tens, tensPosition)
+                + numberPositionToRoman(ones, onesPosition);
     }
 
     private String getNTimesLetter(Integer countOfTimes, String letter) {
@@ -64,12 +71,12 @@ public class IntegerToRomanConverter {
 
     private String convertNineInDifferentPositionToRoman(int numberPosition) {
         return arabicFigureToRoman.get(numberPosition)
-            + arabicFigureToRoman.get(numberPosition * notation);
+                + arabicFigureToRoman.get(numberPosition * notation);
     }
 
     private String convertFourInDifferentPositionToRoman(int numberPosition) {
         return arabicFigureToRoman.get(numberPosition)
-            + arabicFigureToRoman.get(numberPosition * boundaryValueFive);
+                + arabicFigureToRoman.get(numberPosition * boundaryValueFive);
     }
 
     private String convertDigitBetween5And9InDifferentPosition(int countOfNumberPosition, int numberPosition) {
@@ -77,7 +84,7 @@ public class IntegerToRomanConverter {
             return convertNineInDifferentPositionToRoman(numberPosition);
         } else {
             return arabicFigureToRoman.get(boundaryValueFive * numberPosition)
-                + numberPositionToRoman(countOfNumberPosition - boundaryValueFive, numberPosition);
+                    + numberPositionToRoman(countOfNumberPosition - boundaryValueFive, numberPosition);
         }
     }
 

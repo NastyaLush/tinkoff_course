@@ -1,22 +1,26 @@
 package edu.hw3.task7;
 
 import java.util.TreeMap;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class TreeMapCreator {
 
     public <T extends Comparable<T>, E> TreeMap<T, E> getExtendedTreeMap() {
-        TreeMap<T, E> treeMap = new TreeMap<>((o1, o2) -> {
-            if (o1 == null && o2 == null) {
+        log.info("create extended treeMap");
+        TreeMap<T, E> treeMap = new TreeMap<>((firstObject, secondObject) -> {
+            if (firstObject == null && secondObject == null) {
                 return 0;
             }
-            if (o1 == null) {
+            if (firstObject == null) {
                 return -1;
             }
-            if (o2 == null) {
+            if (secondObject == null) {
                 return 1;
             }
-            return o1.compareTo(o2);
+            return firstObject.compareTo(secondObject);
         });
+        log.info("finish creating extended treeMap");
         return treeMap;
     }
 

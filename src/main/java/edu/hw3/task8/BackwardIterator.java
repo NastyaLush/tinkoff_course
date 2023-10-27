@@ -2,7 +2,9 @@ package edu.hw3.task8;
 
 import java.util.Iterator;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class BackwardIterator implements Iterator {
 
     private final List list;
@@ -15,11 +17,13 @@ public class BackwardIterator implements Iterator {
 
     @Override
     public boolean hasNext() {
+        log.info("check if has next");
         return pointer >= 0;
     }
 
     @Override
     public Object next() {
+        log.info("get {} value", pointer);
         return list.get(pointer--);
     }
 

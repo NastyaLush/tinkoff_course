@@ -1,14 +1,20 @@
 package edu.hw3.task5;
 
 import java.util.Comparator;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class SortContacts {
 
     public String[] parseContacts(String[] contacts, SortOrder order) {
+        log.info("begin parse contacts");
+
         if (contacts == null || contacts.length == 0) {
-            return new String[] {};
+            return new String[]{};
         }
         quickSort(0, contacts.length - 1, contacts, new NameComparatorDependsOnOrder(order));
+
+        log.info("finish parse contacts");
         return contacts;
     }
 
@@ -52,9 +58,9 @@ public class SortContacts {
         }
 
         @Override
-        public int compare(String o1, String o2) {
-            String first = getName(o1);
-            String second = getName(o2);
+        public int compare(String firstObjectFullName, String secondObjectFullName) {
+            String first = getName(firstObjectFullName);
+            String second = getName(secondObjectFullName);
             if (order == SortOrder.ASC) {
                 return first.compareTo(second);
             } else {

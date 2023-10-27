@@ -1,17 +1,21 @@
 package edu.hw3.task1;
 
 import java.util.ArrayList;
+import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class AtbashEnglish {
 
-    protected final ArrayList<Character> alphabetSmall = new ArrayList<>();
-    protected final ArrayList<Character> alphabetBig = new ArrayList<>();
+    protected final List<Character> alphabetSmall = new ArrayList<>();
+    protected final List<Character> alphabetBig = new ArrayList<>();
     protected final char firstBigLetter = 'A';
     protected final char lastBigLetter = 'Z';
     protected final char firstSmallLetter = 'a';
     protected final char lastSmallLetter = 'z';
 
     public AtbashEnglish() {
+        log.info("initialise astbash english class");
         char small = firstSmallLetter;
         char big = firstBigLetter;
         while (small <= lastSmallLetter) {
@@ -24,6 +28,7 @@ public class AtbashEnglish {
     }
 
     public String code(String input) {
+        log.info("encrypt {}", input);
         char[] inputString = input.toCharArray();
         char[] encodedString = new char[input.length()];
         for (int i = 0; i < input.length(); i++) {
@@ -35,6 +40,7 @@ public class AtbashEnglish {
                 encodedString[i] = inputString[i];
             }
         }
+        log.info("finish encrypt");
         return new String(encodedString);
     }
 

@@ -4,10 +4,13 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.stream.Collectors;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class Cluster {
 
     public ArrayList<String> clusterize(String inputString) {
+        log.info("begin clusterizing {}", inputString);
         Deque<Character> stack = new ArrayDeque<>();
         ArrayList<Character> cluster = new ArrayList<>();
         ArrayList<String> clusters = new ArrayList<>();
@@ -22,16 +25,19 @@ public class Cluster {
                     stack.removeFirst();
                     cluster.add(ch);
                     if (stack.isEmpty()) {
-                        clusters.add(cluster.stream().map(Object::toString)
-                            .collect(Collectors.joining("")));
+                        clusters.add(cluster.stream()
+                                            .map(Object::toString)
+                                            .collect(Collectors.joining("")));
                         cluster.clear();
                     }
                 }
             }
         }
         if (!cluster.isEmpty()) {
+            log.error("cluster is empty, input is incorrect");
             throw new IllegalArgumentException();
         }
+        log.info("finish clusterizing");
         return clusters;
     }
 

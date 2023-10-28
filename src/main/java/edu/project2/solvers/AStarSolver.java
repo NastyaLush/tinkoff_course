@@ -7,8 +7,10 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 import java.util.TreeSet;
+import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 
+@Slf4j
 public class AStarSolver implements Solver {
 
     PriorityQueue<AStarSolverCell> queue;
@@ -22,8 +24,10 @@ public class AStarSolver implements Solver {
 
     @Override
     public TreeSet<Cell> solve(@NotNull Maze<Cell> maze, @NotNull Cell begin, @NotNull Cell end) {
+        log.info("start finding path from {} to {} using A* solver", begin, end);
         createAndFillMazeForSolving(maze);
         if (!isInMaze(maze, begin) || !isInMaze(maze, end)) {
+            log.error("{} or {} are not in the maze", begin, end);
             throw new IllegalArgumentException();
         }
 
@@ -56,6 +60,7 @@ public class AStarSolver implements Solver {
                 queue.add(neighbor);
             }
         }
+        log.info("finish finding path from {} to {} using A* solver", begin, end);
         return getPath(current);
     }
 

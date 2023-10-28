@@ -9,8 +9,8 @@ import org.jetbrains.annotations.NotNull;
 
 public class EulerAlgorithm implements Generator {
 
-    private final HashMap<Integer, ArrayList<Cell>> cellsOfCurrentRowWithoutBottomByClasses;
     private static final double PROBABILITY_OF_BUILDING_A_WALL = 0.5;
+    private final HashMap<Integer, ArrayList<Cell>> cellsOfCurrentRowWithoutBottomByClasses;
     private Maze<Cell> maze;
     private Integer[] classesOfCurrentRowCells;
     private double probabilityOfBuildingAWall;
@@ -24,6 +24,7 @@ public class EulerAlgorithm implements Generator {
 
     @Override
     public Maze<Cell> generate(@NotNull Integer rows, @NotNull Integer columns) {
+        LOGGER.info("start generate maze using euler algorithm");
         validateData(rows, columns);
         createMaze(rows, columns);
         generateStartClasses(maze.columns());
@@ -55,6 +56,7 @@ public class EulerAlgorithm implements Generator {
         addLeftWallsToFirstColumn(maze);
 
         correctLeftWallsInLastRow(maze);
+        LOGGER.info("finish generate maze using euler algorithm");
         return maze;
     }
 

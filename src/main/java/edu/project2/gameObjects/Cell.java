@@ -1,8 +1,10 @@
 package edu.project2.gameObjects;
 
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 
+@Slf4j
 @Data
 public class Cell implements Comparable {
 
@@ -14,6 +16,7 @@ public class Cell implements Comparable {
 
     public Cell(@NotNull Integer row, @NotNull Integer column, boolean leftWall, boolean bottomWall) {
         if (row < 0 || column < 0) {
+            log.info("can't create cell because of illegal arguments row {} column {}", row, column);
             throw new IllegalArgumentException();
         }
         this.row = row;

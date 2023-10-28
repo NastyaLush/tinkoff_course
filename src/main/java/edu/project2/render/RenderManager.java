@@ -3,8 +3,10 @@ package edu.project2.render;
 import edu.project2.gameObjects.Cell;
 import edu.project2.gameObjects.Maze;
 import java.util.Set;
+import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 
+@Slf4j
 public class RenderManager {
 
     private final Maze maze;
@@ -18,7 +20,9 @@ public class RenderManager {
     }
 
     public void renderMazeWithPath(@NotNull Render render, @NotNull Set<Cell> path, @NotNull Input input) {
+        log.info("start rendering maze using {}", render);
         render.rendWithPath(maze, path, input);
+        log.info("finish rendering maze using {}", render);
     }
 
 }

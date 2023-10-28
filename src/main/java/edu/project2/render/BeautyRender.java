@@ -4,8 +4,10 @@ import edu.project2.gameObjects.Cell;
 import edu.project2.gameObjects.Maze;
 import java.util.HashSet;
 import java.util.Set;
+import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 
+@Slf4j
 public class BeautyRender implements Render {
 
     public static final String ANSI_PURPLE_BACKGROUND = "\u001B[45m";
@@ -13,20 +15,24 @@ public class BeautyRender implements Render {
 
     @Override
     public void rend(@NotNull Maze maze, @NotNull Input input) {
+        log.info("start rendering maze without path");
         input.print(rendTopMaze(maze));
         for (int i = 0; i < maze.rows(); i++) {
             input.print(rendFirstLevelCells(maze, i, new HashSet<>()));
             input.print(rendSecondLevelCells(maze, i));
         }
+        log.info("finish rendering maze without path");
     }
 
     @Override
     public <T extends Cell> void rendWithPath(@NotNull Maze<T> maze, @NotNull Set<Cell> path, @NotNull Input input) {
+        log.info("start rendering maze with path");
         input.print(rendTopMaze(maze));
         for (int i = 0; i < maze.rows(); i++) {
             input.print(rendFirstLevelCells(maze, i, path));
             input.print(rendSecondLevelCells(maze, i));
         }
+        log.info("finish rendering maze with path");
     }
 
     private <T extends Cell> String rendTopMaze(Maze<T> maze) {

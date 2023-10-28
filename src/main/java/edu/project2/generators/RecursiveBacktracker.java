@@ -19,6 +19,7 @@ public class RecursiveBacktracker extends TreeGenerator {
 
     @Override
     public Maze<RecursiveBacktrackerCell> generate(@NotNull Integer rows, @NotNull Integer columns) {
+        LOGGER.info("start generate maze using recursive backtracker algorithm");
         validateData(rows, columns);
         createAndFillSimpleMaze(rows, columns);
         if (startCell == null) {
@@ -44,6 +45,7 @@ public class RecursiveBacktracker extends TreeGenerator {
                 breakWall(current, chosen);
             }
         }
+        LOGGER.info("finish generate maze using recursive backtracker algorithm");
         return maze;
     }
 

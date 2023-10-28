@@ -23,6 +23,7 @@ public class GrowingForestAlgorithm extends TreeGenerator {
 
     @Override
     public Maze generate(@NotNull Integer rows, @NotNull Integer columns) {
+        LOGGER.info("start generate maze using growing forest algorithm");
         validateData(rows, columns);
         createAndFillSimpleMaze(rows, columns);
 
@@ -44,7 +45,7 @@ public class GrowingForestAlgorithm extends TreeGenerator {
                 mergeClassesOfCells(parent, child);
             }
         }
-
+        LOGGER.info("finish generate maze using growing forest algorithm");
         return maze;
     }
 

@@ -5,6 +5,7 @@ import edu.project2.gameObjects.RecursiveBacktrackerCell;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
+import org.jetbrains.annotations.NotNull;
 
 public class RecursiveBacktracker extends TreeGenerator {
 
@@ -17,7 +18,8 @@ public class RecursiveBacktracker extends TreeGenerator {
     }
 
     @Override
-    public Maze<RecursiveBacktrackerCell> generate(Integer rows, Integer columns) {
+    public Maze<RecursiveBacktrackerCell> generate(@NotNull Integer rows, @NotNull Integer columns) {
+        validateData(rows, columns);
         createAndFillSimpleMaze(rows, columns);
         if (startCell == null) {
             startCell = maze.maze()[0][0];
@@ -31,7 +33,7 @@ public class RecursiveBacktracker extends TreeGenerator {
         while (!stack.isEmpty()) {
             current = stack.getFirst();
             ArrayList<RecursiveBacktrackerCell> freeNeighbors =
-                getFreeNeighbors(current.getRow(), current.getColumn(), maze);
+                    getFreeNeighbors(current.getRow(), current.getColumn(), maze);
 
             if (freeNeighbors.isEmpty()) {
                 stack.removeFirst();
@@ -59,16 +61,16 @@ public class RecursiveBacktracker extends TreeGenerator {
 
     @Override
     protected boolean isNeighbor(
-        Integer rowCurrent,
-        Integer columnCurrent,
-        Integer rowPotential,
-        Integer columnPotential
+            Integer rowCurrent,
+            Integer columnCurrent,
+            Integer rowPotential,
+            Integer columnPotential
     ) {
         return rowCurrent >= 0 && rowPotential >= 0
-            && columnCurrent >= 0 && columnPotential >= 0
-            && rowCurrent < maze.rows() && rowPotential < maze.rows()
-            && columnCurrent < maze.columns() && columnPotential < maze.columns()
-            && !maze.maze()[rowPotential][columnPotential].isVisited();
+                && columnCurrent >= 0 && columnPotential >= 0
+                && rowCurrent < maze.rows() && rowPotential < maze.rows()
+                && columnCurrent < maze.columns() && columnPotential < maze.columns()
+                && !maze.maze()[rowPotential][columnPotential].isVisited();
     }
 
     public void setStartCell(RecursiveBacktrackerCell startCell) {

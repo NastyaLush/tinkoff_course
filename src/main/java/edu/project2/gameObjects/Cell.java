@@ -1,11 +1,9 @@
 package edu.project2.gameObjects;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.jetbrains.annotations.NotNull;
 
 @Data
-@AllArgsConstructor
 public class Cell implements Comparable {
 
     private final Integer row;
@@ -13,6 +11,16 @@ public class Cell implements Comparable {
 
     private boolean leftWall;
     private boolean bottomWall;
+
+    public Cell(@NotNull Integer row, @NotNull Integer column, boolean leftWall, boolean bottomWall) {
+        if (row < 0 || column < 0) {
+            throw new IllegalArgumentException();
+        }
+        this.row = row;
+        this.column = column;
+        this.leftWall = leftWall;
+        this.bottomWall = bottomWall;
+    }
 
     @Override
     public int compareTo(@NotNull Object o) {

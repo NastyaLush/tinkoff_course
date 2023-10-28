@@ -5,6 +5,7 @@ import edu.project2.gameObjects.GrowingForestAlgorithmStatus;
 import edu.project2.gameObjects.Maze;
 import java.util.ArrayList;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 public class GrowingForestAlgorithm extends TreeGenerator {
 
@@ -21,7 +22,8 @@ public class GrowingForestAlgorithm extends TreeGenerator {
     }
 
     @Override
-    public Maze generate(Integer rows, Integer columns) {
+    public Maze generate(@NotNull Integer rows, @NotNull Integer columns) {
+        validateData(rows, columns);
         createAndFillSimpleMaze(rows, columns);
 
         addStatusNewAndUniqueClassToCells();
@@ -31,7 +33,7 @@ public class GrowingForestAlgorithm extends TreeGenerator {
         while (!activeCells.isEmpty()) {
             GrowingForestAlgorithmCell parent = getRandomActiveCell();
             ArrayList<GrowingForestAlgorithmCell> freeNeighbors =
-                getFreeNeighbors(parent.getRow(), parent.getColumn(), this.maze);
+                    getFreeNeighbors(parent.getRow(), parent.getColumn(), this.maze);
 
             if (freeNeighbors.isEmpty()) {
                 parent.setStatus(GrowingForestAlgorithmStatus.FINISHED);
@@ -71,7 +73,7 @@ public class GrowingForestAlgorithm extends TreeGenerator {
 
     private void makeSomeRandomCellsActive() {
         int begin =
-            getRandomNumber(1, (int) Math.max(1, maze.rows() * maze.columns() * percentOfCellsThatAddsInTheBegin));
+                getRandomNumber(1, (int) Math.max(1, maze.rows() * maze.columns() * percentOfCellsThatAddsInTheBegin));
         for (int i = 0; i < begin; i++) {
             GrowingForestAlgorithmCell cell = choseRandom(newCells);
             cell.setStatus(GrowingForestAlgorithmStatus.ACTIVE);
@@ -106,16 +108,16 @@ public class GrowingForestAlgorithm extends TreeGenerator {
 
     @Override
     protected boolean isNeighbor(
-        Integer rowCurrent, Integer columnCurrent, Integer rowPotential, Integer columnPotential
+            Integer rowCurrent, Integer columnCurrent, Integer rowPotential, Integer columnPotential
     ) {
         return rowCurrent >= 0 && rowPotential >= 0
-            && columnCurrent >= 0 && columnPotential >= 0
-            && rowCurrent < maze.rows() && rowPotential < maze.rows()
-            && columnCurrent < maze.columns() && columnPotential < maze.columns()
-            && maze.maze()[rowPotential][columnPotential].getStatus() != GrowingForestAlgorithmStatus.FINISHED
-            && !Objects.equals(
-            maze.maze()[rowPotential][columnPotential].getClassNumber(),
-            maze.maze()[rowCurrent][columnCurrent].getClassNumber()
+                && columnCurrent >= 0 && columnPotential >= 0
+                && rowCurrent < maze.rows() && rowPotential < maze.rows()
+                && columnCurrent < maze.columns() && columnPotential < maze.columns()
+                && maze.maze()[rowPotential][columnPotential].getStatus() != GrowingForestAlgorithmStatus.FINISHED
+                && !Objects.equals(
+                maze.maze()[rowPotential][columnPotential].getClassNumber(),
+                maze.maze()[rowCurrent][columnCurrent].getClassNumber()
         );
     }
 

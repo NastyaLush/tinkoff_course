@@ -4,6 +4,7 @@ import edu.project2.gameObjects.Cell;
 import edu.project2.gameObjects.Maze;
 import java.util.HashSet;
 import java.util.Set;
+import org.jetbrains.annotations.NotNull;
 
 public class BeautyRender implements Render {
 
@@ -11,7 +12,7 @@ public class BeautyRender implements Render {
     public static final String ANSI_RESET = "\u001B[0m";
 
     @Override
-    public void rend(Maze maze, Input input) {
+    public void rend(@NotNull Maze maze, @NotNull Input input) {
         input.print(rendTopMaze(maze));
         for (int i = 0; i < maze.rows(); i++) {
             input.print(rendFirstLevelCells(maze, i, new HashSet<>()));
@@ -20,7 +21,7 @@ public class BeautyRender implements Render {
     }
 
     @Override
-    public <T extends Cell> void rendWithPath(Maze<T> maze, Set<Cell> path, Input input) {
+    public <T extends Cell> void rendWithPath(@NotNull Maze<T> maze, @NotNull Set<Cell> path, @NotNull Input input) {
         input.print(rendTopMaze(maze));
         for (int i = 0; i < maze.rows(); i++) {
             input.print(rendFirstLevelCells(maze, i, path));

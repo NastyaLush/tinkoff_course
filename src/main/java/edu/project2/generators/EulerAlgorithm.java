@@ -5,6 +5,7 @@ import edu.project2.gameObjects.Maze;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 public class EulerAlgorithm implements Generator {
 
@@ -22,7 +23,8 @@ public class EulerAlgorithm implements Generator {
     }
 
     @Override
-    public Maze<Cell> generate(Integer rows, Integer columns) {
+    public Maze<Cell> generate(@NotNull Integer rows, @NotNull Integer columns) {
+        validateData(rows, columns);
         createMaze(rows, columns);
         generateStartClasses(maze.columns());
 
@@ -90,11 +92,12 @@ public class EulerAlgorithm implements Generator {
     private void updateCellsOfCurrentRowWithoutBottomByClasses(Maze maze, Integer row) {
 
         for (Integer key : cellsOfCurrentRowWithoutBottomByClasses.keySet()) {
-            cellsOfCurrentRowWithoutBottomByClasses.get(key).clear();
+            cellsOfCurrentRowWithoutBottomByClasses.get(key)
+                                                   .clear();
         }
         for (int classNumber = 0; classNumber < maze.columns(); classNumber++) {
             cellsOfCurrentRowWithoutBottomByClasses.get(classesOfCurrentRowCells[classNumber])
-                .add(maze.maze()[row][classNumber]);
+                                                   .add(maze.maze()[row][classNumber]);
         }
     }
 
@@ -112,8 +115,9 @@ public class EulerAlgorithm implements Generator {
 
     private void mergeClasses(Integer main, Integer secondary) {
         int classForRemove = classesOfCurrentRowCells[secondary];
-        cellsOfCurrentRowWithoutBottomByClasses.get(classesOfCurrentRowCells[main]).addAll(
-            cellsOfCurrentRowWithoutBottomByClasses.get(classForRemove));
+        cellsOfCurrentRowWithoutBottomByClasses.get(classesOfCurrentRowCells[main])
+                                               .addAll(
+                                                       cellsOfCurrentRowWithoutBottomByClasses.get(classForRemove));
         cellsOfCurrentRowWithoutBottomByClasses.remove(classesOfCurrentRowCells[secondary]);
 
         updateClassesOfCurrentRowCells(classForRemove, main);
@@ -121,8 +125,10 @@ public class EulerAlgorithm implements Generator {
 
     private boolean isAloneWithFreeBottomInThisClass(Integer setNumberOfCell) {
         return
-            cellsOfCurrentRowWithoutBottomByClasses.get(setNumberOfCell).stream().filter((Cell a) -> !a.isBottomWall())
-                .count() == 1;
+                cellsOfCurrentRowWithoutBottomByClasses.get(setNumberOfCell)
+                                                       .stream()
+                                                       .filter((Cell a) -> !a.isBottomWall())
+                                                       .count() == 1;
     }
 
     private void createBottomWall(Cell cell) {
@@ -131,7 +137,7 @@ public class EulerAlgorithm implements Generator {
 
     private void removeCellWithBottomFromMap(Integer row, Integer column, Maze maze) {
         cellsOfCurrentRowWithoutBottomByClasses.get(classesOfCurrentRowCells[column])
-            .remove(maze.maze()[row][column]);
+                                               .remove(maze.maze()[row][column]);
     }
 
     private void addBottomWallsToLastRow(Maze maze) {

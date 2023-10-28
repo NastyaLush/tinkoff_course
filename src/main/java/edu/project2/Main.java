@@ -12,12 +12,23 @@ import java.util.Set;
 
 public class Main {
 
+    private final static int DEFAULT_ROWS = 100;
+    private final static int DEFAULT_COLUMNS = 100;
+    private final static int DEFAULT_BEGIN_CELL_ROW = 0;
+    private final static int DEFAULT_BEGIN_CELL_COLUMN = 0;
+    private final static int DEFAULT_END_CELL_ROW = 99;
+    private final static int DEFAULT_END_CELL_COLUMN = 99;
+
+    private Main() {
+    }
+
     public static void main(String[] args) {
 
-        Maze maze = new GeneratorManager(100, 100).generateMaze(new GrowingForestAlgorithm());
-//        new BeautyRender().rend(maze);
-        Set<Cell> path = new SolverManager(maze).solveMaze(new AStarSolver(), maze.maze()[0][0], maze.maze()[99][99]);
-//        new BeautyRender().rendWithPath(maze, path);
+        Maze maze = new GeneratorManager(DEFAULT_ROWS, DEFAULT_COLUMNS).generateMaze(new GrowingForestAlgorithm());
+        Set<Cell> path = new SolverManager(maze)
+                .solveMaze(new AStarSolver(),
+                        maze.maze()[DEFAULT_BEGIN_CELL_ROW][DEFAULT_BEGIN_CELL_COLUMN],
+                        maze.maze()[DEFAULT_END_CELL_ROW][DEFAULT_END_CELL_COLUMN]);
         new RenderManager(maze).renderMazeWithPath(new BeautyRender(), path, System.out::println);
     }
 

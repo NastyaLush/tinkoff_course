@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 import java.util.TreeSet;
+import org.jetbrains.annotations.NotNull;
 
 public class AStarSolver implements Solver {
 
@@ -20,12 +21,9 @@ public class AStarSolver implements Solver {
     }
 
     @Override
-    public TreeSet<Cell> solve(Maze<Cell> maze, Cell begin, Cell end) {
+    public TreeSet<Cell> solve(@NotNull Maze<Cell> maze, @NotNull Cell begin, @NotNull Cell end) {
         createAndFillMazeForSolving(maze);
-        if (begin == null || end == null
-            || !isInMaze(maze, begin)
-            || !isInMaze(maze, end)
-        ) {
+        if (!isInMaze(maze, begin) || !isInMaze(maze, end)) {
             throw new IllegalArgumentException();
         }
 
@@ -47,7 +45,9 @@ public class AStarSolver implements Solver {
             current.setVisited(true);
 
             ArrayList<AStarSolverCell> neighbors =
-                getFreeNeighbors(this.maze, current.getCell().getRow(), current.getCell().getColumn());
+                    getFreeNeighbors(this.maze, current.getCell()
+                                                       .getRow(), current.getCell()
+                                                                         .getColumn());
             for (AStarSolverCell neighbor : neighbors) {
                 if (neighbor.getWeight() > f(current, neighbor)) {
                     neighbor.setWeight(f(current, neighbor));
@@ -74,24 +74,32 @@ public class AStarSolver implements Solver {
     }
 
     private int h(AStarSolverCell cell) {
-        return Math.abs(cell.getCell().getRow() - finish.getCell().getRow())
-            + Math.abs(cell.getCell().getColumn() - finish.getCell().getColumn());
+        return Math.abs(cell.getCell()
+                            .getRow() - finish.getCell()
+                                              .getRow())
+                + Math.abs(cell.getCell()
+                               .getColumn() - finish.getCell()
+                                                    .getColumn());
     }
 
     private ArrayList<AStarSolverCell> getFreeNeighbors(AStarSolverCell[][] maze, Integer row, Integer column) {
         ArrayList<AStarSolverCell> freeCells = new ArrayList<>();
-        if (row > 0 && !maze[row - 1][column].isVisited() && !maze[row - 1][column].getCell().isBottomWall()) {
+        if (row > 0 && !maze[row - 1][column].isVisited() && !maze[row - 1][column].getCell()
+                                                                                   .isBottomWall()) {
             freeCells.add(maze[row - 1][column]);
         }
         if (row < maze.length - 1 && !maze[row + 1][column].isVisited()
-            && !maze[row][column].getCell().isBottomWall()) {
+                && !maze[row][column].getCell()
+                                     .isBottomWall()) {
             freeCells.add(maze[row + 1][column]);
         }
-        if (column > 0 && !maze[row][column - 1].isVisited() && !maze[row][column].getCell().isLeftWall()) {
+        if (column > 0 && !maze[row][column - 1].isVisited() && !maze[row][column].getCell()
+                                                                                  .isLeftWall()) {
             freeCells.add(maze[row][column - 1]);
         }
         if (column < maze[0].length - 1 && !maze[row][column + 1].isVisited()
-            && !maze[row][column + 1].getCell().isLeftWall()) {
+                && !maze[row][column + 1].getCell()
+                                         .isLeftWall()) {
             freeCells.add(maze[row][column + 1]);
         }
         return freeCells;

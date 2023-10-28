@@ -1,6 +1,7 @@
 package edu.hw1;
 
 public class Task2 {
+
     private static final int SCALE_OF_NOTATION = 10;
 
     private Task2() {

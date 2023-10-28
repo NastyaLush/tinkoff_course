@@ -3,10 +3,10 @@ package edu.hw1;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class Task4Test {
+
     @ParameterizedTest(name = "Iteration #{index} -> Given string = {0} and must receive {1}")
     @CsvSource({
         "123456, 214365",

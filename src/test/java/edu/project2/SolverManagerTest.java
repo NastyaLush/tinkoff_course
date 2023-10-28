@@ -22,7 +22,7 @@ public class SolverManagerTest {
         givenSetCell.add(begin);
         givenSetCell.add(randomCell);
         givenSetCell.add(end);
-        Maze<Cell> maze = new Maze<>(new Cell[][]{}, 0, 0);
+        Maze<Cell> maze = new Maze<>(MazeTestGenerator.generateCells(), 3, 3);
         SolverManager solverManager = new SolverManager(maze);
         Mockito.when(solver.solve(maze, begin, end))
                .thenReturn(givenSetCell);

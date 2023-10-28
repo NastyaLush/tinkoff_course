@@ -16,15 +16,15 @@ public class GeneratorManagerTest {
     @Test
     public void solveMaze_shouldCallSolveMethod() {
         Generator generator = Mockito.mock(Generator.class);
-        Maze<Cell> maze = new Maze<>(new Cell[][]{}, 0, 0);
-        GeneratorManager generatorManager = new GeneratorManager(0, 0);
-        Mockito.when(generator.generate(0, 0))
+        Maze<Cell> maze = new Maze<>(MazeTestGenerator.generateCells(), 3, 3);
+        GeneratorManager generatorManager = new GeneratorManager(1, 1);
+        Mockito.when(generator.generate(1, 1))
                .thenReturn(maze);
 
         generatorManager.generateMaze(generator);
 
         Mockito.verify(generator, Mockito.times(1))
-               .generate(0, 0);
+               .generate(1, 1);
     }
 
 

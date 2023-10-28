@@ -16,7 +16,7 @@ public class RenderManagerTest {
     public void renderMaze_shouldCallRendMethod() {
         Render render = Mockito.mock(Render.class);
         Input input = Mockito.mock(Input.class);
-        Maze<Cell> maze = new Maze<>(new Cell[][]{}, 0, 0);
+        Maze<Cell> maze = new Maze<>(MazeTestGenerator.generateCells(), 3, 3);
         RenderManager renderManager = new RenderManager(maze);
 
         renderManager.renderMaze(render, input);
@@ -33,7 +33,7 @@ public class RenderManagerTest {
         givenSetCell.add(Mockito.any());
         givenSetCell.add(Mockito.any());
         givenSetCell.add(Mockito.any());
-        Maze<Cell> maze = new Maze<>(new Cell[][]{}, 0, 0);
+        Maze<Cell> maze = new Maze<>(MazeTestGenerator.generateCells(), 3, 3);
         RenderManager renderManager = new RenderManager(maze);
 
         renderManager.renderMazeWithPath(render, givenSetCell, input);

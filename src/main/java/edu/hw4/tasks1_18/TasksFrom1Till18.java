@@ -1,4 +1,4 @@
-package edu.hw4;
+package edu.hw4.tasks1_18;
 
 import edu.hw4.given.Animal;
 import java.util.Collection;
@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class Util {
+public class TasksFrom1Till18 {
 
     private static final Integer GIVEN_MIN_HEIGHT_FOR_TASK11 = 100;
 
@@ -49,10 +49,8 @@ public class Util {
 
     public Map<Animal.Type, Animal> task6TheMostHeavyAnimalByType(List<Animal> animals) {
         return animals.stream()
-                      .collect(Collectors
-                              .groupingBy(Animal::type, Collectors
-                                      .maxBy(Comparator
-                                              .comparingInt(Animal::weight))))
+                      .collect(Collectors.groupingBy(Animal::type,
+                              Collectors.maxBy(Comparator.comparingInt(Animal::weight))))
                       .entrySet()
                       .stream()
                       .filter(typeOptionalEntry -> typeOptionalEntry.getValue()
@@ -67,9 +65,9 @@ public class Util {
                       .get();
     }
 
-    public Optional<Animal> task8TheMostHeavyAnimalShorterK(List<Animal> animals, Integer k) {
+    public Optional<Animal> task8TheMostHeavyAnimalShorterMaxHeight(List<Animal> animals, Integer maxHeight) {
         return animals.stream()
-                      .filter(animal -> animal.height() < k)
+                      .filter(animal -> animal.height() < maxHeight)
                       .max(Comparator.comparingInt(Animal::weight));
     }
 
@@ -93,10 +91,11 @@ public class Util {
                       .toList();
     }
 
-    public List<Animal> task12AnimalWhichWeightMoreThanHeight(List<Animal> animals) {
+    public Integer task12AnimalWhichWeightMoreThanHeight(List<Animal> animals) {
         return animals.stream()
                       .filter(animal -> animal.weight() > animal.height())
-                      .toList();
+                      .toList()
+                      .size();
     }
 
     public List<Animal> task13AnimalWhichNameMoreThanTwoWords(List<Animal> animals) {
@@ -106,20 +105,22 @@ public class Util {
                       .toList();
     }
 
-    public boolean task14isExistDogTallerK(List<Animal> animals, Integer k) {
+    public boolean task14isExistDogTallerMinTall(List<Animal> animals, Integer minTall) {
         return animals.stream()
-                      .anyMatch(animal -> animal.type() == Animal.Type.DOG && animal.height() > k);
+                      .anyMatch(animal -> animal.type() == Animal.Type.DOG && animal.height() > minTall);
     }
 
-    public Integer task15WeightOfAnimalsOlderKYoungerL(List<Animal> animals, Integer k, Integer l) {
+    public Integer task15WeightOfAnimalsOlderMinAgeYoungerMaxAge(List<Animal> animals,
+                                                                 Integer minaAge,
+                                                                 Integer maxAge) {
         return animals.stream()
-                      .filter(animal -> animal.age() > k && animal.age() < l)
+                      .filter(animal -> animal.age() >= minaAge && animal.age() <= maxAge)
                       .map(Animal::weight)
                       .reduce(Integer::sum)
-                      .get();
+                      .orElse(0);
     }
 
-    public List<Animal> task16WeightOfAnimalsOlderKYoungerL(List<Animal> animals, Integer k, Integer l) {
+    public List<Animal> task16SortedByTypeSexName(List<Animal> animals) {
         return animals.stream()
                       .sorted(Comparator.comparing(Animal::type)
                                         .thenComparing(Animal::sex)
@@ -134,10 +135,18 @@ public class Util {
                       .collect(Collectors.groupingBy(Animal::type, Collectors.counting()))
                       .entrySet()
                       .stream()
-                      .sorted(Map.Entry.comparingByValue())
-                      .limit(1)
-                      .allMatch(typeLongEntry -> typeLongEntry.getKey()
-                                                              .equals(Animal.Type.SPIDER));
+                      .reduce((firstEntry, secondEntry) -> {
+                          if (firstEntry.getValue() > secondEntry.getValue()) {
+                              return firstEntry;
+                          }
+                          if (firstEntry.getValue() < secondEntry.getValue()) {
+                              return secondEntry;
+                          }
+                          return Map.entry(Animal.Type.FISH, 1L);
+
+                      })
+                      .stream()
+                      .anyMatch(typeLongEntry -> typeLongEntry.getKey() == Animal.Type.SPIDER);
     }
 
     public Animal task18TheMostHeavyFish(List<List<Animal>> animals) {
@@ -145,7 +154,7 @@ public class Util {
                       .flatMap(Collection::stream)
                       .filter(animal -> animal.type() == Animal.Type.FISH)
                       .max(Comparator.comparingInt(Animal::weight))
-                      .orElse(null);
+                      .get();
     }
 
 

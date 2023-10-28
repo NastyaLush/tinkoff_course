@@ -1,4 +1,4 @@
-package edu.hw4;
+package edu.hw4.task19;
 
 import edu.hw4.given.Animal;
 import java.util.HashMap;
@@ -11,7 +11,7 @@ public class Task19 {
 
     private Set<ValidationError> errors;
 
-    public Map<String, Set<ValidationError>> animalsThatHaveErrors(List<Animal> animals) {
+    public Map<String, Set<ValidationError>> getAnimalsThatHaveErrors(List<Animal> animals) {
         Map<String, Set<ValidationError>> errorsMap = new HashMap<>();
 
         for (Animal animal : animals) {
@@ -42,9 +42,9 @@ public class Task19 {
         if (isNUll(animal.sex())) {
             errors.add(new ValidationError(TypeException.NULL, animal.getSexTitle()));
         }
-        if (isUnique(animal.name(), animals.stream()
-                                           .map(animal1 -> animal1.name())
-                                           .toList())) {
+        if (!isUnique(animal.name(), animals.stream()
+                                            .map(Animal::name)
+                                            .toList())) {
             errors.add(new ValidationError(TypeException.NON_UNIQUE, animal.getNameTitle()));
         }
         return errors.size() > 0;
@@ -64,7 +64,9 @@ public class Task19 {
     }
 
     private <T> boolean isUnique(T animal, List<T> animals) {
-        return animals.contains(animal);
+        return animals.stream()
+                      .filter(name -> name == animal)
+                      .count() == 1;
     }
 
 }

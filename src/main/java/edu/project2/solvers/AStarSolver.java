@@ -42,6 +42,10 @@ public class AStarSolver implements Solver {
 
         while (!current.equals(this.finish)) {
             current = queue.peek();
+            if (current == null) {
+                log.error("there is no path between {} and {}, please check maze", begin, end);
+                throw new IllegalArgumentException();
+            }
             queue.remove();
             if (current.isVisited()) {
                 continue;

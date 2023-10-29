@@ -1,6 +1,7 @@
 package edu.project2;
 
 import static edu.project2.MazeTestGenerator.generateCells;
+import static edu.project2.MazeTestGenerator.generateWrongCells;
 import static edu.project2.MazeTestGenerator.getPath;
 import edu.project2.gameObjects.Cell;
 import edu.project2.gameObjects.Maze;
@@ -32,6 +33,15 @@ public class AStarSolverTest {
         Set<Cell> actualPath = new AStarSolver().solve(new Maze<>(generateCells(), 3, 3), begin, end);
 
         assertEquals(expectedPath, actualPath);
+    }
+
+    @Test
+    public void solve_shouldThrowErrorIfThereIsNoPathExist() {
+        Cell begin = new Cell(0, 0, true, false);
+        Cell end = new Cell(2, 2, false, false);
+        assertThrows(IllegalArgumentException.class,
+                () -> new AStarSolver().solve(new Maze<>(generateWrongCells(), 3, 3), begin, end));
+
     }
 
     @Test

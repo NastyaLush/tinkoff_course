@@ -7,6 +7,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
 public class TasksFrom1Till18Task15Test {
@@ -18,20 +19,20 @@ public class TasksFrom1Till18Task15Test {
                                 new Animal("dd", Animal.Type.DOG, Animal.Sex.F, 5, 5, 101, false),
                                 new Animal("ddd", Animal.Type.DOG, Animal.Sex.F, 6, 6, 99, true),
                                 new Animal("d", Animal.Type.FISH, Animal.Sex.F, 7, 7, 0, true)
-                        ), 5, 6, 101 + 99),
+                        ), 5, 6, Map.of(Animal.Type.DOG, 200)),
                 Arguments.of(
                         List.of(new Animal("d", Animal.Type.CAT, Animal.Sex.F, 3, 101, 0, false),
-                                new Animal("dd", Animal.Type.SPIDER, Animal.Sex.F, 8, 101, 0, false)
-                        ), 9, 20, 0),
-                Arguments.of(List.of(), 0, 0, 0)
+                                new Animal("dd", Animal.Type.SPIDER, Animal.Sex.F, 9, 101, 0, false)
+                        ), 9, 20, Map.of(Animal.Type.SPIDER, 0)),
+                Arguments.of(List.of(), 0, 0, Map.of())
 
         );
     }
 
     @ParameterizedTest
     @MethodSource("providerTask15")
-    public void task15WeightOfAnimalsOlderMinAgeYoungerMaxAge_shouldReturnWeightOfAnimalsOlderMinAgeYoungerMaxAge(List<Animal> givenAnimals, Integer minAge, Integer maxAge, Integer expectedAnswer) {
-        Integer actualAnswer = new TasksFrom1Till18().task15WeightOfAnimalsOlderMinAgeYoungerMaxAge(givenAnimals, minAge, maxAge);
+    public void task15WeightOfAnimalsOlderMinAgeYoungerMaxAge_shouldReturnWeightOfAnimalsOlderMinAgeYoungerMaxAge(List<Animal> givenAnimals, Integer minAge, Integer maxAge, Map<Animal.Type, Integer> expectedAnswer) {
+        Map<Animal.Type, Integer> actualAnswer = new TasksFrom1Till18().task15WeightOfAnimalsOlderMinAgeYoungerMaxAge(givenAnimals, minAge, maxAge);
 
         assertEquals(expectedAnswer, actualAnswer);
     }

@@ -44,7 +44,7 @@ public class Task20Test {
         Map<String, Set<ValidationError>> expectedMap = new HashMap<>();
 
 
-        Map<String, Set<ValidationError>> actualMap = new Task19().getAnimalsThatHaveErrors(animals);
+        Map<String, Set<ValidationError>> actualMap = Task19.validateAnimals(animals);
 
         assertTrue(expectedMap.equals(actualMap));
     }

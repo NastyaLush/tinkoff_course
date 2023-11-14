@@ -2,7 +2,7 @@ package edu.hw4;
 
 import edu.hw4.given.Animal;
 import edu.hw4.task19.Task19;
-import edu.hw4.task19.TypeException;
+import edu.hw4.task19.ErrorType;
 import edu.hw4.task19.ValidationError;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -26,25 +26,25 @@ public class Task19Test {
         Map<String, Set<ValidationError>>
                 expectedMap = new HashMap<>();
         HashSet<ValidationError> set = new HashSet<>();
-        set.add(new ValidationError(TypeException.NON_UNIQUE, animals.get(0)
-                                                                     .getNameTitle()));
-        set.add(new ValidationError(TypeException.NEGATIVE_OR_ZERO, animals.get(0)
-                                                                           .getWeightTitle()));
-        set.add(new ValidationError(TypeException.NEGATIVE_OR_ZERO, animals.get(0)
-                                                                           .getAgeTitle()));
-        set.add(new ValidationError(TypeException.NEGATIVE_OR_ZERO, animals.get(0)
-                                                                           .getHeightTitle()));
-        set.add(new ValidationError(TypeException.NULL, animals.get(0)
-                                                               .getSexTitle()));
-        set.add(new ValidationError(TypeException.NULL, animals.get(0)
-                                                               .getTypeTitle()));
+        set.add(new ValidationError(ErrorType.NON_UNIQUE, animals.get(0)
+                                                                 .getNameTitle()));
+        set.add(new ValidationError(ErrorType.NEGATIVE_OR_ZERO, animals.get(0)
+                                                                       .getWeightTitle()));
+        set.add(new ValidationError(ErrorType.NEGATIVE_OR_ZERO, animals.get(0)
+                                                                       .getAgeTitle()));
+        set.add(new ValidationError(ErrorType.NEGATIVE_OR_ZERO, animals.get(0)
+                                                                       .getHeightTitle()));
+        set.add(new ValidationError(ErrorType.NULL, animals.get(0)
+                                                           .getSexTitle()));
+        set.add(new ValidationError(ErrorType.NULL, animals.get(0)
+                                                           .getTypeTitle()));
         expectedMap.put("dog", set);
         set = new HashSet<>();
-        set.add(new ValidationError(TypeException.NULL, animals.get(0)
-                                                               .getNameTitle()));
+        set.add(new ValidationError(ErrorType.NULL, animals.get(0)
+                                                           .getNameTitle()));
         expectedMap.put(null, set);
 
-        Map<String, Set<ValidationError>> actualMap = new Task19().getAnimalsThatHaveErrors(animals);
+        Map<String, Set<ValidationError>> actualMap = Task19.validateAnimals(animals);
 
         expectedMap.forEach((s, validationErrors) -> assertEquals(validationErrors, actualMap.get(s)));
     }
@@ -56,7 +56,7 @@ public class Task19Test {
                 expectedMap = new HashMap<>();
 
 
-        Map<String, Set<ValidationError>> actualMap = new Task19().getAnimalsThatHaveErrors(animals);
+        Map<String, Set<ValidationError>> actualMap = Task19.validateAnimals(animals);
 
         assertTrue(expectedMap.equals(actualMap));
     }

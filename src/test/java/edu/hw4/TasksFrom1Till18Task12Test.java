@@ -19,20 +19,20 @@ public class TasksFrom1Till18Task12Test {
                                 new Animal("dd", Animal.Type.DOG, Animal.Sex.F, 4, 100, 101, false),
                                 new Animal("ddd", Animal.Type.DOG, Animal.Sex.F, 3, 100, 99, true),
                                 new Animal("d", Animal.Type.FISH, Animal.Sex.F, 0, 101, 0, true)
-                        ), 1),
+                        ), 1L),
                 Arguments.of(
                         List.of(new Animal("d", Animal.Type.CAT, Animal.Sex.F, 3, 101, 0, false),
                                 new Animal("dd", Animal.Type.SPIDER, Animal.Sex.F, 8, 101, 0, false)
-                        ), 0),
-                Arguments.of(List.of(), 0)
+                        ), 0L),
+                Arguments.of(List.of(), 0L)
 
         );
     }
 
     @ParameterizedTest
     @MethodSource("providerTask12")
-    public void task12AnimalWhichWeightMoreThanHeight_shouldReturnAnimalWhichWeightMoreThanHeight(List<Animal> givenAnimals, Integer expectedAnswer) {
-        Integer actualAnswer = new TasksFrom1Till18().task12AnimalWhichWeightMoreThanHeight(givenAnimals);
+    public void task12AnimalWhichWeightMoreThanHeight_shouldReturnAnimalWhichWeightMoreThanHeight(List<Animal> givenAnimals, Long expectedAnswer) {
+        Long actualAnswer = new TasksFrom1Till18().task12AnimalWhichWeightMoreThanHeight(givenAnimals);
 
         assertEquals(expectedAnswer, actualAnswer);
     }

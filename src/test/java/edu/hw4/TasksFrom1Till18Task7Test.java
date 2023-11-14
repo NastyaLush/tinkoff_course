@@ -21,29 +21,29 @@ public class TasksFrom1Till18Task7Test {
                                 new Animal("dd", Animal.Type.DOG, Animal.Sex.F, 0, 0, 0, false),
                                 new Animal("ddd", Animal.Type.DOG, Animal.Sex.F, 0, 0, 0, false),
                                 new Animal("d", Animal.Type.DOG, Animal.Sex.F, 0, 0, 0, false)
-                        ), new Animal("d", Animal.Type.DOG, Animal.Sex.F, 0, 0, 0, false)
+                        ), 1, new Animal("d", Animal.Type.DOG, Animal.Sex.F, 0, 0, 0, false)
                 ),
                 Arguments.of(
                         List.of(new Animal("d", Animal.Type.DOG, Animal.Sex.F, 0, 0, 0, false),
                                 new Animal("dd", Animal.Type.DOG, Animal.Sex.F, 5, 0, 0, false),
-                                new Animal("dd", Animal.Type.DOG, Animal.Sex.F, 0, 0, 0, false),
-                                new Animal("d", Animal.Type.DOG, Animal.Sex.F, 0, 0, 0, false)
-                        ), new Animal("dd", Animal.Type.DOG, Animal.Sex.F, 5, 0, 0, false)),
+                                new Animal("dd", Animal.Type.DOG, Animal.Sex.F, 4, 0, 0, false),
+                                new Animal("d", Animal.Type.DOG, Animal.Sex.F, 1, 0, 0, false)
+                        ), 3, new Animal("d", Animal.Type.DOG, Animal.Sex.F, 1, 0, 0, false)),
                 Arguments.of(
                         List.of(new Animal("", Animal.Type.DOG, Animal.Sex.F, 1, 0, 0, false),
                                 new Animal("dd", Animal.Type.DOG, Animal.Sex.F, 5, 0, 0, false),
                                 new Animal("ddd", Animal.Type.DOG, Animal.Sex.F, 5, 0, 0, false),
                                 new Animal("d", Animal.Type.DOG, Animal.Sex.F, -1, 0, 0, false)
-                        ), new Animal("dd", Animal.Type.DOG, Animal.Sex.F, 5, 0, 0, false))
+                        ), 1, new Animal("dd", Animal.Type.DOG, Animal.Sex.F, 5, 0, 0, false))
 
         );
     }
 
     @ParameterizedTest
     @MethodSource("providerTask7")
-    public void task7TheOldestAnimal_shouldReturnTheOldestAnimal(List<Animal> givenAnimals, Animal expectedAnimal) {
+    public void task7TheOldestAnimal_shouldReturnTheOldestAnimal(List<Animal> givenAnimals, int givenK, Animal expectedAnimal) {
 
-        Animal actualAnimal = new TasksFrom1Till18().task7TheOldestAnimal(givenAnimals);
+        Animal actualAnimal = new TasksFrom1Till18().task7TheOldestAnimal(givenAnimals, givenK);
 
         assertEquals(expectedAnimal, actualAnimal);
     }
@@ -52,7 +52,15 @@ public class TasksFrom1Till18Task7Test {
     public void task7TheOldestAnimal_shouldThrowExceptionIfListIsEmpty() {
         List<Animal> animals = new ArrayList<>();
 
-        assertThrows(Exception.class, () -> new TasksFrom1Till18().task7TheOldestAnimal(animals));
+        assertThrows(Exception.class, () -> new TasksFrom1Till18().task7TheOldestAnimal(animals, 1));
+    }
+
+    @Test
+    public void task7TheOldestAnimal_shouldThrowExceptionIfKIllegal() {
+        List<Animal> animals = new ArrayList<>();
+        animals.add(new Animal("f", Animal.Type.DOG, Animal.Sex.F, 1, 1, 1, false));
+
+        assertThrows(IllegalArgumentException.class, () -> new TasksFrom1Till18().task7TheOldestAnimal(animals, 0));
     }
 
 

@@ -69,8 +69,9 @@ public class TasksFrom1Till18 {
         return animals.stream()
                       .sorted(Comparator.comparingInt(Animal::age)
                                         .reversed())
-                      .toList()
-                      .get(k - 1);
+                      .skip(k - 1)
+                      .findFirst()
+                      .orElseThrow();
 
     }
 

@@ -62,11 +62,13 @@ public class AttributeFilterTest {
         switch (options) {
 
             case READABLE -> {
+                Files.createFile(path);
                 Set<PosixFilePermission> permissions = EnumSet.of(PosixFilePermission.OWNER_READ, PosixFilePermission.GROUP_READ, PosixFilePermission.OTHERS_READ);
                 Files.setPosixFilePermissions(path, permissions);
                 return path;
             }
             case WRITABLE -> {
+                Files.createFile(path);
                 Set<PosixFilePermission> permissions = EnumSet.of(PosixFilePermission.OWNER_WRITE, PosixFilePermission.GROUP_WRITE, PosixFilePermission.OTHERS_WRITE);
                 Files.setPosixFilePermissions(path, permissions);
                 return path;
@@ -77,6 +79,7 @@ public class AttributeFilterTest {
             }
 
             case EXECUTABLE -> {
+                Files.createFile(path);
                 Set<PosixFilePermission> permissions = EnumSet.of(PosixFilePermission.OWNER_EXECUTE, PosixFilePermission.GROUP_EXECUTE, PosixFilePermission.OTHERS_EXECUTE);
                 Files.setPosixFilePermissions(path, permissions);
                 return path;

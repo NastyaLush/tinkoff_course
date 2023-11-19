@@ -12,17 +12,18 @@ public class FilePrinter implements Printer {
 
     private final String reportFileName = "reports/report";
     private final String reportDirName = "reports";
-    private final CloneFile cloneFile = new CloneFile();
+    private final Cloner cloneFile;
     private final Path path;
 
-    public FilePrinter(OutputType outputType) throws IOException {
+    public FilePrinter(Cloner cloneFile, OutputType outputType) throws IOException {
+        this.cloneFile = cloneFile;
         Path dirPath = Path.of(reportDirName);
 
         if (!Files.exists(dirPath)) {
             Files.createDirectory(dirPath);
         }
 
-        this.path = cloneFile.cloneFile(reportFileName + "_" + LocalDate.now() + "." + outputType);
+        this.path = this.cloneFile.cloneFile(reportFileName + "_" + LocalDate.now() + "." + outputType);
     }
 
     @Override

@@ -6,7 +6,7 @@ import java.nio.file.Path;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
-public class CloneFile {
+public class CloneFile implements Cloner {
 
     public Path cloneFile(String pathName) throws IOException {
         Path path = Path.of(pathName);

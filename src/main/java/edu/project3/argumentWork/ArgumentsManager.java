@@ -45,6 +45,9 @@ public class ArgumentsManager {
         return argumentTo;
     }
 
+    public ArgumentsManager() {
+    }
+
     public void setArgumentTo(String argumentTo) {
         if (this.argumentTo != null) {
             log.error("the to already added");
@@ -52,6 +55,16 @@ public class ArgumentsManager {
         }
         log.debug("parse --to argument");
         this.argumentTo = parseDate(argumentTo);
+    }
+
+    public ArgumentsManager(String argumentPath,
+                            LocalDateTime argumentFrom,
+                            LocalDateTime argumentTo,
+                            OutputType argumentFormat) {
+        this.argumentPath = argumentPath;
+        this.argumentFrom = argumentFrom;
+        this.argumentTo = argumentTo;
+        this.argumentFormat = argumentFormat;
     }
 
     public OutputType getArgumentFormat() {

@@ -9,7 +9,7 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 public record LogRecord(
         String ipClient,
-        Integer clientName,
+        String clientName,
         OffsetDateTime dateOfRequest,
         URL url,
         String httpCodeStatus,
@@ -33,14 +33,13 @@ public record LogRecord(
     public static LogRecord parse(String logValue) {
         Pattern pattern = Pattern.compile(
                 "^([\\w\\.:]*) - ([\\w-]*) \\[(.*)\\] \"(\\w{3,7}) "
-                        + "([/\\w]*) ([/\\w\\.]*)\" (\\d{3}) (\\d*) (\".*\") (\".*\")$"
+                        + "([/\\w]*) ([/\\w\\.]*)\" (\\d{3}) (\\d*) \"(.*)\" \"(.*)\"$"
         );
         Matcher matcher = pattern.matcher(logValue);
         if (matcher.matches()) {
             return new LogRecord(
                     matcher.group(IP_CLIENT_GROUP_NUMBER),
-                    matcher.group(CLIENT_NAME_GROUP_NUMBER)
-                           .equals("-") ? null : Integer.parseInt(matcher.group(CLIENT_NAME_GROUP_NUMBER)),
+                    matcher.group(CLIENT_NAME_GROUP_NUMBER),
                     OffsetDateTime.parse(matcher.group(DATA_OF_REQUEST_GROUP_NUMBER), DATE_TIME_FORMATTER),
                     new URL(
                             matcher.group(URL_METHOD_GROUP_NUMBER),

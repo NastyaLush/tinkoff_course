@@ -32,6 +32,7 @@ public class MetricPublisherTest {
         assertEquals(expectedArray, actualArray);
     }
 
+    //works with flag -Dnet.bytebuddy.experimental=true
     @Test
     public void updateMetrics_shouldCalMethodUpdateFromMetrics() {
         MetricPublisher metricPublisher = new MetricPublisher();

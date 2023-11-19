@@ -5,7 +5,9 @@ import edu.project3.metrics.MetricCommon;
 import edu.project3.metrics.MetricManager;
 import edu.project3.metrics.MetricPopularity;
 import edu.project3.metrics.MetricPublisher;
+import edu.project3.output.CloneFile;
 import edu.project3.output.FilePrinter;
+import edu.project3.output.PrintManager;
 import edu.project3.structures.LogRecord;
 import java.io.IOException;
 import lombok.extern.log4j.Log4j2;
@@ -24,8 +26,8 @@ public class Main {
         argumentsManager.setArgumentPath(string);
         argumentsManager.setArgumentFormat("adoc");
         MetricPublisher metricPublisher = getMetricPublisher();
-
-        new MetricManager(argumentsManager, metricPublisher, new FilePrinter(argumentsManager.getArgumentFormat()))
+        new FilePrinter(new CloneFile(), argumentsManager.getArgumentFormat());
+        new MetricManager(argumentsManager, metricPublisher)
                 .calcMetric();
 
     }
@@ -73,7 +75,10 @@ public class Main {
                 }
             }
         }
-        new MetricManager(arguments, metricPublisher, new FilePrinter(arguments.getArgumentFormat())).calcMetric();
+        new MetricManager(arguments, metricPublisher).calcMetric();
+        new PrintManager().print(arguments.getArgumentFormat(),
+                new FilePrinter(new CloneFile(), arguments.getArgumentFormat()),
+                metricPublisher.getMetrics());
 
     }
 

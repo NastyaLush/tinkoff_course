@@ -20,7 +20,7 @@ public class MetricCommonTest {
     public static Stream<Arguments> updateProvider() {
         return Stream.of(
                 Arguments.of(getMetricCommon(Stream.of(
-                                new LogRecord("1", 1, OffsetDateTime.of(2000, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC), new URL(
+                                new LogRecord("1", "1", OffsetDateTime.of(2000, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC), new URL(
                                         "GET", "dddd", "dddd"
                                 ), "400", 2L, "d", "d")
                         )),
@@ -31,16 +31,16 @@ public class MetricCommonTest {
                                 1L, BigInteger.valueOf(2))
                 ),
                 Arguments.of(getMetricCommon(Stream.of(
-                                new LogRecord("1", 1, OffsetDateTime.of(2000, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC), new URL(
+                                new LogRecord("1", "1", OffsetDateTime.of(2000, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC), new URL(
                                         "GET", "dddd", "dddd"
                                 ), "400", 2L, "d", "d"),
-                                new LogRecord("1", 1, OffsetDateTime.of(2020, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC), new URL(
+                                new LogRecord("1", "1", OffsetDateTime.of(2020, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC), new URL(
                                         "GET", "dddd", "dddd"
                                 ), "400", Long.MAX_VALUE, "d", "d"),
-                                new LogRecord("1", 1, OffsetDateTime.of(2030, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC), new URL(
+                                new LogRecord("1", "1", OffsetDateTime.of(2030, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC), new URL(
                                         "GET", "dddd", "dddd"
                                 ), "400", Long.MAX_VALUE, "d", "d"),
-                                new LogRecord("1", 1, OffsetDateTime.of(1900, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC), new URL(
+                                new LogRecord("1", "1", OffsetDateTime.of(1900, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC), new URL(
                                         "GET", "dddd", "dddd"
                                 ), "400", Long.MAX_VALUE, "d", "d")
                         )),

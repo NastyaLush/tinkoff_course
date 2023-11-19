@@ -37,14 +37,21 @@ public class MetricCommon extends Metric {
     public ArrayList<ArrayList<String>> getMetric() {
         ArrayList<ArrayList<String>> metrics = new ArrayList<>();
         metrics.add(new ArrayList<>(List.of(new String[]{"Метрика", "Значение"})));
-        metrics.add(new ArrayList<>(List.of(new String[]{"Начальная дата", minDate.toString()})));
-        metrics.add(new ArrayList<>(List.of(new String[]{"Конечная дата", maxDate.toString()})));
-        metrics.add(new ArrayList<>(List.of(new String[]{"Количество запросов", countOfRequest.toString()})));
+        metrics.add(new ArrayList<>(List.of(new String[]{"Начальная дата", getStringPerfom(minDate)})));
+        metrics.add(new ArrayList<>(List.of(new String[]{"Конечная дата", getStringPerfom(maxDate)})));
+        metrics.add(new ArrayList<>(List.of(new String[]{"Количество запросов", getStringPerfom(countOfRequest)})));
         metrics.add(new ArrayList<>(List.of(new String[]{"Средний размер ответа",
-                sumOfResponseSize.divide(BigInteger.valueOf(countOfRequest))
-                        .toString()})));
+                countOfRequest != 0 ? sumOfResponseSize.divide(BigInteger.valueOf(countOfRequest))
+                                                       .toString() : "0"})));
 
         return metrics;
+    }
+
+    private <T> String getStringPerfom(T t) {
+        if (t == null) {
+            return "-";
+        }
+        return t.toString();
     }
 
 }

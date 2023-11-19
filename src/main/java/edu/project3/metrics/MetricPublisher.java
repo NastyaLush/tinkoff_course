@@ -22,7 +22,4 @@ public class MetricPublisher {
         return metrics;
     }
 
-    public void removeMetric(Metric metric) {
-        metrics.remove(metric);
-    }
 }

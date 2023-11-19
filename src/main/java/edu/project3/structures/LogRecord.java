@@ -13,7 +13,7 @@ public record LogRecord(
         OffsetDateTime dateOfRequest,
         URL url,
         String httpCodeStatus,
-        Integer sizeOfResponse,
+        Long sizeOfResponse,
         String referer,
         String userAgent
 ) {
@@ -48,7 +48,7 @@ public record LogRecord(
                             matcher.group(URL_HTTP_PROTOCOL_VERSION_GROUP_NUMBER)
                     ),
                     matcher.group(HTTP_CODE_STATUS_GROUP_NUMBER),
-                    Integer.parseInt(matcher.group(SIZE_OF_RESPONSE_GROUP_NUMBER)),
+                    Long.parseLong(matcher.group(SIZE_OF_RESPONSE_GROUP_NUMBER)),
                     matcher.group(REFERER_GROUP_NUMBER),
                     matcher.group(USER_AGENT_GROUP_NUMBER)
             );

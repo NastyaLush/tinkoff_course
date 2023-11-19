@@ -1,7 +1,7 @@
 package edu.project3.metrics;
 
-import edu.project3.argument.ArgumentsManager;
-import edu.project3.argument.Util;
+import edu.project3.argumentWork.ArgumentsManager;
+import edu.project3.argumentWork.Util;
 import edu.project3.output.PrintManager;
 import edu.project3.output.Printer;
 import edu.project3.structures.LogRecord;
@@ -25,11 +25,11 @@ public class MetricManager {
     public void calcMetric() {
 
         try {
-            Util.getStream(arguments.getPathArgument())
+            Util.getStream(arguments.getArgumentPath())
                 .map(LogRecord::parse)
                 .filter((this::filter))
                 .forEach(metricPublisher::updateMetrics);
-            new PrintManager().print(arguments.getFormat(), printer, metricPublisher.getMetrics());
+            new PrintManager().print(arguments.getArgumentFormat(), printer, metricPublisher.getMetrics());
         } catch (IOException | InterruptedException e) {
             log.error("exception while iterate " + e.getMessage());
         }
@@ -37,13 +37,13 @@ public class MetricManager {
 
     public boolean filter(LogRecord logRecord) {
         boolean answer = true;
-        if (arguments.getFrom() != null) {
-            answer &= arguments.getFrom()
+        if (arguments.getArgumentFrom() != null) {
+            answer &= arguments.getArgumentFrom()
                                .isBefore(logRecord.dateOfRequest()
                                                   .toLocalDateTime());
         }
-        if (arguments.getTo() != null) {
-            answer &= arguments.getFrom()
+        if (arguments.getArgumentTo() != null) {
+            answer &= arguments.getArgumentFrom()
                                .isAfter(logRecord.dateOfRequest()
                                                  .toLocalDateTime());
         }

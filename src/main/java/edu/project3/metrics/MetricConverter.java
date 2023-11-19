@@ -3,7 +3,7 @@ package edu.project3.metrics;
 import edu.project3.structures.LogRecord;
 
 @FunctionalInterface
-public interface FieldForMetric {
+public interface MetricConverter {
 
-    String getField(LogRecord logRecord);
+    String getMetric(LogRecord logRecord);
 }

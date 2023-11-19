@@ -1,9 +1,9 @@
-package edu.project3.argument;
+package edu.project3.argumentWork;
 
 import java.nio.file.Path;
 
 @FunctionalInterface
-public interface Predicate {
+public interface PredicatePath {
 
     boolean test(Path path);
 }

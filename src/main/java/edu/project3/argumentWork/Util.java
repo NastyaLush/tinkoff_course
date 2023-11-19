@@ -1,4 +1,4 @@
-package edu.project3.argument;
+package edu.project3.argumentWork;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -28,26 +28,26 @@ public class Util {
 
     public static Stream<String> getStream(String pathArgument) throws IOException, InterruptedException {
         if (urlValidator(pathArgument)) {
-            log.info("receive url");
+            log.info("--path is url");
             return getUrlStream(pathArgument);
         } else if (pathArgument.contains("*")) {
-            log.info("receive pattern directory");
+            log.info("--path is pattern directory");
             return getPatternStream(pathArgument);
         } else {
             Path path = Path.of(pathArgument);
             if (Files.isRegularFile(path)) {
-                log.info("receive file");
+                log.info("--path is file");
                 return getFileStream(pathArgument);
             } else if (Files.isDirectory(path)) {
-                log.info("receive simple directory");
+                log.info("--path is simple directory");
                 return getDirectoryStream(pathArgument);
             }
         }
-        log.error("there is no pattern for this path");
+        log.error("there is no pattern or path for --path argument");
         throw new IllegalArgumentException();
     }
 
-    private static boolean urlValidator(String url) {
+    protected static boolean urlValidator(String url) {
         try {
             new URL(url).toURI();
             return true;
@@ -56,7 +56,7 @@ public class Util {
         }
     }
 
-    private static Stream<String> getUrlStream(String pathArgument) throws IOException, InterruptedException {
+    protected static Stream<String> getUrlStream(String pathArgument) throws IOException, InterruptedException {
         HttpClient httpClient = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                                          .uri(URI.create(pathArgument))
@@ -68,7 +68,7 @@ public class Util {
                                      .split("\n"));
     }
 
-    private static Stream<String> getPatternStream(String pathArgument) throws IOException {
+    protected static Stream<String> getPatternStream(String pathArgument) throws IOException {
 
         Matcher matcher = PATTERN_FIRST_TYPE.matcher(pathArgument);
         if (matcher.matches()) {
@@ -84,39 +84,44 @@ public class Util {
 
     }
 
-    private static Stream<String> getFileStream(String pathArgument) throws IOException {
+    protected static Stream<String> getFileStream(String pathArgument) throws IOException {
         try (Stream<String> stream = Files.lines(Path.of(pathArgument))) {
-            return stream;
+            return stream.toList()
+                         .stream();
         }
     }
 
-    private static Stream<String> getDirectoryStream(String pathArgument) throws IOException {
+    protected static Stream<String> getDirectoryStream(String pathArgument) throws IOException {
         try (Stream<Path> stream = Files.walk(Path.of(pathArgument), 1)) {
             return stream.flatMap((path -> {
-                try {
-                    return Files.lines(path);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }));
+                             try {
+                                 return Files.lines(path)
+                                             .toList()
+                                             .stream();
+                             } catch (IOException e) {
+                                 throw new RuntimeException(e);
+                             }
+                         }))
+                         .toList()
+                         .stream();
         }
     }
 
-    private static Stream<String> getStreamFirstPattern(Matcher matcher) throws IOException {
+    protected static Stream<String> getStreamFirstPattern(Matcher matcher) throws IOException {
         log.info("receive first pattern");
 
         Path dir = Path.of(matcher.group(1));
         String startPathPattern = matcher.group(PATTERN_GROUP_NUMBER)
                                          .split("\\*")[0];
 
-        try (Stream<Path> stream = Files.walk(dir, 2)) {
+        try (Stream<Path> stream = Files.walk(dir, 1)) {
             return getStreamFromPathStream(stream, (path) -> path.getFileName()
                                                                  .toString()
                                                                  .startsWith(startPathPattern));
         }
     }
 
-    private static Stream<String> getStreamSecondPattern(Matcher matcher) throws IOException {
+    protected static Stream<String> getStreamSecondPattern(Matcher matcher) throws IOException {
         log.info("receive second pattern");
 
         Path dir = Path.of(matcher.group(1));
@@ -128,10 +133,11 @@ public class Util {
         }
     }
 
-    private static Stream<String> getStreamFromPathStream(Stream<Path> stream, Predicate predicate) {
+    private static Stream<String> getStreamFromPathStream(Stream<Path> stream, PredicatePath predicate) {
         return stream.filter(Files::isRegularFile)
                      .filter(predicate::test)
                      .flatMap((path -> {
+                         log.debug("current file for flatmap is " + path);
                          try {
                              return Files.lines(path);
                          } catch (IOException e) {

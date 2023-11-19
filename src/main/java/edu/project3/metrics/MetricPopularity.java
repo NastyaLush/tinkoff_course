@@ -9,7 +9,7 @@ import java.util.Map;
 public class MetricPopularity extends Metric {
 
     private final Integer defaultCountOfRowsToPrint = 3;
-    protected final FieldForMetric fieldForMetric;
+    protected final MetricConverter fieldForMetric;
     protected final HashMap<String, Integer> popularity = new HashMap<>();
     protected final Integer countOfRowsToPrint;
     private final String headline;
@@ -18,7 +18,7 @@ public class MetricPopularity extends Metric {
     public MetricPopularity(String name,
                             String headline,
                             String popHeadline,
-                            FieldForMetric fieldForMetric) {
+                            MetricConverter fieldForMetric) {
         super(name);
         countOfRowsToPrint = defaultCountOfRowsToPrint;
         this.fieldForMetric = fieldForMetric;
@@ -29,7 +29,7 @@ public class MetricPopularity extends Metric {
     public MetricPopularity(String name,
                             String headline,
                             String popHeadline,
-                            FieldForMetric fieldForMetric,
+                            MetricConverter fieldForMetric,
                             Integer countOfRowsToPrint) {
         super(name);
         this.countOfRowsToPrint = countOfRowsToPrint;
@@ -40,10 +40,11 @@ public class MetricPopularity extends Metric {
 
     @Override
     public void update(LogRecord logRecord) {
-        if (popularity.containsKey(fieldForMetric.getField(logRecord))) {
-            popularity.put(fieldForMetric.getField(logRecord), popularity.get(fieldForMetric.getField(logRecord)) + 1);
+        if (popularity.containsKey(fieldForMetric.getMetric(logRecord))) {
+            popularity.put(fieldForMetric.getMetric(logRecord),
+                    popularity.get(fieldForMetric.getMetric(logRecord)) + 1);
         } else {
-            popularity.put(fieldForMetric.getField(logRecord), 1);
+            popularity.put(fieldForMetric.getMetric(logRecord), 1);
         }
     }
 

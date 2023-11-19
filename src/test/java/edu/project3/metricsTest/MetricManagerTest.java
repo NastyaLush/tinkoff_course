@@ -1,4 +1,4 @@
-package project3.metricsTest;
+package edu.project3.metricsTest;
 
 import edu.project3.argumentWork.ArgumentsManager;
 import edu.project3.argumentWork.Util;

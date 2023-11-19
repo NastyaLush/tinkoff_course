@@ -1,4 +1,4 @@
-package project3.argumentWorkTests;
+package edu.project3.argumentWorkTests;
 
 import edu.project3.argumentWork.ArgumentsManager;
 import edu.project3.output.OutputType;

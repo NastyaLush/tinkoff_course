@@ -1,4 +1,4 @@
-package project3.structresTest;
+package edu.project3.structresTest;
 
 import edu.project3.structures.LogRecord;
 import edu.project3.structures.URL;

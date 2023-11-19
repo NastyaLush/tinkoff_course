@@ -1,4 +1,4 @@
-package project3.outputTest;
+package edu.project3.outputTest;
 
 
 import edu.project3.output.CloneFile;

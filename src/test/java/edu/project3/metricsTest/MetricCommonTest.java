@@ -1,4 +1,4 @@
-package project3.metricsTest;
+package edu.project3.metricsTest;
 
 import edu.project3.metrics.MetricCommon;
 import edu.project3.structures.LogRecord;

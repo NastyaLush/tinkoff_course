@@ -93,8 +93,10 @@ public class Util {
 
     protected static Stream<String> getDirectoryStream(String pathArgument) throws IOException {
         try (Stream<Path> stream = Files.walk(Path.of(pathArgument), 1)) {
-            return stream.flatMap((path -> {
+            return stream.filter(Files::isRegularFile)
+                         .flatMap((path -> {
                              try {
+                                 System.out.println(pathArgument);
                                  return Files.lines(path)
                                              .toList()
                                              .stream();

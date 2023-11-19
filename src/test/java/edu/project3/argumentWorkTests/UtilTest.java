@@ -1,4 +1,4 @@
-package project3.argumentWorkTests;
+package edu.project3.argumentWorkTests;
 
 import edu.project3.argumentWork.Util;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -17,7 +17,7 @@ public class UtilTest {
                 Arguments.of("https://edu.tinkoff.ru/my-activities/"),
                 Arguments.of("https://raw.githubusercontent.com/elastic/examples/master/Common%20Data%20Formats/nginx_logs/nginx_logs"),
                 Arguments.of("logs/log1.txt"),
-                Arguments.of("logs/dir"),
+                Arguments.of("logs/dir/"),
                 Arguments.of("logs/log*"),
                 Arguments.of("logs/**/log.txt"),
                 Arguments.of("logs/**/logo.txt")
@@ -31,7 +31,7 @@ public class UtilTest {
                 Arguments.of("logs/log**"),
                 Arguments.of("logs/*/log.txt"),
                 Arguments.of("logs/log1.tx"),
-                Arguments.of("log/dir")
+                Arguments.of("log/dir/")
         );
     }
 

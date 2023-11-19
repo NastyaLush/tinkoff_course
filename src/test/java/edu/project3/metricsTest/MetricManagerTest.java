@@ -4,19 +4,17 @@ import edu.project3.argumentWork.ArgumentsManager;
 import edu.project3.argumentWork.Util;
 import edu.project3.metrics.MetricManager;
 import edu.project3.metrics.MetricPublisher;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import java.time.LocalDateTime;
 import java.util.stream.Stream;
 
-//@ExtendWith(MockitoExtension.class)
+@ExtendWith(MockitoExtension.class)
 public class MetricManagerTest {
 
     @Mock
@@ -26,15 +24,6 @@ public class MetricManagerTest {
     @InjectMocks
     private MetricManager metricManager;
 
-    @BeforeEach
-    void setUp() {
-//        MockitoAnnotations.openMocks(this);
-        argumentsManager = Mockito.mock(ArgumentsManager.class);
-        metricPublisher = Mockito.mock(MetricPublisher.class);
-        metricManager = new MetricManager(argumentsManager, metricPublisher);
-    }
-
-    //-Dnet.bytebuddy.experimental=true
     @Test
     public void calcMetric_shouldFilterLogRecordAndCalcMetricForAllMetrics() {
         Mockito.when(argumentsManager.getArgumentFrom())

@@ -96,7 +96,6 @@ public class Util {
             return stream.filter(Files::isRegularFile)
                          .flatMap((path -> {
                              try {
-                                 System.out.println(pathArgument);
                                  return Files.lines(path)
                                              .toList()
                                              .stream();

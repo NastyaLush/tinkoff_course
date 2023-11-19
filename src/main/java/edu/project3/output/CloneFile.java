@@ -32,7 +32,7 @@ public class CloneFile implements Cloner {
                                                           .matches())
                                  .count();
             Path newPath;
-            newPath = Path.of(path.getParent() + "\\" + filename + "(" + count + ")." + ext);
+            newPath = Path.of(path.getParent() + "/" + filename + "(" + count + ")." + ext);
 
             Files.createFile(newPath);
             return newPath;

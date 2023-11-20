@@ -3,16 +3,8 @@ package edu.hw5.task2;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.Month;
-import java.time.temporal.TemporalAdjusters;
-import java.time.temporal.TemporalField;
 import java.util.ArrayList;
 import java.util.List;
-import java.time.temporal.ChronoUnit;
-import java.time.temporal.IsoFields;
-import java.time.temporal.TemporalAdjusters;
-import java.time.temporal.TemporalUnit;
-
-import java.time.temporal.ChronoField;
 
 public class Friday13 {
 

@@ -1,10 +1,10 @@
 package edu.hw5.task6;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.util.stream.Stream;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import java.util.stream.Stream;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class Task6Test {
 
@@ -19,7 +19,8 @@ public class Task6Test {
             Arguments.of("A123BE765", "A15", false),
             Arguments.of("A123BE765", "a", false),
             Arguments.of("A123BE765", "L", false),
-            Arguments.of("\\\\abc", "\\\\a", true)
+            Arguments.of("\\\\abc", "\\\\a", true),
+            Arguments.of("{.}", "{.", true)
 
         );
     }

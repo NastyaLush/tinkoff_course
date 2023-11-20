@@ -5,12 +5,11 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
-public class Validator {
+public class DateFormattedParser implements Parser {
 
     protected final DateTimeFormatter formatter;
-    private Validator nextValidator;
 
-    public Validator(DateTimeFormatter formatter) {
+    public DateFormattedParser(DateTimeFormatter formatter) {
         this.formatter = formatter;
     }
 
@@ -23,15 +22,4 @@ public class Validator {
         }
     }
 
-    public Validator getNextValidator() {
-        return nextValidator;
-    }
-
-    public void setNextValidator(Validator nextValidator) {
-        this.nextValidator = nextValidator;
-    }
-
-    public boolean hasNextValidator() {
-        return nextValidator != null;
-    }
 }

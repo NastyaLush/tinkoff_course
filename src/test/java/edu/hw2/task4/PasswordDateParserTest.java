@@ -6,12 +6,12 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class PasswordValidatorTest {
+public class PasswordDateParserTest {
 
     private static Stream<Arguments> callingInfoProvider() {
         return Stream.of(Arguments.of(new Exception()), Arguments.of(new NullPointerException()),
-                Arguments.of(new IllegalArgumentException()), Arguments.of(new StackOverflowError()),
-                Arguments.of(new Error())
+            Arguments.of(new IllegalArgumentException()), Arguments.of(new StackOverflowError()),
+            Arguments.of(new Error())
         );
     }
 

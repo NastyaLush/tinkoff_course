@@ -6,12 +6,7 @@ import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class DayAgoFormatValidator extends Validator {
-
-    public DayAgoFormatValidator() {
-        super(null);
-    }
-
+public class DayAgoFormatDateParser implements Parser {
     @Override
     public Optional<LocalDate> parseDate(String string) {
         Pattern pattern = Pattern.compile("^[-+]?\\d+ days? ago$");
@@ -20,7 +15,7 @@ public class DayAgoFormatValidator extends Validator {
         if (matcher.find()) {
             try {
                 return Optional.of(LocalDate.now()
-                                            .minusDays(Long.parseLong(string.split(" ")[0])));
+                    .minusDays(Long.parseLong(string.split(" ")[0])));
             } catch (DateTimeException | NumberFormatException e) {
                 return Optional.empty();
             }

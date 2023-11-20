@@ -15,7 +15,7 @@ public class ClientSessionTime {
                                      .map(this::getDuration)
                                      .collect(Collectors.averagingLong(Long::longValue));
 
-        Duration duration = Duration.ofNanos(avgNanoSecTime.longValue());
+        Duration duration = Duration.ofSeconds(avgNanoSecTime.longValue());
         System.out.printf("%dч %dм", duration.toHours(), duration.toMinutesPart());
     }
 
@@ -24,7 +24,7 @@ public class ClientSessionTime {
         LocalDateTime start = LocalDateTime.parse(inputSlitOnStartAndEnd[0], pattern);
         LocalDateTime end = LocalDateTime.parse(inputSlitOnStartAndEnd[1], pattern);
         return Duration.between(start, end)
-                       .toNanos();
+                       .toSeconds();
     }
 
 }

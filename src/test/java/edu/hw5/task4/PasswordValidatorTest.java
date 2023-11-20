@@ -1,6 +1,5 @@
-package edu.hw4.task4;
+package edu.hw5.task4;
 
-import edu.hw5.task4.PasswordValidator;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;

@@ -1,6 +1,5 @@
-package edu.hw4.task1;
+package edu.hw5.task1;
 
-import edu.hw5.task1.ClientSessionTime;
 import org.junit.jupiter.api.AfterEach;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;

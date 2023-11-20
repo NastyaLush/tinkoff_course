@@ -1,6 +1,5 @@
-package edu.hw4.task6;
+package edu.hw5.task6;
 
-import edu.hw5.task6.Task6;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;

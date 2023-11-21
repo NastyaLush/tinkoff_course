@@ -6,6 +6,7 @@ import lombok.extern.log4j.Log4j2;
 
 @Log4j2
 public class PiCalculator {
+    private final double constForCalculatingPi = 4;
 
     public Double calcPI(Integer countOfIterations, Integer radius, Integer countOfThreads)
         throws InterruptedException {
@@ -31,9 +32,9 @@ public class PiCalculator {
             circleCount += thread.getValue().circleCount;
             totalCount += thread.getValue().totalCount;
         }
-        Double answer = 4d * ((double) circleCount / totalCount);
-        log.info(countOfThreads + " threads with " + countOfIterations + " executed in " + (System.nanoTime() - start) +
-            " nanosec with result " + answer);
+        Double answer = constForCalculatingPi * ((double) circleCount / totalCount);
+        log.info(countOfThreads + " threads with " + countOfIterations + " executed in " + (System.nanoTime() - start)
+            + " nanosec with result " + answer);
         return answer;
     }
 

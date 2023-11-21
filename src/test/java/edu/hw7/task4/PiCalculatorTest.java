@@ -1,10 +1,12 @@
 package edu.hw7.task4;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class PiCalculatorTest {
 
     @Test
+    @DisplayName("dont know how to test just run it")
     public void calcPi_shouldCalcPi() throws InterruptedException {
         PiCalculator piCalculator = new PiCalculator();
         piCalculator.calcPI(10000, 1, 1);

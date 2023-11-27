@@ -3,16 +3,16 @@ package edu.project3.output;
 import edu.project3.metrics.Metric;
 import java.util.ArrayList;
 
-public class PrinterWithFormatMarkdown implements PrinterWithFormat {
+public class MdReportGenerator implements ReportGenerator {
 
     private final Printer printer;
 
-    public PrinterWithFormatMarkdown(Printer printer) {
+    public MdReportGenerator(Printer printer) {
         this.printer = printer;
     }
 
     @Override
-    public void print(Metric metric) {
+    public void generate(Metric metric) {
         printHeadline(metric.getHeadline());
         printTableHeadline(metric.getMetric()
                                  .get(0));

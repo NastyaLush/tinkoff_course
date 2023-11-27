@@ -6,25 +6,36 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import lombok.extern.log4j.Log4j2;
 
-@Log4j2
-public class ArgumentsManager {
+@Log4j2 public class ArgumentsManager {
 
-    private String argumentPath;
-    private LocalDateTime argumentFrom;
-    private LocalDateTime argumentTo;
-    private OutputType argumentFormat;
+    private String path;
+    private LocalDateTime dateFrom;
+    private LocalDateTime dateTo;
+    private OutputType reportFormat;
 
-    public LocalDateTime getArgumentFrom() {
-        return argumentFrom;
+    public ArgumentsManager() {
     }
 
-    public void setArgumentFrom(String argumentFrom) {
-        if (this.argumentFrom != null) {
+    public ArgumentsManager(
+        String path, LocalDateTime dateFrom, LocalDateTime dateTo, OutputType reportFormat
+    ) {
+        this.path = path;
+        this.dateFrom = dateFrom;
+        this.dateTo = dateTo;
+        this.reportFormat = reportFormat;
+    }
+
+    public LocalDateTime getDateFrom() {
+        return dateFrom;
+    }
+
+    public void setDateFrom(String dateFrom) {
+        if (this.dateFrom != null) {
             log.error("the from already added");
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("the from already added");
         }
         log.debug("parse --from argument");
-        this.argumentFrom = parseDate(argumentFrom);
+        this.dateFrom = parseDate(dateFrom);
     }
 
     private LocalDateTime parseDate(String date) {
@@ -41,68 +52,65 @@ public class ArgumentsManager {
         return null;
     }
 
-    public LocalDateTime getArgumentTo() {
-        return argumentTo;
+    public LocalDateTime getDateTo() {
+        return dateTo;
     }
 
-    public ArgumentsManager() {
-    }
-
-    public void setArgumentTo(String argumentTo) {
-        if (this.argumentTo != null) {
-            log.error("the to already added");
-            throw new IllegalArgumentException();
+    public void setDateTo(String dateTo) {
+        if (this.dateTo != null) {
+            String message = "the to already added";
+            log.error(message);
+            throw new IllegalArgumentException(message);
         }
         log.debug("parse --to argument");
-        this.argumentTo = parseDate(argumentTo);
+        this.dateTo = parseDate(dateTo);
     }
 
-    public ArgumentsManager(String argumentPath,
-                            LocalDateTime argumentFrom,
-                            LocalDateTime argumentTo,
-                            OutputType argumentFormat) {
-        this.argumentPath = argumentPath;
-        this.argumentFrom = argumentFrom;
-        this.argumentTo = argumentTo;
-        this.argumentFormat = argumentFormat;
+    public OutputType getReportFormat() {
+        return reportFormat;
     }
 
-    public OutputType getArgumentFormat() {
-        return argumentFormat;
-    }
-
-    public void setArgumentFormat(String argumentFormat) {
-        if (this.argumentFormat != null) {
-            log.error("the --format already added");
-            throw new IllegalArgumentException();
+    public void setReportFormat(String reportFormat) {
+        if (this.reportFormat != null) {
+            String message = "the --format already added";
+            log.error(message);
+            throw new IllegalArgumentException(message);
         }
         log.debug("parse --format argument");
-        this.argumentFormat = switch (argumentFormat) {
+        this.reportFormat = switch (reportFormat) {
             case "markdown" -> OutputType.MARKDOWN;
             case "adoc" -> OutputType.ADOC;
             default -> {
-                log.error("the --format has wrong type");
-                throw new IllegalArgumentException();
+                String message = "the --format has wrong type";
+                log.error(message);
+                throw new IllegalArgumentException(message);
             }
         };
     }
 
-    public String getArgumentPath() {
-        return argumentPath;
+    public String getPath() {
+        return path;
     }
 
-    public void setArgumentPath(String argumentPath) {
-        if (this.argumentPath != null) {
-            log.error("the --path argument already added");
-            throw new IllegalArgumentException();
+    public void setPath(String path) {
+        if (this.path != null) {
+            String message = "the --path argument already added";
+            log.error(message);
+            throw new IllegalArgumentException(message);
         }
-        this.argumentPath = argumentPath;
+        this.path = path;
     }
 
     public void validate() {
-        if (argumentPath == null) {
-            log.error("should give --path argument to logfiles");
-            throw new IllegalArgumentException();
+        if (path == null) {
+            String message = "should give --path argument to logfiles";
+            log.error(message);
+            throw new IllegalArgumentException(message);
+        }
+        if ((dateFrom != null || dateTo != null) && dateFrom.isAfter(dateTo)) {
+            String message = "--from must be earlier than --to";
+            log.error(message);
+            throw new IllegalArgumentException(message);
         }
     }
 }

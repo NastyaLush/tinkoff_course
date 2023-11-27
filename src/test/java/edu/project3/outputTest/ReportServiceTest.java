@@ -2,27 +2,25 @@ package edu.project3.outputTest;
 
 import edu.project3.metrics.MetricCommon;
 import edu.project3.output.OutputType;
-import edu.project3.output.PrintManager;
-import edu.project3.output.PrinterWithFormatDoc;
-import edu.project3.output.PrinterWithFormatMarkdown;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import edu.project3.output.ReportService;
 import java.util.ArrayList;
 import java.util.List;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class PrintManagerTest {
+public class ReportServiceTest {
 
     @Test
     @DisplayName("check if argument adoc so the print in adoc format")
     public void print_shouldPrintInCorrectIsStyleADOC() {
-        PrintManager printManager = new PrintManager();
+        ReportService reportService = new ReportService();
         MetricCommon metricCommon = new MetricCommon();
         List<String> expectedList = new ArrayList<>();
-        new PrinterWithFormatDoc(expectedList::add).print(metricCommon);
+        new edu.project3.output.DocReportGenerator(expectedList::add).generate(metricCommon);
 
         List<String> actualList = new ArrayList<>();
-        printManager.print(OutputType.ADOC, actualList::add, List.of(metricCommon));
+        reportService.report(OutputType.ADOC, actualList::add, List.of(metricCommon));
 
         assertEquals(expectedList, actualList);
     }
@@ -30,13 +28,13 @@ public class PrintManagerTest {
     @Test
     @DisplayName("check if argument md so the print in md format")
     public void print_shouldPrintInCorrectIsStyleMD() {
-        PrintManager printManager = new PrintManager();
+        ReportService reportService = new ReportService();
         MetricCommon metricCommon = new MetricCommon();
         List<String> expectedList = new ArrayList<>();
-        new PrinterWithFormatMarkdown(expectedList::add).print(metricCommon);
+        new edu.project3.output.MdReportGenerator(expectedList::add).generate(metricCommon);
 
         List<String> actualList = new ArrayList<>();
-        printManager.print(OutputType.MARKDOWN, actualList::add, List.of(metricCommon));
+        reportService.report(OutputType.MARKDOWN, actualList::add, List.of(metricCommon));
 
         assertEquals(expectedList, actualList);
     }
@@ -44,18 +42,17 @@ public class PrintManagerTest {
     @Test
     @DisplayName("method works correctly with some metrics")
     public void print_shouldPrintAllMetrics() {
-        PrintManager printManager = new PrintManager();
+        ReportService reportService = new ReportService();
         MetricCommon metricCommon = new MetricCommon();
         MetricCommon metricCommon2 = new MetricCommon();
         List<String> expectedList = new ArrayList<>();
-        new PrinterWithFormatMarkdown(expectedList::add).print(metricCommon);
-        new PrinterWithFormatMarkdown(expectedList::add).print(metricCommon2);
+        new edu.project3.output.MdReportGenerator(expectedList::add).generate(metricCommon);
+        new edu.project3.output.MdReportGenerator(expectedList::add).generate(metricCommon2);
 
         List<String> actualList = new ArrayList<>();
-        printManager.print(OutputType.MARKDOWN, actualList::add, List.of(metricCommon, metricCommon2));
+        reportService.report(OutputType.MARKDOWN, actualList::add, List.of(metricCommon, metricCommon2));
 
         assertEquals(expectedList, actualList);
     }
-
 
 }

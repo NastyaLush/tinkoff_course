@@ -2,8 +2,8 @@ package edu.project3.output;
 
 import edu.project3.metrics.Metric;
 
-public interface PrinterWithFormat {
+public interface ReportGenerator {
 
-    void print(Metric metric);
+    void generate(Metric metric);
 
 }

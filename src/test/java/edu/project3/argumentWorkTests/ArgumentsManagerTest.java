@@ -16,20 +16,20 @@ public class ArgumentsManagerTest {
 
     public static Stream<Arguments> dateProvider() {
         return Stream.of(
-                Arguments.of(
-                        "2011-12-03T10:15:30", LocalDateTime.of(2011, 12, 3, 10, 15, 30),
-                        "2011-12-03", LocalDateTime.of(2011, 12, 3, 0, 0, 0),
-                        "2011/12/03", null
-                )
+            Arguments.of(
+                "2011-12-03T10:15:30", LocalDateTime.of(2011, 12, 3, 10, 15, 30),
+                "2011-12-03", LocalDateTime.of(2011, 12, 3, 0, 0, 0),
+                "2011/12/03", null
+            )
         );
     }
 
     public static Stream<Arguments> formatProvider() {
         return Stream.of(
-                Arguments.of(
-                        "markdown", OutputType.MARKDOWN,
-                        "adoc", OutputType.ADOC
-                )
+            Arguments.of(
+                "markdown", OutputType.MARKDOWN,
+                "adoc", OutputType.ADOC
+            )
         );
     }
 
@@ -37,9 +37,9 @@ public class ArgumentsManagerTest {
     @MethodSource("dateProvider")
     public void setArgumentFrom_shouldParsStringToDate(String givenDate, LocalDateTime expectedLocalDateTime) {
         ArgumentsManager argumentsManager = new ArgumentsManager();
-        argumentsManager.setArgumentFrom(givenDate);
+        argumentsManager.setDateFrom(givenDate);
 
-        LocalDateTime actualLocalDateTime = argumentsManager.getArgumentFrom();
+        LocalDateTime actualLocalDateTime = argumentsManager.getDateFrom();
 
         assertEquals(expectedLocalDateTime, actualLocalDateTime);
 
@@ -50,18 +50,18 @@ public class ArgumentsManagerTest {
     public void setArgumentFrom_shouldThrowErrorIfDateAlreadyAdded() {
         ArgumentsManager argumentsManager = new ArgumentsManager();
         String from = "2011-12-03T10:15:30";
-        argumentsManager.setArgumentFrom(from);
+        argumentsManager.setDateFrom(from);
 
-        assertThrows(IllegalArgumentException.class, () -> argumentsManager.setArgumentFrom(from));
+        assertThrows(IllegalArgumentException.class, () -> argumentsManager.setDateFrom(from));
     }
 
     @ParameterizedTest(name = "The date {0} should be converted to {1}")
     @MethodSource("dateProvider")
     public void setArgumentTo_shouldParsStringToDate(String givenDate, LocalDateTime expectedLocalDateTime) {
         ArgumentsManager argumentsManager = new ArgumentsManager();
-        argumentsManager.setArgumentTo(givenDate);
+        argumentsManager.setDateTo(givenDate);
 
-        LocalDateTime actualLocalDateTime = argumentsManager.getArgumentTo();
+        LocalDateTime actualLocalDateTime = argumentsManager.getDateTo();
 
         assertEquals(expectedLocalDateTime, actualLocalDateTime);
 
@@ -72,18 +72,18 @@ public class ArgumentsManagerTest {
     public void setArgumentTo_shouldThrowErrorIfDateAlreadyAdded() {
         ArgumentsManager argumentsManager = new ArgumentsManager();
         String from = "2011-12-03T10:15:30";
-        argumentsManager.setArgumentTo(from);
+        argumentsManager.setDateTo(from);
 
-        assertThrows(IllegalArgumentException.class, () -> argumentsManager.setArgumentTo(from));
+        assertThrows(IllegalArgumentException.class, () -> argumentsManager.setDateTo(from));
     }
 
     @ParameterizedTest(name = "The input {0} should be converted to {1}")
     @MethodSource("formatProvider")
     public void setArgumentFormat_shouldParsFormatIfDataCorrect(String givenInput, OutputType expectedOutputType) {
         ArgumentsManager argumentsManager = new ArgumentsManager();
-        argumentsManager.setArgumentFormat(givenInput);
+        argumentsManager.setReportFormat(givenInput);
 
-        OutputType actualLocalDateTime = argumentsManager.getArgumentFormat();
+        OutputType actualLocalDateTime = argumentsManager.getReportFormat();
 
         assertEquals(expectedOutputType, actualLocalDateTime);
 
@@ -94,9 +94,9 @@ public class ArgumentsManagerTest {
     public void setArgumentFormat_shouldThrowErrorIfDateAlreadyAdded() {
         ArgumentsManager argumentsManager = new ArgumentsManager();
         String format = "adoc";
-        argumentsManager.setArgumentFormat(format);
+        argumentsManager.setReportFormat(format);
 
-        assertThrows(IllegalArgumentException.class, () -> argumentsManager.setArgumentFormat(format));
+        assertThrows(IllegalArgumentException.class, () -> argumentsManager.setReportFormat(format));
     }
 
     @Test()
@@ -105,15 +105,13 @@ public class ArgumentsManagerTest {
         ArgumentsManager argumentsManager = new ArgumentsManager();
         String format = "adocc";
 
-
-        assertThrows(IllegalArgumentException.class, () -> argumentsManager.setArgumentFormat(format));
+        assertThrows(IllegalArgumentException.class, () -> argumentsManager.setReportFormat(format));
     }
 
     @Test()
     @DisplayName("validate should throw error if there is no path")
     public void validate_shouldThrowErrorIfThereIsNoThisPath() {
         ArgumentsManager argumentsManager = new ArgumentsManager();
-
 
         assertThrows(IllegalArgumentException.class, argumentsManager::validate);
     }
@@ -123,10 +121,9 @@ public class ArgumentsManagerTest {
     public void setArgumentPath_shouldThrowErrorIfPathAlreadyExist() {
         ArgumentsManager argumentsManager = new ArgumentsManager();
         String path = "a";
-        argumentsManager.setArgumentPath(path);
+        argumentsManager.setPath(path);
 
-
-        assertThrows(IllegalArgumentException.class, () -> argumentsManager.setArgumentPath(path));
+        assertThrows(IllegalArgumentException.class, () -> argumentsManager.setPath(path));
     }
 
     @Test()
@@ -134,9 +131,9 @@ public class ArgumentsManagerTest {
     public void setArgumentPath_shouldAddPathIfPathNotExist() {
         ArgumentsManager argumentsManager = new ArgumentsManager();
         String expectedPath = "a";
-        argumentsManager.setArgumentPath(expectedPath);
+        argumentsManager.setPath(expectedPath);
 
-        String actualPath = argumentsManager.getArgumentPath();
+        String actualPath = argumentsManager.getPath();
 
         assertEquals(expectedPath, actualPath);
     }
@@ -145,8 +142,7 @@ public class ArgumentsManagerTest {
     @DisplayName("validate should work correctly if path exist")
     public void validate_shouldWorkCorrectlyIfThereIsPath() {
         ArgumentsManager argumentsManager = new ArgumentsManager();
-        argumentsManager.setArgumentPath("a");
-
+        argumentsManager.setPath("a");
 
         argumentsManager.validate();
     }

@@ -9,24 +9,24 @@ public class PiCalculatorTest {
     @DisplayName("dont know how to test just run it")
     public void calcPi_shouldCalcPi() throws InterruptedException {
         PiCalculator piCalculator = new PiCalculator();
-        piCalculator.calcPI(10000, 1, 1);
-        piCalculator.calcPI(10000, 1, 2);
-        piCalculator.calcPI(10000, 1, 5);
-        piCalculator.calcPI(10000, 1, 10);
-        piCalculator.calcPI(10000, 1, 50);
-        piCalculator.calcPI(10000, 1, 100);
-        piCalculator.calcPI(10000, 1, 103);
-        piCalculator.calcPI(10000, 1, 1000);
-        piCalculator.calcPI(10000, 1, 3000);
-        piCalculator.calcPI(10000, 1, 5000);
+        piCalculator.calcPI(10000, 1);
+        piCalculator.calcPI(10000, 2);
+        piCalculator.calcPI(10000, 5);
+        piCalculator.calcPI(10000, 10);
+        piCalculator.calcPI(10000, 50);
+        piCalculator.calcPI(10000, 100);
+        piCalculator.calcPI(10000, 103);
+        piCalculator.calcPI(10000, 1000);
+        piCalculator.calcPI(10000, 3000);
+        piCalculator.calcPI(10000, 5000);
 
-        piCalculator.calcPI(10000000, 1, 1);
-        piCalculator.calcPI(10000000, 1, 5);
-        piCalculator.calcPI(10000000, 1, 10);
-        piCalculator.calcPI(10000000, 1, 50);
-        piCalculator.calcPI(10000000, 1, 100);
-        piCalculator.calcPI(10000000, 1, 103);
-        piCalculator.calcPI(10000000, 1, 1000);
-        piCalculator.calcPI(10000000, 1, 2000);
+        piCalculator.calcPI(10000000, 1);
+        piCalculator.calcPI(10000000, 5);
+        piCalculator.calcPI(10000000, 10);
+        piCalculator.calcPI(10000000, 50);
+        piCalculator.calcPI(10000000, 100);
+        piCalculator.calcPI(10000000, 103);
+        piCalculator.calcPI(10000000, 1000);
+        piCalculator.calcPI(10000000, 2000);
     }
 }

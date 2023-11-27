@@ -1,18 +1,20 @@
 package edu.hw7.task3;
 
 import java.util.HashMap;
+import java.util.Map;
 import lombok.extern.log4j.Log4j2;
 import org.jetbrains.annotations.Nullable;
 
 @Log4j2
 public class PersonDatabaseImpl implements PersonDatabase {
-    private final HashMap<Integer, Person> database;
+
+    private final Map<Integer, Person> database;
     private final Object nameLock = new Object();
     private final Object addrLock = new Object();
     private final Object phoneLock = new Object();
-    private final HashMap<String, Integer> idByName;
-    private final HashMap<String, Integer> idByAddress;
-    private final HashMap<String, Integer> idByPhone;
+    private final Map<String, Integer> idByName;
+    private final Map<String, Integer> idByAddress;
+    private final Map<String, Integer> idByPhone;
 
     public PersonDatabaseImpl() {
         this.database = new HashMap<>();
@@ -61,9 +63,8 @@ public class PersonDatabaseImpl implements PersonDatabase {
             if (idByName.get(name) == null) {
                 return null;
             }
-            synchronized (idByName.get(name)) {
-                return database.get(idByName.get(name));
-            }
+            return database.get(idByName.get(name));
+
         }
     }
 
@@ -74,9 +75,9 @@ public class PersonDatabaseImpl implements PersonDatabase {
             if (idByAddress.get(address) == null) {
                 return null;
             }
-            synchronized (idByAddress.get(address)) {
-                return database.get(idByAddress.get(address));
-            }
+
+            return database.get(idByAddress.get(address));
+
         }
     }
 
@@ -87,9 +88,8 @@ public class PersonDatabaseImpl implements PersonDatabase {
             if (idByPhone.get(phone) == null) {
                 return null;
             }
-            synchronized (idByPhone.get(phone)) {
-                return database.get(idByPhone.get(phone));
-            }
+            return database.get(idByPhone.get(phone));
+
         }
     }
 }

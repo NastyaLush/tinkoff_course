@@ -5,19 +5,11 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import lombok.extern.log4j.Log4j2;
 
-@Log4j2
-public class Counter {
-    private final AtomicInteger counter;
-    private final List<Thread> threads;
+@Log4j2 public class Counter {
 
-    public Counter() {
-        this.counter = new AtomicInteger(0);
-        this.threads = new ArrayList<>();
-    }
-
-    public void run(Integer countOfThreads, Integer countOfIterationsInThread) {
-        this.counter.set(0);
-        this.threads.clear();
+    public AtomicInteger run(Integer countOfThreads, Integer countOfIterationsInThread) throws InterruptedException {
+        AtomicInteger counter = new AtomicInteger(0);
+        List<Thread> threads = new ArrayList<>();
         log.info("start method run in main");
         for (int i = 0; i < countOfThreads; i++) {
             Thread thread = new Thread(() -> {
@@ -29,12 +21,10 @@ public class Counter {
             threads.add(thread);
             thread.start();
         }
-    }
-
-    public AtomicInteger getCounter() throws InterruptedException {
         for (Thread thread : threads) {
             thread.join();
         }
         return counter;
     }
+
 }

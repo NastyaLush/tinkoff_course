@@ -7,11 +7,12 @@ import org.junit.jupiter.params.provider.MethodSource;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CounterTest {
+
     public static Stream<Arguments> runProvider() {
         return Stream.of(
             Arguments.of(1, 10, 10),
             Arguments.of(50, 100, 50 * 100)
-        
+
         );
     }
 
@@ -23,9 +24,8 @@ public class CounterTest {
         Integer expectedAnswer
     ) throws InterruptedException {
         Counter counter = new Counter();
-        counter.run(countOfThreads, countOfIterationsInThread);
 
-        Integer actualAnswer = counter.getCounter().get();
+        Integer actualAnswer = counter.run(countOfThreads, countOfIterationsInThread).get();
 
         assertEquals(expectedAnswer, actualAnswer);
     }

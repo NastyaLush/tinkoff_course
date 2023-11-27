@@ -11,9 +11,9 @@ public class FreePortManager {
     private static final Integer MAX_PORT = 49151;
 
     public void printBusyPorts(Printer printer) {
-        ReservedPortsDescription reservedPort = new ReservedPortsDescription();
+        ReservedPortsDescriptionService reservedPort = new ReservedPortsDescriptionService();
 
-        List<Port> busyPorts = getBusyPort();
+        List<Port> busyPorts = getBusyPorts();
         printer.print("Протокол", "Порт", "Сервис");
         for (Port port : busyPorts) {
             printer.print(port.protocol()
@@ -23,7 +23,7 @@ public class FreePortManager {
     }
 
     @SuppressWarnings("EmptyBlock")
-    private List<Port> getBusyPort() {
+    private List<Port> getBusyPorts() {
         List<Port> busyPorts = new ArrayList<>();
         for (int i = 0; i <= MAX_PORT; i++) {
             try (ServerSocket serverSocket = new ServerSocket(i)) {

@@ -11,13 +11,13 @@ import java.util.regex.Pattern;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
-public class ReservedPortsDescription {
+public class ReservedPortsDescriptionService {
 
     private final Integer groupOfService = 3;
 
     private final HashMap<Port, String> reservedPorts;
 
-    public ReservedPortsDescription() {
+    public ReservedPortsDescriptionService() {
         this.reservedPorts = new HashMap<>();
     }
 

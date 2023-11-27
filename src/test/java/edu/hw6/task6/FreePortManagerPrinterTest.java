@@ -39,7 +39,7 @@ public class FreePortManagerPrinterTest {
     public void printBusyPorts_shouldCorrectlyDefineService() {
         FreePortManager freePortManager = new FreePortManager();
         ArrayList<PortForTest> busyPorts = new ArrayList<>();
-        ReservedPortsDescription reservedPortsDescription = new ReservedPortsDescription();
+        ReservedPortsDescriptionService reservedPortsDescriptionService = new ReservedPortsDescriptionService();
         freePortManager.printBusyPorts((String... args) -> {
             if (args[0] != "Протокол") {
                 busyPorts.add(new PortForTest(args[0], args[1], args[2]));
@@ -47,7 +47,7 @@ public class FreePortManagerPrinterTest {
         });
         for (int i = 1; i < busyPorts.size(); i++) {
             if (!Objects.equals(busyPorts.get(1).service, "")) {
-                String service = reservedPortsDescription.getPortDescription(new Port(
+                String service = reservedPortsDescriptionService.getPortDescription(new Port(
                     busyPorts.get(i).protocol,
                     busyPorts.get(i).number
                 ));

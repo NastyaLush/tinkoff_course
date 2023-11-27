@@ -12,22 +12,20 @@ import java.util.zip.CheckedOutputStream;
 
 public class Task4 {
 
-    @SuppressWarnings("NestedTryDepth")
     public void complete(Path path) throws IOException {
         if (Files.exists(path)) {
             throw new IllegalArgumentException();
         }
         Files.createFile(path);
-        try (OutputStream outputStream = Files.newOutputStream(path)) {
-            try (CheckedOutputStream checkedOutputStream = new CheckedOutputStream(outputStream, new Adler32())) {
-                try (BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(checkedOutputStream)) {
-                    try (OutputStreamWriter outputStreamWriter = new OutputStreamWriter(bufferedOutputStream)) {
-                        try (PrintWriter printWriter = new PrintWriter(outputStreamWriter)) {
-                            printWriter.write("Programming is learned by writing programs. ― Brian Kernighan");
-                        }
-                    }
-                }
-            }
+        try (
+            OutputStream outputStream = Files.newOutputStream(path);
+            CheckedOutputStream checkedOutputStream = new CheckedOutputStream(outputStream, new Adler32());
+            BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(checkedOutputStream);
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(bufferedOutputStream);
+            PrintWriter printWriter = new PrintWriter(outputStreamWriter);
+        ) {
+            printWriter.write("Programming is learned by writing programs. ― Brian Kernighan");
+
         }
     }
 

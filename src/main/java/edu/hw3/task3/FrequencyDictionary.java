@@ -2,9 +2,9 @@ package edu.hw3.task3;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 
-@Slf4j
+@Log4j2
 public class FrequencyDictionary {
 
     public <T> HashMap<T, Integer> freqDict(ArrayList<T> dictionary) {

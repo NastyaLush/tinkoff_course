@@ -6,7 +6,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class Task4Test {
+public class PasswordDateParserTest {
 
     private static Stream<Arguments> callingInfoProvider() {
         return Stream.of(Arguments.of(new Exception()), Arguments.of(new NullPointerException()),

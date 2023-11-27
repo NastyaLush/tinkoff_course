@@ -132,7 +132,8 @@
             <groupId>org.mockito</groupId>
             <artifactId>mockito-junit-jupiter</artifactId>
             <version>5.2.0</version>
-
+            <scope>test</scope>
+        </dependency>
 
 
         <!-- https://mvnrepository.com/artifact/org.mockito/mockito-core -->
@@ -142,7 +143,6 @@
             <version>2.24.0</version>
             <scope>test</scope>
         </dependency>
-
 
 
         <dependency>

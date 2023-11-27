@@ -1,24 +1,24 @@
 package edu.hw6.task5;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class HackerNewsTest {
 
     @Test
     @DisplayName("hacker news top stories should return long array with top stories")
-    public void hackerNewsTopStories_shouldReturnLongArrayWithTopStories() {
+    public void hackerNewsTopStories_shouldReturnLongArrayWithTopStories() throws IOException, InterruptedException {
         HackerNews hackerNews = new HackerNews();
         Integer expectedMaxSizeOfList = 500;
         Integer actualExpectedSizeOfList = hackerNews.hackerNewsTopStories()
-                                                     .size();
+            .size();
 
         assertTrue(actualExpectedSizeOfList <= expectedMaxSizeOfList);
         assertTrue(actualExpectedSizeOfList != 0);
@@ -26,7 +26,7 @@ public class HackerNewsTest {
 
     @Test
     @DisplayName("news should return headline of new")
-    public void news_shouldReturnNewsHeaderById() {
+    public void news_shouldReturnNewsHeaderById() throws IOException, InterruptedException {
         HackerNews hackerNews = new HackerNews();
         Integer givenId = 38278753;
         String expectedAnswer = "Show HN: Outsmart AI in a Spy Game";
@@ -40,9 +40,9 @@ public class HackerNewsTest {
     public void news_shouldReturnNullIfIdInvalid() throws IOException, InterruptedException {
         HttpClient httpClient = HttpClient.newHttpClient();
         HttpRequest httpRequest = HttpRequest.newBuilder()
-                                             .uri(URI.create(
-                                                     "https://hacker-news.firebaseio.com/v0/maxitem.json"))
-                                             .build();
+            .uri(URI.create(
+                "https://hacker-news.firebaseio.com/v0/maxitem.json"))
+            .build();
 
         HttpResponse<String> httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
         String body = httpResponse.body();

@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.DatagramSocket;
 import java.net.ServerSocket;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class FreePortManager {
@@ -12,22 +11,14 @@ public class FreePortManager {
     private static final Integer MAX_PORT = 49151;
 
     public void printBusyPorts(Printer printer) {
-        ReservedPortManager reservedPort = new ReservedPortManager();
-        HashMap<Port, String> portTreeSet = reservedPort.getReservedPort();
+        ReservedPortsDescription reservedPort = new ReservedPortsDescription();
 
-        List<Port> busyPort = getBusyPort();
+        List<Port> busyPorts = getBusyPort();
         printer.print("Протокол", "Порт", "Сервис");
-        for (Port port : busyPort) {
-            if (portTreeSet.containsKey(port)) {
-                printer.print(port.protocol()
-                                  .toString(), port.number()
-                                                   .toString(), portTreeSet.get(port));
-
-            } else {
-                printer.print(port.protocol()
-                                  .toString(), port.number()
-                                                   .toString(), "");
-            }
+        for (Port port : busyPorts) {
+            printer.print(port.protocol()
+                .toString(), port.number()
+                .toString(), reservedPort.getPortDescription(port));
         }
     }
 

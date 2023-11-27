@@ -15,47 +15,39 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 public class HackerNews {
 
-    public List<Long> hackerNewsTopStories() {
+    public List<Long> hackerNewsTopStories() throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
-                                         .uri(URI.create("https://hacker-news.firebaseio.com/v0/topstories.json"))
-                                         .build();
+            .uri(URI.create("https://hacker-news.firebaseio.com/v0/topstories.json"))
+            .build();
 
-        try {
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            return Arrays.stream(response.body()
-                                         .replace("[", "")
-                                         .replace("]", "")
-                                         .split(","))
-                         .map(Long::parseLong)
-                         .collect(Collectors.toList());
-        } catch (IOException | InterruptedException e) {
-            log.error(e);
-        }
-        return null;
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        return Arrays.stream(response.body()
+                .replace("[", "")
+                .replace("]", "")
+                .split(","))
+            .map(Long::parseLong)
+            .collect(Collectors.toList());
 
     }
 
-    public String news(long id) {
+    public String news(long id) throws IOException, InterruptedException {
         HttpClient httpClient = HttpClient.newHttpClient();
         HttpRequest httpRequest = HttpRequest.newBuilder()
-                                             .uri(URI.create(
-                                                     "https://hacker-news.firebaseio.com/v0/item/" + id + ".json"))
-                                             .build();
-        try {
-            HttpResponse<String> httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
-            String body = httpResponse.body();
-            Pattern pattern = Pattern.compile(".*\"title\":\"([^\"]*)\".*");
-            Matcher matcher = pattern.matcher(body);
-            if (matcher.find()) {
-                return matcher.group(1);
-            } else {
-                return null;
-            }
-        } catch (IOException | InterruptedException e) {
-            log.error(e);
+            .uri(URI.create(
+                "https://hacker-news.firebaseio.com/v0/item/" + id + ".json"))
+            .build();
+
+        HttpResponse<String> httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
+        String body = httpResponse.body();
+        Pattern pattern = Pattern.compile(".*\"title\":\"([^\"]*)\".*");
+        Matcher matcher = pattern.matcher(body);
+        if (matcher.find()) {
+            return matcher.group(1);
+        } else {
+            return null;
         }
-        return null;
+
     }
 
 }

@@ -1,9 +1,9 @@
 package edu.hw3.task5;
 
 import java.util.Comparator;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 
-@Slf4j
+@Log4j2
 public class SortContacts {
 
     public String[] parseContacts(String[] contacts, SortOrder order) {

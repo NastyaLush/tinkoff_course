@@ -31,8 +31,9 @@ import lombok.extern.log4j.Log4j2;
 
     public void setDateFrom(String dateFrom) {
         if (this.dateFrom != null) {
-            log.error("the from already added");
-            throw new IllegalArgumentException("the from already added");
+            String message = "the from already added";
+            log.error(message);
+            throw new IllegalArgumentException(message);
         }
         log.debug("parse --from argument");
         this.dateFrom = parseDate(dateFrom);

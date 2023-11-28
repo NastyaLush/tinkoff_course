@@ -53,7 +53,6 @@ public class PersonDatabaseImpl3point5 implements PersonDatabase {
                 return null;
             }
             return database.get(idByName.get(name));
-
         } finally {
             readWriteLock.readLock().unlock();
         }
@@ -66,7 +65,6 @@ public class PersonDatabaseImpl3point5 implements PersonDatabase {
             if (idByAddress.get(address) == null) {
                 return null;
             }
-
             return database.get(idByAddress.get(address));
 
         } finally {
@@ -81,7 +79,6 @@ public class PersonDatabaseImpl3point5 implements PersonDatabase {
             if (idByPhone.get(phone) == null) {
                 return null;
             }
-
             return database.get(idByPhone.get(phone));
 
         } finally {

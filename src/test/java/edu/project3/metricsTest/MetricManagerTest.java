@@ -23,7 +23,9 @@ public class MetricManagerTest {
         MetricCommon metricCommon = Mockito.mock(MetricCommon.class);
         MetricPopularity metricPopularity = Mockito.mock(MetricPopularity.class);
 
-        MetricManager metricManager = new MetricManager(argumentsManager, metricCommon, metricPopularity);
+        MetricManager metricManager = new MetricManager(argumentsManager);
+        metricManager.addMetric(metricCommon);
+        metricManager.addMetric(metricPopularity);
 
         Mockito.when(argumentsManager.getDateFrom())
                .thenReturn(LocalDateTime.of(2010, 1, 1, 1, 1, 1, 1));

@@ -37,7 +37,7 @@ public class PrintFormatDocTest {
 
         edu.project3.output.DocReportGenerator printerWithFormatDoc
             = new edu.project3.output.DocReportGenerator(output::add);
-        printerWithFormatDoc.generate(metricCommon);
+        printerWithFormatDoc.print(metricCommon);
         String actualAnswer = String.join("", output);
 
         assertEquals(expectedAnswer, actualAnswer);

@@ -2,18 +2,19 @@ package edu.project3.output;
 
 import edu.project3.metrics.Metric;
 import java.util.List;
+import lombok.extern.log4j.Log4j2;
 
+@Log4j2
 public class ReportService {
 
     public void report(OutputType outputType, Printer printer, List<Metric> metrics) {
-        ReportGenerator printerF = getPrinter(outputType, printer);
+        ReportGenerator reportGenerator = createGenerator(outputType, printer);
         for (Metric metric : metrics) {
-            assert printerF != null;
-            printerF.generate(metric);
+            reportGenerator.print(metric);
         }
     }
 
-    private ReportGenerator getPrinter(OutputType outputType, Printer printer) {
+    private ReportGenerator createGenerator(OutputType outputType, Printer printer) {
         switch (outputType) {
             case MARKDOWN -> {
                 return new MdReportGenerator(printer);
@@ -22,7 +23,9 @@ public class ReportService {
                 return new DocReportGenerator(printer);
             }
             default -> {
-                return null;
+                String message = "there is no option";
+                log.error(message);
+                throw new IllegalArgumentException(message);
             }
         }
     }

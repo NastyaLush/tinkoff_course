@@ -15,10 +15,12 @@ public class MetricPopularity extends Metric {
     private final String headline;
     private final String popHeadline;
 
-    public MetricPopularity(String name,
-                            String headline,
-                            String popHeadline,
-                            MetricConverter fieldForMetric) {
+    public MetricPopularity(
+        String name,
+        String headline,
+        String popHeadline,
+        MetricConverter fieldForMetric
+    ) {
         super(name);
         countOfRowsToPrint = defaultCountOfRowsToPrint;
         this.fieldForMetric = fieldForMetric;
@@ -26,11 +28,13 @@ public class MetricPopularity extends Metric {
         this.popHeadline = popHeadline;
     }
 
-    public MetricPopularity(String name,
-                            String headline,
-                            String popHeadline,
-                            MetricConverter fieldForMetric,
-                            Integer countOfRowsToPrint) {
+    public MetricPopularity(
+        String name,
+        String headline,
+        String popHeadline,
+        MetricConverter fieldForMetric,
+        Integer countOfRowsToPrint
+    ) {
         super(name);
         this.countOfRowsToPrint = countOfRowsToPrint;
         this.fieldForMetric = fieldForMetric;
@@ -41,20 +45,22 @@ public class MetricPopularity extends Metric {
     @Override
     public void update(LogRecord logRecord) {
         if (popularity.containsKey(fieldForMetric.getMetric(logRecord))) {
-            popularity.put(fieldForMetric.getMetric(logRecord),
-                    popularity.get(fieldForMetric.getMetric(logRecord)) + 1);
+            popularity.put(
+                fieldForMetric.getMetric(logRecord),
+                popularity.get(fieldForMetric.getMetric(logRecord)) + 1
+            );
         } else {
             popularity.put(fieldForMetric.getMetric(logRecord), 1);
         }
     }
 
-    public ArrayList<ArrayList<String>> getMetric() {
+    public ArrayList<ArrayList<String>> getMetricData() {
         Integer currentCountOfRowsToPrint = this.countOfRowsToPrint;
         ArrayList<ArrayList<String>> metrics = new ArrayList<>();
-        metrics.add(new ArrayList<>(List.of(new String[]{headline, popHeadline})));
+        metrics.add(new ArrayList<>(List.of(new String[] {headline, popHeadline})));
         for (Map.Entry<String, Integer> entry : popularity.entrySet()) {
-            metrics.add(new ArrayList<>(List.of(new String[]{entry.getKey(), entry.getValue()
-                    .toString()})));
+            metrics.add(new ArrayList<>(List.of(new String[] {entry.getKey(), entry.getValue()
+                .toString()})));
             currentCountOfRowsToPrint--;
             if (currentCountOfRowsToPrint == 0) {
                 return metrics;

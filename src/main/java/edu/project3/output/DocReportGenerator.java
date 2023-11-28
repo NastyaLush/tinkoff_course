@@ -12,13 +12,13 @@ public class DocReportGenerator implements ReportGenerator {
     }
 
     @Override
-    public void generate(Metric metric) {
+    public void print(Metric metric) {
         printHeadline(metric.getHeadline());
-        printColumns(metric.getMetric()
+        printColumns(metric.getMetricData()
                            .get(0)
                            .size());
         printer.print("|====\n");
-        for (ArrayList<String> row : metric.getMetric()) {
+        for (ArrayList<String> row : metric.getMetricData()) {
             printRow(row);
             printer.print("\n");
         }

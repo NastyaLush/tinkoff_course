@@ -5,10 +5,10 @@ import edu.project3.metrics.Metric;
 import edu.project3.metrics.MetricCommon;
 import edu.project3.metrics.MetricManager;
 import edu.project3.metrics.MetricPopularity;
+import edu.project3.output.ConsolePrinter;
 import edu.project3.output.ReportService;
 import edu.project3.structures.LogRecord;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import lombok.extern.log4j.Log4j2;
 
@@ -24,35 +24,32 @@ import lombok.extern.log4j.Log4j2;
         ArgumentsManager argumentsManager = new ArgumentsManager();
         argumentsManager.setPath(string);
         argumentsManager.setReportFormat("adoc");
-        new edu.project3.output.ConsolePrinter();
+        MetricManager metricManager = new MetricManager(argumentsManager);
         new ReportService().report(
             argumentsManager.getReportFormat(),
-            new edu.project3.output.ConsolePrinter(),
-            new MetricManager(argumentsManager, getMetrics()).calcMetric()
+            new ConsolePrinter(),
+            metricManager.calcMetric()
         );
     }
 
-    private static Metric[] getMetrics() {
-        ArrayList<Metric> metrics = new ArrayList<>();
-        metrics.add(new MetricCommon());
-        metrics.add(new MetricPopularity(
+    private static void configureMetrics(MetricManager metricManager) {
+        metricManager.addMetric(new MetricCommon());
+        metricManager.addMetric(new MetricPopularity(
             "Самый Популярный IP",
             "IP",
             COUNT_HEADLINE,
             LogRecord::ipClient
         ));
-        metrics.add(new MetricPopularity("Запрашиваемые ресурсы", "Ресурс", COUNT_HEADLINE, logRecord -> {
+        metricManager.addMetric(new MetricPopularity("Запрашиваемые ресурсы", "Ресурс", COUNT_HEADLINE, logRecord -> {
             String[] pathToResource = logRecord.url().resource().split("/");
-            String resource = pathToResource[pathToResource.length - 1];
-            return resource;
+            return pathToResource[pathToResource.length - 1];
         }));
-        metrics.add(new MetricPopularity(
+        metricManager.addMetric(new MetricPopularity(
             "Коды ответа",
             "Код",
             COUNT_HEADLINE,
             LogRecord::httpCodeStatus
         ));
-        return metrics.toArray(new Metric[] {});
     }
 
     public static void main(String[] args) throws IOException {
@@ -60,29 +57,14 @@ import lombok.extern.log4j.Log4j2;
     }
 
     private static void work(String[] args) throws IOException {
-        if (args.length % 2 != 0) {
-            log.error("the count of arguments must be even");
-            return;
-        }
 
-        ArgumentsManager arguments = new ArgumentsManager();
-
-        for (int i = 0; i < args.length; i += 2) {
-            switch (args[i]) {
-                case "--path" -> arguments.setPath(args[i + 1]);
-                case "--from" -> arguments.setDateFrom(args[i + 1]);
-                case "--to" -> arguments.setDateTo(args[i + 1]);
-                case "--format" -> arguments.setReportFormat(args[i + 1]);
-                default -> {
-                    log.error("there is this option");
-                    throw new IllegalArgumentException();
-                }
-            }
-        }
-        List<Metric> metricList = new MetricManager(arguments, getMetrics()).calcMetric();
+        ArgumentsManager argumentsManager = ArgumentsManager.parseArgs(args);
+        MetricManager metricManager = new MetricManager(argumentsManager);
+        configureMetrics(metricManager);
+        List<Metric> metricList = metricManager.calcMetric();
         new ReportService().report(
-            arguments.getReportFormat(),
-            new edu.project3.output.ConsolePrinter(),
+            argumentsManager.getReportFormat(),
+            new ConsolePrinter(),
             metricList
         );
 

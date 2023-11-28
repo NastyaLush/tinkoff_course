@@ -26,7 +26,7 @@ public class PrintFormatMarkdownTest {
 
         edu.project3.output.MdReportGenerator
             printerWithFormatMarkdown = new edu.project3.output.MdReportGenerator(output::add);
-        printerWithFormatMarkdown.generate(metricCommon);
+        printerWithFormatMarkdown.print(metricCommon);
         String actualAnswer = String.join("", output);
 
         assertEquals(expectedAnswer, actualAnswer);

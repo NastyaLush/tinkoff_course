@@ -34,15 +34,17 @@ public class MetricCommon extends Metric {
     }
 
     @Override
-    public ArrayList<ArrayList<String>> getMetric() {
+    public ArrayList<ArrayList<String>> getMetricData() {
         ArrayList<ArrayList<String>> metrics = new ArrayList<>();
-        metrics.add(new ArrayList<>(List.of(new String[]{"Метрика", "Значение"})));
-        metrics.add(new ArrayList<>(List.of(new String[]{"Начальная дата", getStringPerfom(minDate)})));
-        metrics.add(new ArrayList<>(List.of(new String[]{"Конечная дата", getStringPerfom(maxDate)})));
-        metrics.add(new ArrayList<>(List.of(new String[]{"Количество запросов", getStringPerfom(countOfRequest)})));
-        metrics.add(new ArrayList<>(List.of(new String[]{"Средний размер ответа",
-                countOfRequest != 0 ? sumOfResponseSize.divide(BigInteger.valueOf(countOfRequest))
-                                                       .toString() : "0"})));
+        metrics.add(new ArrayList<>(List.of(new String[] {"Метрика", "Значение"})));
+        metrics.add(new ArrayList<>(List.of(new String[] {"Начальная дата", getStringPerfom(minDate)})));
+        metrics.add(new ArrayList<>(List.of(new String[] {"Конечная дата", getStringPerfom(maxDate)})));
+        metrics.add(new ArrayList<>(List.of(new String[] {"Количество запросов", getStringPerfom(countOfRequest)})));
+        metrics.add(new ArrayList<>(List.of(new String[] {"Средний размер ответа",
+                                                          countOfRequest != 0
+                                                              ? sumOfResponseSize.divide(BigInteger.valueOf(
+                                                                                     countOfRequest))
+                                                                                 .toString() : "0"})));
 
         return metrics;
     }

@@ -17,6 +17,6 @@ public abstract class Metric {
         return name;
     }
 
-    public abstract ArrayList<ArrayList<String>> getMetric();
+    public abstract ArrayList<ArrayList<String>> getMetricData();
 
 }

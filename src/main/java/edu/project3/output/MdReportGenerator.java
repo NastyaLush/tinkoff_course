@@ -12,13 +12,13 @@ public class MdReportGenerator implements ReportGenerator {
     }
 
     @Override
-    public void generate(Metric metric) {
+    public void print(Metric metric) {
         printHeadline(metric.getHeadline());
-        printTableHeadline(metric.getMetric()
+        printTableHeadline(metric.getMetricData()
                                  .get(0));
-        for (int i = 1; i < metric.getMetric()
+        for (int i = 1; i < metric.getMetricData()
                                   .size(); i++) {
-            printRow(metric.getMetric()
+            printRow(metric.getMetricData()
                            .get(i));
             printer.print("\n");
         }

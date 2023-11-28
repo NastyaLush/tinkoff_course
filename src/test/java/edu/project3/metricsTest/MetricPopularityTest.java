@@ -75,7 +75,7 @@ public class MetricPopularityTest {
         MetricPopularity metricPopularity,
         ArrayList<ArrayList<String>> expectedArray
     ) {
-        ArrayList<ArrayList<String>> actualArray = metricPopularity.getMetric();
+        ArrayList<ArrayList<String>> actualArray = metricPopularity.getMetricData();
 
         assertEquals(expectedArray, actualArray);
     }

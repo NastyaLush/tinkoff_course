@@ -2,15 +2,15 @@ package edu.project3.argumentWorkTests;
 
 import edu.project3.argumentWork.ArgumentsManager;
 import edu.project3.output.OutputType;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import java.time.LocalDateTime;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import java.time.LocalDateTime;
-import java.util.stream.Stream;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ArgumentsManagerTest {
 
@@ -30,6 +30,58 @@ public class ArgumentsManagerTest {
                 "markdown", OutputType.MARKDOWN,
                 "adoc", OutputType.ADOC
             )
+        );
+    }
+
+    public static Stream<Arguments> argumentsProvider() {
+        return Stream.of(
+            Arguments.of(
+                new ArgumentsManager("path", null, null, null),
+                new String[] {"--path", "path"}
+            ),
+            Arguments.of(
+                new ArgumentsManager(null, null, null, OutputType.MARKDOWN),
+                new String[] {"--format", "markdown"}
+            ),
+            Arguments.of(
+                new ArgumentsManager(null, null, null, OutputType.ADOC),
+                new String[] {"--format", "adoc"}
+            ),
+            Arguments.of(
+                new ArgumentsManager(null, LocalDateTime.of(2011, 12, 3, 10, 15, 30), null, null),
+                new String[] {"--from", "2011-12-03T10:15:30"}
+            ), Arguments.of(
+                new ArgumentsManager(null, LocalDateTime.of(2011, 12, 3, 10, 15, 30), null, null),
+                new String[] {"--from", "2011-12-03T10:15:30"}
+            ),
+            Arguments.of(
+                new ArgumentsManager(null, null, LocalDateTime.of(2011, 12, 3, 10, 15, 30), null),
+                new String[] {"--to", "2011-12-03T10:15:30"}
+            ),
+            Arguments.of(
+                new ArgumentsManager(
+                    "path",
+                    LocalDateTime.of(2011, 12, 3, 10, 15, 30),
+                    LocalDateTime.of(2011, 12, 3, 10, 15, 30),
+                    OutputType.MARKDOWN
+                ),
+                new String[] {"--path", "path", "--format", "markdown", "--from", "2011-12-03T10:15:30", "--to",
+                              "2011-12-03T10:15:30"}
+            )
+        );
+    }
+
+    public static Stream<Arguments> wrongArgumentsProvider() {
+        return Stream.of(
+            Arguments.of((Object) new String[] {"--path", "path", "--path", "path2"}),
+            Arguments.of((Object) new String[] {"--format", "adoc", "--format", "adoc"}),
+            Arguments.of((Object) new String[] {"--format", "format"}),
+            Arguments.of((Object) new String[] {"--from", "2011-12-03", "--from", "2011-12-03"}),
+            Arguments.of((Object) new String[] {"--from", "12-03-2014"}),
+            Arguments.of((Object) new String[] {"--to", "2011-12-03", "--to", "2011-12-03"}),
+            Arguments.of((Object) new String[] {"--to", "12-03-2014"}),
+            Arguments.of((Object) new String[] {"--path", "path", "--flag", "true"}),
+            Arguments.of((Object) new String[] {"--path", "path", "--path"})
         );
     }
 
@@ -145,5 +197,22 @@ public class ArgumentsManagerTest {
         argumentsManager.setPath("a");
 
         argumentsManager.validate();
+    }
+
+    @ParameterizedTest
+    @MethodSource("argumentsProvider")
+    public void parseArgs_shouldCorrectlyParseArguments(ArgumentsManager expectedArgumentsManager, String... args) {
+        ArgumentsManager actualArgumentsManager = ArgumentsManager.parseArgs(args);
+
+        assertEquals(expectedArgumentsManager, actualArgumentsManager);
+    }
+
+    @ParameterizedTest
+    @MethodSource("wrongArgumentsProvider")
+    public void parseArgs_shouldThrowErrorIfArgumentsIncorrect(String... args) {
+        assertThrows(IllegalArgumentException.class, () -> {
+            ArgumentsManager.parseArgs(args);
+        });
+
     }
 }

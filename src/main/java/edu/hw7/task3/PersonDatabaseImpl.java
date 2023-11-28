@@ -40,7 +40,7 @@ public class PersonDatabaseImpl implements PersonDatabase {
     }
 
     @Override
-    public synchronized void delete(int id) {
+    public void delete(int id) {
         log.info("delete person: " + id);
         synchronized (nameLock) {
             synchronized (addrLock) {

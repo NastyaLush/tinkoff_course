@@ -74,7 +74,7 @@ public class PiCalculator {
         }
 
         private double generateRandom() {
-            return Math.random() * ((double) 1 - (double) -1) + (double) -1;
+            return Math.random() * (2.0) + -1.0;
         }
     }
 

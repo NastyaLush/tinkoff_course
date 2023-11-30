@@ -8,20 +8,15 @@ import org.jetbrains.annotations.Nullable;
 @Log4j2
 public class PersonDatabaseImpl implements PersonDatabase {
 
-    private final Map<Integer, Person> database;
+    private final Map<Integer, Person> database = new HashMap<>();
     private final Object nameLock = new Object();
     private final Object addrLock = new Object();
     private final Object phoneLock = new Object();
-    private final Map<String, Integer> idByName;
-    private final Map<String, Integer> idByAddress;
-    private final Map<String, Integer> idByPhone;
+    private final Map<String, Integer> idByName = new HashMap<>();
+    private final Map<String, Integer> idByAddress = new HashMap<>();
+    private final Map<String, Integer> idByPhone = new HashMap<>();
 
-    public PersonDatabaseImpl() {
-        this.database = new HashMap<>();
-        idByPhone = new HashMap<>();
-        idByName = new HashMap<>();
-        idByAddress = new HashMap<>();
-    }
+    public PersonDatabaseImpl() {}
 
     @Override
     public void add(Person person) {

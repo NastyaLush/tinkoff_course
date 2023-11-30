@@ -7,12 +7,16 @@
     strict="true"
 >
     <Appenders>
+        <Async name="Async">
+            <AppenderRef ref="STDOUT_PLAIN"/>
+        </Async>
         <Console name="STDOUT_PLAIN" target="SYSTEM_OUT">
             <PatternLayout
                 disableAnsi="false"
                 pattern="%d{HH:mm:ss.SSS} %highlight{%-5p} [%-15.15thread] %-15.15logger{20} -- %highlight{%m}%n"
             />
         </Console>
+
     </Appenders>
 
     <Loggers>
@@ -24,7 +28,7 @@
         <Logger name="edu" level="TRACE"/>
 
         <Root level="INFO">
-            <AppenderRef ref="STDOUT_PLAIN"/>
+            <AppenderRef ref="Async"/>
         </Root>
     </Loggers>
 </Configuration>

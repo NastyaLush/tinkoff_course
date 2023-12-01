@@ -11,6 +11,7 @@ public class FixedThreadPoolImpl implements ThreadPool {
     private final Integer countOfThreads;
     private final LinkedBlockingQueue<Runnable> queue;
     private final List<Thread> threads = new ArrayList<>();
+    private final Integer waitSeconds = 50;
 
     public FixedThreadPoolImpl(Integer countOfThreads) {
         this.countOfThreads = countOfThreads;
@@ -52,7 +53,7 @@ public class FixedThreadPoolImpl implements ThreadPool {
     @Override
     public synchronized void close() throws Exception {
         while (!queue.isEmpty()) {
-            wait(50);
+            wait(waitSeconds);
         }
         log.info("queue is empty, close threads");
         for (Thread thread : threads) {

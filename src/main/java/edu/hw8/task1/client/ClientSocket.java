@@ -13,11 +13,12 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 public class ClientSocket {
 
-    private final String port = "localhost";
-    private final Integer host = 4000;
+    private ClientSocket() {
+    }
 
-    public void interactiveMode() throws IOException {
-        try (Socket socket = new Socket(port, host);
+    @SuppressWarnings("RegexpSinglelineJava")
+    public static void interactiveMode(String host, Integer port) throws IOException {
+        try (Socket socket = new Socket(host, port);
              PrintWriter outServer = new PrintWriter(new BufferedOutputStream(socket.getOutputStream()), true);
              BufferedReader inServer = new BufferedReader(new InputStreamReader(socket.getInputStream()))
         ) {

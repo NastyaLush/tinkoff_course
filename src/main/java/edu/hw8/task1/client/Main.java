@@ -4,7 +4,14 @@ import java.io.IOException;
 
 public class Main {
 
+    private static final int PORT = 4000;
+    private static final String HOST = "localhost";
+
+    private Main() {
+    }
+
     public static void main(String[] args) throws IOException {
-        new ClientSocket().interactiveMode();
+
+        ClientSocket.interactiveMode(HOST, PORT);
     }
 }

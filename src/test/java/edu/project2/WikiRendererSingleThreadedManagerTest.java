@@ -10,7 +10,7 @@ import org.mockito.Mockito;
 import java.util.HashSet;
 import java.util.Set;
 
-public class RenderManagerTest {
+public class WikiRendererSingleThreadedManagerTest {
 
     @Test
     public void renderMaze_shouldCallRendMethod() {

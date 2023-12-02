@@ -11,8 +11,7 @@ import org.junit.jupiter.api.Test;
 import java.util.HashSet;
 import java.util.Set;
 
-public class BeautyRenderTest {
-
+public class BeautyWikiRendererSingleThreadedTest {
 
     @Test
     public void rend_shouldRendCorrectly() {
@@ -20,17 +19,17 @@ public class BeautyRenderTest {
         Maze maze = new Maze<>(cells, 3, 3);
         RenderManager renderManager = new RenderManager(maze);
         String expectedMaze = "\u001B[45m      \u001B[0m\u001B[45m      "
-                + "\u001B[0m\u001B[45m      \u001B[0m\u001B[45m   "
-                + "\u001B[0m\u001B[45m   \u001B[0m               \u001B[45m   "
-                + "\u001B[0m\u001B[45m   \u001B[0m   \u001B[45m   \u001B[0m\u001B[45m   "
-                + "\u001B[0m\u001B[45m   \u001B[0m\u001B[45m   \u001B[0m\u001B[45m   "
-                + "\u001B[0m\u001B[45m   \u001B[0m   \u001B[45m   \u001B[0m         "
-                + "\u001B[45m   \u001B[0m\u001B[45m   \u001B[0m   \u001B[45m   "
-                + "\u001B[0m   \u001B[45m   \u001B[0m   \u001B[45m   \u001B[0m\u001B[45m   "
-                + "\u001B[0m         \u001B[45m   \u001B[0m   \u001B[45m   "
-                + "\u001B[0m\u001B[45m   \u001B[0m\u001B[45m   \u001B[0m\u001B[45m   "
-                + "\u001B[0m\u001B[45m   \u001B[0m\u001B[45m   \u001B[0m\u001B[45m   "
-                + "\u001B[0m\u001B[45m   \u001B[0m";
+            + "\u001B[0m\u001B[45m      \u001B[0m\u001B[45m   "
+            + "\u001B[0m\u001B[45m   \u001B[0m               \u001B[45m   "
+            + "\u001B[0m\u001B[45m   \u001B[0m   \u001B[45m   \u001B[0m\u001B[45m   "
+            + "\u001B[0m\u001B[45m   \u001B[0m\u001B[45m   \u001B[0m\u001B[45m   "
+            + "\u001B[0m\u001B[45m   \u001B[0m   \u001B[45m   \u001B[0m         "
+            + "\u001B[45m   \u001B[0m\u001B[45m   \u001B[0m   \u001B[45m   "
+            + "\u001B[0m   \u001B[45m   \u001B[0m   \u001B[45m   \u001B[0m\u001B[45m   "
+            + "\u001B[0m         \u001B[45m   \u001B[0m   \u001B[45m   "
+            + "\u001B[0m\u001B[45m   \u001B[0m\u001B[45m   \u001B[0m\u001B[45m   "
+            + "\u001B[0m\u001B[45m   \u001B[0m\u001B[45m   \u001B[0m\u001B[45m   "
+            + "\u001B[0m\u001B[45m   \u001B[0m";
         final String[] actualMaze = {""};
 
         renderManager.renderMaze(new BeautyRender(), string -> actualMaze[0] += string);
@@ -38,7 +37,6 @@ public class BeautyRenderTest {
         assertEquals(expectedMaze, actualMaze[0]);
 
     }
-
 
     @Test
     public void rendWithPath_shouldWorkCorrectlyIfPathIsEmpty() {
@@ -68,18 +66,18 @@ public class BeautyRenderTest {
         Maze maze = new Maze<>(cells, 3, 3);
         RenderManager renderManager = new RenderManager(maze);
         String expectedMaze =
-                "\u001B[45m      \u001B[0m\u001B[45m      " + "\u001B[0m\u001B[45m      \u001B[0m\u001B[45m   "
-                        + "\u001B[0m\u001B[45m   \u001B[0m #             "
-                        + "\u001B[45m   \u001B[0m\u001B[45m   \u001B[0m   "
-                        + "\u001B[45m   \u001B[0m\u001B[45m   \u001B[0m\u001B[45m   "
-                        + "\u001B[0m\u001B[45m   \u001B[0m\u001B[45m   \u001B[0m\u001B[45m   "
-                        + "\u001B[0m # \u001B[45m   \u001B[0m #     # \u001B[45m   "
-                        + "\u001B[0m\u001B[45m   \u001B[0m   \u001B[45m   \u001B[0m   "
-                        + "\u001B[45m   \u001B[0m   \u001B[45m   \u001B[0m\u001B[45m   "
-                        + "\u001B[0m #     # \u001B[45m   \u001B[0m # \u001B[45m   "
-                        + "\u001B[0m\u001B[45m   \u001B[0m\u001B[45m   \u001B[0m\u001B[45m   "
-                        + "\u001B[0m\u001B[45m   \u001B[0m\u001B[45m   \u001B[0m\u001B[45m   "
-                        + "\u001B[0m\u001B[45m   \u001B[0m";
+            "\u001B[45m      \u001B[0m\u001B[45m      " + "\u001B[0m\u001B[45m      \u001B[0m\u001B[45m   "
+                + "\u001B[0m\u001B[45m   \u001B[0m #             "
+                + "\u001B[45m   \u001B[0m\u001B[45m   \u001B[0m   "
+                + "\u001B[45m   \u001B[0m\u001B[45m   \u001B[0m\u001B[45m   "
+                + "\u001B[0m\u001B[45m   \u001B[0m\u001B[45m   \u001B[0m\u001B[45m   "
+                + "\u001B[0m # \u001B[45m   \u001B[0m #     # \u001B[45m   "
+                + "\u001B[0m\u001B[45m   \u001B[0m   \u001B[45m   \u001B[0m   "
+                + "\u001B[45m   \u001B[0m   \u001B[45m   \u001B[0m\u001B[45m   "
+                + "\u001B[0m #     # \u001B[45m   \u001B[0m # \u001B[45m   "
+                + "\u001B[0m\u001B[45m   \u001B[0m\u001B[45m   \u001B[0m\u001B[45m   "
+                + "\u001B[0m\u001B[45m   \u001B[0m\u001B[45m   \u001B[0m\u001B[45m   "
+                + "\u001B[0m\u001B[45m   \u001B[0m";
         final String[] actualMaze = {""};
 
         renderManager.renderMazeWithPath(new BeautyRender(), getPath(), string -> actualMaze[0] += string);
@@ -87,6 +85,5 @@ public class BeautyRenderTest {
         assertEquals(expectedMaze, actualMaze[0]);
 
     }
-
 
 }

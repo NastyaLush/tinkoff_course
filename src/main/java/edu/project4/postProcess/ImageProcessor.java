@@ -6,5 +6,5 @@ import edu.project4.structures.FractalImage;
 public
 interface ImageProcessor {
 
-    FractalImage process(FractalImage image);
+    FractalImage process(FractalImage image, Double gamma);
 }

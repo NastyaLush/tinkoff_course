@@ -15,4 +15,12 @@ public record FractalImage(Pixel[][] data, int width, int height) {
     public Pixel pixel(int x, int y) {
         return data[x][y];
     }
+
+    public Pixel pixel(Point point) {
+        return data[(int) point.x()][(int) point.y()];
+    }
+
+    public boolean isInImage(Point point) {
+        return point.x() >= 0 && point.x() < height && point.y() >= 0 && point.y() < width;
+    }
 }

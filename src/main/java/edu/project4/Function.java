@@ -6,6 +6,8 @@ import edu.project4.transformation.transformationFunctions.TransformationFunctio
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
+import static edu.project4.Random.randomDouble;
+import static edu.project4.Random.randomInt;
 
 @Getter
 public class Function {
@@ -25,26 +27,18 @@ public class Function {
     }
 
     private static List<Transformation> generateTransformations(List<TransformationFunction> transformationList) {
-        int countOfTransformations = random(1, transformationList.size());
+        int countOfTransformations = randomInt(1, transformationList.size());
         double till = 1;
         List<Transformation> transformations = new ArrayList<>();
         while (countOfTransformations > 0) {
-            int currentFunction = random(0, transformationList.size() - 1);
-            double weight = randomD(0, till);
+            int currentFunction = randomInt(0, transformationList.size() - 1);
+            double weight = randomDouble(0, till);
             transformations.add(new Transformation(transformationList.get(currentFunction), weight));
             transformationList.remove(currentFunction);
             till -= weight;
             countOfTransformations--;
         }
         return transformations;
-    }
-
-    private static int random(double from, double till) {
-        return (int) (Math.random() * (till - from) + from);
-    }
-
-    private static double randomD(double from, double till) {
-        return (Math.random() * (till - from) + from);
     }
 
     public static List<Function> generateFunctions(
@@ -54,7 +48,7 @@ public class Function {
         double till = 1;
         List<Function> functions = new ArrayList<>();
         for (int i = 0; i < countOfFunctions; i++) {
-            double weight = randomD(0, till);
+            double weight = randomDouble(0, till);
             functions.add(generateFunction(transformationList, weight));
             till -= weight;
         }

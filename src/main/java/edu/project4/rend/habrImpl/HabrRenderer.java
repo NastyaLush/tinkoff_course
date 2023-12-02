@@ -1,6 +1,7 @@
 package edu.project4.rend.habrImpl;
 
 import edu.project4.AffineSpace;
+import edu.project4.rend.ConfigRender;
 import edu.project4.rend.Renderer;
 import edu.project4.structures.FractalImage;
 import edu.project4.transformation.transformationFunctions.TransformationFunction;
@@ -16,9 +17,6 @@ public interface HabrRenderer extends Renderer {
         int numberSamples,
         int iterationPerSample,
         int symmetry,
-        double xMIN,
-        double xMAX,
-        double yMIN,
-        double yMAX
+        ConfigRender configRender
     );
 }

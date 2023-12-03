@@ -13,12 +13,6 @@ import static edu.project4.Random.randomPoint;
 @Log4j2
 public class HabrRendererSingleThreaded implements HabrRenderer {
 
-    private final int countOfThreads;
-
-    public HabrRendererSingleThreaded(int countOfThreads) {
-        this.countOfThreads = countOfThreads;
-    }
-
     public void rend(
         FractalImage fractalImage,
         List<AffineSpace> affineSpaces,

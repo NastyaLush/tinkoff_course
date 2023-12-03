@@ -5,9 +5,11 @@ import edu.project4.structures.Pixel;
 
 public class Reduce {
 
+    private Reduce() {
+    }
+
     @SuppressWarnings("NestedForDepth")
-    public FractalImage process(FractalImage image) {
-        int sample = 2;
+    public static FractalImage process(FractalImage image, Integer sample) {
         int h = image.width() / sample;
         int w = image.height() / sample;
         Pixel[][] newPixels = new Pixel[h][w];

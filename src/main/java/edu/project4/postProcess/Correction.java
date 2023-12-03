@@ -3,10 +3,12 @@ package edu.project4.postProcess;
 import edu.project4.structures.FractalImage;
 import edu.project4.structures.Pixel;
 
-public class Correction implements ImageProcessor {
+public class Correction {
 
-    @Override
-    public FractalImage process(FractalImage image, Double gamma) {
+    private Correction() {
+    }
+
+    public static void process(FractalImage image, Double gamma) {
         double maxNormal = -1;
         for (int row = 0; row < image.width(); row++) {
             for (int col = 0; col < image.height(); col++) {
@@ -28,6 +30,5 @@ public class Correction implements ImageProcessor {
                 pixel.setB((int) (pixel.getB() * Math.pow(pixel.getNormal(), 1d / gamma)));
             }
         }
-        return image;
     }
 }

@@ -4,15 +4,16 @@ import edu.project4.structures.Point;
 import lombok.Getter;
 import static edu.project4.Random.randomDouble;
 
+@Getter
 public class AffineSpace {
 
     private static final Integer COUNT_OF_COLORS = 256;
     private static final Integer MIN_VALUE = -1;
     private static final Integer MAX_VALUE = 1;
 
-    @Getter private final int red;
-    @Getter private final int green;
-    @Getter private final int blue;
+    private final int red;
+    private final int green;
+    private final int blue;
     private double a;
     private double b;
     private double c;

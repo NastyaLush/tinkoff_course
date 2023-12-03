@@ -4,18 +4,14 @@ import edu.project4.postProcess.Correction;
 import edu.project4.postProcess.Reduce;
 import edu.project4.rend.ConfigRender;
 import edu.project4.rend.habrImpl.HabrRendererMultiThreaded;
-import edu.project4.rend.wikiImpl.WikiRendererMultiThreaded;
-import edu.project4.rend.wikiImpl.WikiRendererSingleThreaded;
 import edu.project4.save.ImageFormat;
 import edu.project4.save.ImageUtils;
 import edu.project4.structures.FractalImage;
 import edu.project4.transformation.transformationFunctions.DiskTransformationFunction;
 import edu.project4.transformation.transformationFunctions.HeartTransformationFunction;
-import edu.project4.transformation.transformationFunctions.HorseshoeTransformationFunction;
 import edu.project4.transformation.transformationFunctions.LinearTransformationFunction;
 import edu.project4.transformation.transformationFunctions.SinTransformationFunction;
 import edu.project4.transformation.transformationFunctions.SphereTransformationFunction;
-import edu.project4.transformation.transformationFunctions.SwirlTransformationFunction;
 import edu.project4.transformation.transformationFunctions.TransformationFunction;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -95,44 +91,11 @@ public class Main {
         long start = System.nanoTime();
 
         FractalImage fractalImage = supplier.get();
-        new Correction().process(fractalImage, GAMMA);
+        Correction.process(fractalImage, GAMMA);
         ImageUtils.save(fractalImage, Path.of("img_f.png"), ImageFormat.PNG);
-        FractalImage red = new Reduce().process(fractalImage);
+        FractalImage red = Reduce.process(fractalImage, 2);
         ImageUtils.save(red, Path.of("img.png"), ImageFormat.PNG);
         log.info(System.nanoTime() - start);
     }
 
-    public static void randomLikeInWiki(String[] args) throws IOException {
-        FractalImage fractalImage = FractalImage.create(HEIGHT, WIDTH);
-
-        List<TransformationFunction> transformations1 = new ArrayList<>();
-        runProgram(() -> {
-
-            transformations1.add(new SphereTransformationFunction());
-            transformations1.add(new HeartTransformationFunction());
-            transformations1.add(new SinTransformationFunction());
-            transformations1.add(new DiskTransformationFunction());
-            transformations1.add(new SwirlTransformationFunction());
-            transformations1.add(new LinearTransformationFunction());
-            transformations1.add(new HorseshoeTransformationFunction());
-
-            WikiRendererSingleThreaded wikiRendererSingleThreaded = new WikiRendererMultiThreaded(COUNT_OF_THREADS);
-
-            wikiRendererSingleThreaded.rend(
-                fractalImage,
-                Function.generateFunctions(transformations1, COUNT_OF_FUNCTIONS),
-                NUMBER_SAMPLES,
-                ITERATION_PER_SAMPLE,
-                SYMMETRY,
-                new ConfigRender(
-                    X_MIN,
-                    X_MAX,
-                    Y_MIN,
-                    Y_MAX
-                )
-            );
-            return fractalImage;
-        });
-
-    }
 }

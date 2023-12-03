@@ -11,6 +11,8 @@ import edu.project4.save.ImageUtils;
 import edu.project4.structures.FractalImage;
 import edu.project4.transformation.transformationFunctions.DiskTransformationFunction;
 import edu.project4.transformation.transformationFunctions.HeartTransformationFunction;
+import edu.project4.transformation.transformationFunctions.HorseshoeTransformationFunction;
+import edu.project4.transformation.transformationFunctions.LinearTransformationFunction;
 import edu.project4.transformation.transformationFunctions.SinTransformationFunction;
 import edu.project4.transformation.transformationFunctions.SphereTransformationFunction;
 import edu.project4.transformation.transformationFunctions.SwirlTransformationFunction;
@@ -25,11 +27,11 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 public class Main {
 
-    private static final int WIDTH = 1080;
-    private static final int HEIGHT = 1920;
+    private static final int HEIGHT = 1080;
+    private static final int WIDTH = 1920;
     private static final int NUMBER_SAMPLES = 20000;
-    private static final int ITERATION_PER_SAMPLE = 1000;
-    private static final int SYMMETRY = 1;
+    private static final int ITERATION_PER_SAMPLE = 2000;
+    private static final int SYMMETRY = 3;
     private static final double X_MIN = -1.777;
     private static final float X_MAX = 1.777f;
     private static final int Y_MIN = -1;
@@ -46,9 +48,9 @@ public class Main {
     }
 
     public static void randomLikeInHabr(String[] args) throws IOException {
-        runProgramm(() -> {
+        runProgram(() -> {
 
-            FractalImage fractalImage = FractalImage.create(WIDTH, HEIGHT);
+            FractalImage fractalImage = FractalImage.create(HEIGHT, WIDTH);
 
             List<TransformationFunction> transformations1 = new ArrayList<>();
 
@@ -56,7 +58,9 @@ public class Main {
             transformations1.add(new HeartTransformationFunction());
             transformations1.add(new SinTransformationFunction());
             transformations1.add(new DiskTransformationFunction());
-            transformations1.add(new SwirlTransformationFunction());
+//            transformations1.add(new SwirlTransformationFunction());
+            transformations1.add(new LinearTransformationFunction());
+//            transformations1.add(new HorseshoeTransformationFunction());
             List<AffineSpace> affineSpaces = new ArrayList<>();
             affineSpaces.add(new AffineSpace());
             affineSpaces.add(new AffineSpace());
@@ -87,7 +91,7 @@ public class Main {
 
     }
 
-    public static void runProgramm(Supplier<FractalImage> supplier) throws IOException {
+    public static void runProgram(Supplier<FractalImage> supplier) throws IOException {
         long start = System.nanoTime();
 
         FractalImage fractalImage = supplier.get();
@@ -98,17 +102,19 @@ public class Main {
         log.info(System.nanoTime() - start);
     }
 
-    public static void randomFun(String[] args) throws IOException {
-        FractalImage fractalImage = FractalImage.create(WIDTH, HEIGHT);
+    public static void randomLikeInWiki(String[] args) throws IOException {
+        FractalImage fractalImage = FractalImage.create(HEIGHT, WIDTH);
 
         List<TransformationFunction> transformations1 = new ArrayList<>();
-        runProgramm(() -> {
+        runProgram(() -> {
 
             transformations1.add(new SphereTransformationFunction());
             transformations1.add(new HeartTransformationFunction());
             transformations1.add(new SinTransformationFunction());
             transformations1.add(new DiskTransformationFunction());
             transformations1.add(new SwirlTransformationFunction());
+            transformations1.add(new LinearTransformationFunction());
+            transformations1.add(new HorseshoeTransformationFunction());
 
             WikiRendererSingleThreaded wikiRendererSingleThreaded = new WikiRendererMultiThreaded(COUNT_OF_THREADS);
 

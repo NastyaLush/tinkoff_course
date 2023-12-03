@@ -8,8 +8,8 @@ public class Correction implements ImageProcessor {
     @Override
     public FractalImage process(FractalImage image, Double gamma) {
         double maxNormal = -1;
-        for (int row = 0; row < image.height(); row++) {
-            for (int col = 0; col < image.width(); col++) {
+        for (int row = 0; row < image.width(); row++) {
+            for (int col = 0; col < image.height(); col++) {
                 Pixel pixel = image.pixel(row, col);
                 if (pixel.getHitCount() != 0) {
                     pixel.setNormal(Math.log10(pixel.getHitCount()));
@@ -19,8 +19,8 @@ public class Correction implements ImageProcessor {
                 }
             }
         }
-        for (int row = 0; row < image.height(); row++) {
-            for (int col = 0; col < image.width(); col++) {
+        for (int row = 0; row < image.width(); row++) {
+            for (int col = 0; col < image.height(); col++) {
                 Pixel pixel = image.pixel(row, col);
                 pixel.setNormal(pixel.getNormal() / maxNormal);
                 pixel.setR((int) (pixel.getR() * Math.pow(pixel.getNormal(), 1d / gamma)));

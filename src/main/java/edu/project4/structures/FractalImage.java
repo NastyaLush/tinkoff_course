@@ -1,15 +1,15 @@
 package edu.project4.structures;
 
-public record FractalImage(Pixel[][] data, int width, int height) {
+public record FractalImage(Pixel[][] data, int height, int width) {
 
-    public static FractalImage create(int width, int height) {
-        Pixel[][] pixels = new Pixel[height][width];
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
+    public static FractalImage create(int height, int width) {
+        Pixel[][] pixels = new Pixel[width][height];
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
                 pixels[i][j] = new Pixel();
             }
         }
-        return new FractalImage(pixels, width, height);
+        return new FractalImage(pixels, height, width);
     }
 
     public Pixel pixel(int x, int y) {
@@ -21,6 +21,6 @@ public record FractalImage(Pixel[][] data, int width, int height) {
     }
 
     public boolean isInImage(Point point) {
-        return point.x() >= 0 && point.x() < height && point.y() >= 0 && point.y() < width;
+        return point.x() >= 0 && point.x() < width && point.y() >= 0 && point.y() < height;
     }
 }

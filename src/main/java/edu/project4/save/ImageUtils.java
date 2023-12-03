@@ -16,10 +16,10 @@ public class ImageUtils {
     private ImageUtils() {}
 
     public static void save(FractalImage image, Path filename, ImageFormat format) throws IOException {
-        BufferedImage bi = new BufferedImage(image.height(), image.width(), BufferedImage.TYPE_INT_BGR);
+        BufferedImage bi = new BufferedImage(image.width(), image.height(), BufferedImage.TYPE_INT_BGR);
 
-        for (int x = 0; x < image.height(); x++) {
-            for (int y = 0; y < image.width(); y++) {
+        for (int x = 0; x < image.width(); x++) {
+            for (int y = 0; y < image.height(); y++) {
                 bi.setRGB(
                     x,
                     y,

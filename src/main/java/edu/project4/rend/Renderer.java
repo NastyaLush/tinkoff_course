@@ -51,8 +51,8 @@ public interface Renderer {
                     && rotPoint.y() >= configRender.yMIN() && rotPoint.y() <= configRender.yMAX()) {
                     Point resultPoint = getResultPoint(
                         rotPoint,
-                        fractalImage.height(),
                         fractalImage.width(),
+                        fractalImage.height(),
                         configRender.xMIN(),
                         configRender.xMAX(),
                         configRender.yMIN(),

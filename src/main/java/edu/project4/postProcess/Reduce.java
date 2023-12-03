@@ -8,8 +8,8 @@ public class Reduce {
     @SuppressWarnings("NestedForDepth")
     public FractalImage process(FractalImage image) {
         int sample = 2;
-        int h = image.height() / sample;
-        int w = image.width() / sample;
+        int h = image.width() / sample;
+        int w = image.height() / sample;
         Pixel[][] newPixels = new Pixel[h][w];
         for (int i = 0; i < h; i++) {
             for (int j = 0; j < w; j++) {

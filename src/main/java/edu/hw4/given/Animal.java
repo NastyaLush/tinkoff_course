@@ -45,7 +45,7 @@ public record Animal(String name, Type type, Sex sex, int age, int height, int w
     }
 
     public String getHeightTitle() {
-        return "height";
+        return "width";
     }
 
     public String getBitesTitle() {

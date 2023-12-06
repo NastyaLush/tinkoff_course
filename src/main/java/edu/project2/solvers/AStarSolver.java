@@ -53,9 +53,9 @@ public class AStarSolver implements Solver {
             current.setVisited(true);
 
             ArrayList<AStarSolverCell> neighbors =
-                    getFreeNeighbors(this.maze, current.getCell()
-                                                       .getRow(), current.getCell()
-                                                                         .getColumn());
+                getFreeNeighbors(this.maze, current.getCell()
+                                                   .getRow(), current.getCell()
+                                                                     .getColumn());
             for (AStarSolverCell neighbor : neighbors) {
                 if (neighbor.getWeight() > f(current, neighbor)) {
                     neighbor.setWeight(f(current, neighbor));
@@ -78,17 +78,13 @@ public class AStarSolver implements Solver {
         }
     }
 
-    private boolean isInMaze(Maze<Cell> maze, Cell cell) {
-        return between(cell.getRow(), 0, maze.rows()) && between(cell.getColumn(), 0, maze.columns());
-    }
-
     private int h(AStarSolverCell cell) {
         return Math.abs(cell.getCell()
                             .getRow() - finish.getCell()
                                               .getRow())
-                + Math.abs(cell.getCell()
-                               .getColumn() - finish.getCell()
-                                                    .getColumn());
+            + Math.abs(cell.getCell()
+                           .getColumn() - finish.getCell()
+                                                .getColumn());
     }
 
     private ArrayList<AStarSolverCell> getFreeNeighbors(AStarSolverCell[][] maze, Integer row, Integer column) {
@@ -98,8 +94,8 @@ public class AStarSolver implements Solver {
             freeCells.add(maze[row - 1][column]);
         }
         if (row < maze.length - 1 && !maze[row + 1][column].isVisited()
-                && !maze[row][column].getCell()
-                                     .isBottomWall()) {
+            && !maze[row][column].getCell()
+                                 .isBottomWall()) {
             freeCells.add(maze[row + 1][column]);
         }
         if (column > 0 && !maze[row][column - 1].isVisited() && !maze[row][column].getCell()
@@ -107,8 +103,8 @@ public class AStarSolver implements Solver {
             freeCells.add(maze[row][column - 1]);
         }
         if (column < maze[0].length - 1 && !maze[row][column + 1].isVisited()
-                && !maze[row][column + 1].getCell()
-                                         .isLeftWall()) {
+            && !maze[row][column + 1].getCell()
+                                     .isLeftWall()) {
             freeCells.add(maze[row][column + 1]);
         }
         return freeCells;
@@ -127,10 +123,6 @@ public class AStarSolver implements Solver {
         }
         path.add(current.getCell());
         return path;
-    }
-
-    private boolean between(Integer value, Integer left, Integer right) {
-        return value >= left && value <= right;
     }
 
     private long g(AStarSolverCell parent) {

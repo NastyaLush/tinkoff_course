@@ -18,30 +18,30 @@ public class DirectoryFinderTest {
 
         Files.createDirectory(Path.of(DIRECTORY_FINDER_TEST));
         for (int i = 0; i < 999; i++) {
-            Files.createFile(Path.of(DIRECTORY_FINDER_TEST + "\\" + i));
+            Files.createFile(Path.of(DIRECTORY_FINDER_TEST + "/" + i));
         }
-        Files.createDirectory(Path.of(DIRECTORY_FINDER_TEST + "\\dir"));
+        Files.createDirectory(Path.of(DIRECTORY_FINDER_TEST + "/dir"));
         for (int i = 0; i < 1050; i++) {
-            Files.createFile(Path.of(DIRECTORY_FINDER_TEST + "\\dir\\" + i));
+            Files.createFile(Path.of(DIRECTORY_FINDER_TEST + "/dir/" + i));
         }
     }
 
     @AfterAll
     public static void deleteFiles() throws IOException {
         for (int i = 0; i < 1050; i++) {
-            Files.deleteIfExists(Path.of(DIRECTORY_FINDER_TEST + "\\" + i));
+            Files.deleteIfExists(Path.of(DIRECTORY_FINDER_TEST + "/" + i));
         }
         for (int i = 0; i < 1050; i++) {
-            Files.deleteIfExists(Path.of(DIRECTORY_FINDER_TEST + "\\dir\\" + i));
+            Files.deleteIfExists(Path.of(DIRECTORY_FINDER_TEST + "/dir/" + i));
         }
-        Files.deleteIfExists(Path.of(DIRECTORY_FINDER_TEST + "\\dir"));
+        Files.deleteIfExists(Path.of(DIRECTORY_FINDER_TEST + "/dir"));
         Files.deleteIfExists(Path.of(DIRECTORY_FINDER_TEST));
     }
 
     @Test
     public void find_shouldFindDirectoriesThatHaveMoreThan1000Files() throws IOException {
         DirectoryFinder directoryFinder = new DirectoryFinder();
-        List<Path> expectedAnswer = List.of(Path.of(DIRECTORY_FINDER_TEST + "\\dir").toAbsolutePath());
+        List<Path> expectedAnswer = List.of(Path.of(DIRECTORY_FINDER_TEST + "/dir").toAbsolutePath());
         List<Path> actualAnswer = directoryFinder.find(Path.of(DIRECTORY_FINDER_TEST));
 
         assertEquals(expectedAnswer, actualAnswer);

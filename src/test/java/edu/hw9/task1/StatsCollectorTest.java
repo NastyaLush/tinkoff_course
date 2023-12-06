@@ -15,7 +15,7 @@ public class StatsCollectorTest {
     public void justTryToExecute() {
         String[] metricNames = new String[] {"m1", "m2", "m3", "m4", "m5"};
         StatsCollector statsCollector = new StatsCollector();
-        try (ExecutorService executorService = Executors.newVirtualThreadPerTaskExecutor()) {
+        try (ExecutorService executorService = Executors.newCachedThreadPool()) {
             for (int i = 0; i < 1000; i++) {
                 executorService.submit(() -> {
                     for (int i1 = 0; i1 < 100; i1++) {
@@ -38,7 +38,7 @@ public class StatsCollectorTest {
     }
 
     @Test
-    public void ddd() {
+    public void stats_shouldReturnCorrectStats() {
         String[] metricNames = new String[] {"m1", "m2", "m3", "m4", "m5"};
         StatsCollector statsCollector = new StatsCollector();
         double[] m1_1 = new double[] {1, 4, 3.5, 7, 2, 3};

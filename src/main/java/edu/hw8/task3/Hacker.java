@@ -1,9 +1,9 @@
 package edu.hw8.task3;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -11,8 +11,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 @Log4j2 public class Hacker {
 
     private final Map<String, String> data;
-    private final Map<String, String> passwords = new HashMap();
-    private final int comb = 62;
+    private final Map<String, String> passwords = new ConcurrentHashMap<>();
     private final AtomicInteger passNumber = new AtomicInteger(0);
     private final char[] symbols = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789".toCharArray();
     private final Integer countOfPossibleCharacters = 62;

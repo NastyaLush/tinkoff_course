@@ -12,7 +12,7 @@ import net.bytebuddy.jar.asm.Opcodes;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class Task3 {
+public class FibonacciTest {
 
     @Test
     public void fib_shouldCalcFibonacci()
@@ -154,7 +154,7 @@ public class Task3 {
         }
     }
 
-    class FibMethod implements ByteCodeAppender {
+    static class FibMethod implements ByteCodeAppender {
 
         @Override
         public Size apply(

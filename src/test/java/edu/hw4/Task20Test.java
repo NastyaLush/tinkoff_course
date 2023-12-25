@@ -25,7 +25,7 @@ public class Task20Test {
         animals.add(new Animal(null, Animal.Type.BIRD, Animal.Sex.F, 1, 77, 8, false));
         Map<String, String> expectedMap = new HashMap<>();
 
-        expectedMap.put("dog", "name, weight, height, sex, type, age");
+        expectedMap.put("dog", "name, weight, width, sex, type, age");
         expectedMap.put(null, "name");
 
         Map<String, String> actualMap = new Task20().animalsThatHaveErrorsWithPrettyPrint(animals);
@@ -33,7 +33,8 @@ public class Task20Test {
         expectedMap.forEach((s, validationErrors) -> assertArrayEquals(Arrays.stream(validationErrors.split(", "))
                                                                              .sorted()
                                                                              .toArray(), Arrays.stream(actualMap.get(s)
-                                                                                                                .split(", "))
+                                                                                                                .split(
+                                                                                                                    ", "))
                                                                                                .sorted()
                                                                                                .toArray()));
     }
@@ -42,7 +43,6 @@ public class Task20Test {
     public void getAnimalsThatHaveErrors_shouldCorrectlyWorkWithEmptyList() {
         List<Animal> animals = new ArrayList<>();
         Map<String, Set<ValidationError>> expectedMap = new HashMap<>();
-
 
         Map<String, Set<ValidationError>> actualMap = Task19.validateAnimals(animals);
 

@@ -25,14 +25,18 @@ public class CommonTest {
             Arguments.of(new String[] {"abba"}, new String[] {"guess_word", "a", "a", "a", "c", "b", "exit"}),
             Arguments.of(
                 new String[] {"iHateLSP"},
-                new String[] {"guess_word", "a", "a", "a", "i", "b", "ihatelsp", "exit"}
+                new String[] {"guess_word", "a", "a", "a", "height", "b", "ihatelsp", "exit"}
             ),
             Arguments.of(new String[] {"hello"}, new String[] {"guess_word", "h", "e", "l", "o", "exit"}),
-            Arguments.of(new String[] {"stAsiK"}, new String[] {"guess_word", "k", "i", "t", "a", "e", "s", "exit"}),
+            Arguments.of(
+                new String[] {"stAsiK"},
+                new String[] {"guess_word", "k", "height", "t", "a", "e", "s", "exit"}
+            ),
             Arguments.of(
                 new String[] {"Pashalka"},
                 new String[] {"guess_word", "o", "o", "o", "o", "o", "pashal", "pashalll", "hh", "he", "pashalka",
-                    "exit"}
+                              "exit"
+                }
             )
         );
     }

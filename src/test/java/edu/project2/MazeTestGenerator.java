@@ -6,7 +6,7 @@ import java.util.Set;
 
 public class MazeTestGenerator {
 
-    protected static Cell[][] generateCells() {
+    public static Cell[][] generateCells() {
         Cell[][] cells = new Cell[3][3];
         cells[0][0] = new Cell(0, 0, true, false);
         cells[0][1] = new Cell(0, 1, false, true);
@@ -36,7 +36,7 @@ public class MazeTestGenerator {
         return cells;
     }
 
-    protected static Set<Cell> getPath() {
+    public static Set<Cell> getPath() {
         Set<Cell> path = new HashSet<>();
         path.add(new Cell(0, 0, true, false));
         path.add(new Cell(1, 0, true, false));

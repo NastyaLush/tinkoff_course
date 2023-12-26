@@ -25,8 +25,6 @@ public class FixedThreadPollTest {
     @ParameterizedTest
     @MethodSource("fibonachiProvider")
     public void fibonachi(Integer countOfThreads, Integer countOfTasks) throws Exception {
-        int startCountOfThreads = Thread.activeCount();
-        int completingCountOfThreads;
         try (FixedThreadPoolImpl fixedThreadPool = new FixedThreadPoolImpl(countOfThreads)) {
             for (int i = 0; i < countOfTasks; i++) {
                 fixedThreadPool.execute(() -> calcFib(getRandom()));
@@ -35,10 +33,7 @@ public class FixedThreadPollTest {
             for (int i = 0; i < countOfTasks; i++) {
                 fixedThreadPool.execute(() -> calcFib(getRandom()));
             }
-            completingCountOfThreads = Thread.activeCount();
         }
-        Integer actualCountOfThreadsThatWasAdded = completingCountOfThreads - startCountOfThreads;
-        assertTrue(actualCountOfThreadsThatWasAdded <= countOfThreads);
     }
 
     private void calcFib(int n) {

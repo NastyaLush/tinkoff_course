@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 import lombok.extern.log4j.Log4j2;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -43,15 +44,31 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
     }
 
     @Test public void cache_shouldWriteDataToDiskIfPersist() throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        int delay = 2000000;
+        HardWorkLogicImpl hardWorkLogicImpl = new HardWorkLogicImpl();
+        HardWorkLogic hardWorkLogic = CacheProxy.create(hardWorkLogicImpl, HardWorkLogic.class, dirPath);
+        long result = hardWorkLogic.workHard(delay);
+        String expectedString = "workHard:" + Arrays.hashCode(new Object[] {delay}) + ";"
+            + "\"long\"" + ";"
+            + objectMapper.writeValueAsString(result);
+        String actualString = Files.readString(Path.of(dirPath + "/" + "data"));
+        assertEquals(expectedString, actualString);
+    }
+
+    @Test public void cache_shouldReadDataFromExistingFile() throws IOException {
         int delay = 2000000;
         HardWorkLogicImpl hardWorkLogicImpl = new HardWorkLogicImpl();
         HardWorkLogic hardWorkLogic = CacheProxy.create(hardWorkLogicImpl, HardWorkLogic.class, dirPath);
         hardWorkLogic.workHard(delay);
-        String expectedString = "workHard:" + Arrays.hashCode(new Object[] {delay}) + ":" + (
-            hardWorkLogicImpl.hashCode()
-                + delay);
-        String actualString = Files.readString(Path.of(dirPath + "/" + hardWorkLogic.hashCode()));
-        assertEquals(expectedString, actualString);
+
+        HardWorkLogicImpl hardWorkLogicImpl2 = new HardWorkLogicImpl();
+        HardWorkLogic hardWorkLogic2 = CacheProxy.create(hardWorkLogicImpl2, HardWorkLogic.class, dirPath);
+        long start = System.nanoTime();
+        hardWorkLogic2.workHard(delay);
+        long finish = System.nanoTime();
+
+        assertTrue(finish - start < delay);
     }
 
     public interface HardWorkLogic {
